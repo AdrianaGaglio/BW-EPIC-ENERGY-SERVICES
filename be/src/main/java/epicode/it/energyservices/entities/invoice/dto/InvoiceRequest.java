@@ -20,4 +20,7 @@ public class InvoiceRequest {
     private double amount;
 
     private String status;
+
+    @NotNull(message = "Customer ID is required")
+    private Long customerId;
 }
