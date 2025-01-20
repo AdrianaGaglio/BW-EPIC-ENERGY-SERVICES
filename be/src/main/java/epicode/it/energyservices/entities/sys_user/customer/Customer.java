@@ -18,7 +18,8 @@ public class Customer extends SysUser {
     @Column(name="vat_code")
     private String vatCode;
 
-    private LocalDate date;
+    @Column(name="creation_date")
+    private LocalDate creationDate = LocalDate.now();
 
     @Column(name="last_contact")
     private LocalDate lastContact;
@@ -38,7 +39,7 @@ public class Customer extends SysUser {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    private HashMap<String, String> addresses = new HashMap<>();
+    private HashMap<String, String> addresses = new HashMap<>(); // collegare a entità indirizzo
 
     private List<Invoice> invoices = new ArrayList<>();
 
