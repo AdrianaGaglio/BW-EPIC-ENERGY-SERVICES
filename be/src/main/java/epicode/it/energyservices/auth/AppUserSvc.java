@@ -2,8 +2,8 @@ package epicode.it.energyservices.auth;
 
 import epicode.it.energyservices.auth.dto.RegisterRequest;
 import epicode.it.energyservices.auth.jwt.JwtTokenUtil;
-import epicode.it.energyservices.exception.AlreadyExistsException;
-import epicode.it.energyservices.exception.EmailAlreadyUsedException;
+import epicode.it.energyservices.exceptions.AlreadyExistsException;
+import epicode.it.energyservices.exceptions.EmailAlreadyUsedException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
