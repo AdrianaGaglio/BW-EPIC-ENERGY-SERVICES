@@ -18,7 +18,7 @@ public class Invoice {
 
     private double amount;
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int number;
 
     @ManyToOne

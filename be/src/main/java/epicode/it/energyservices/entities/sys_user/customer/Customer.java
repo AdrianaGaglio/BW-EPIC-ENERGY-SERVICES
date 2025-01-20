@@ -41,6 +41,7 @@ public class Customer extends SysUser {
 
     private HashMap<String, String> addresses = new HashMap<>(); // collegare a entità indirizzo
 
+    @OneToMany
     private List<Invoice> invoices = new ArrayList<>();
 
 }
