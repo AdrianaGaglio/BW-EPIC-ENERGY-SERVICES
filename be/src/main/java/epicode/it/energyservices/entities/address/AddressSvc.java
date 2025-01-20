@@ -6,6 +6,8 @@ import epicode.it.energyservices.entities.district.District;
 import epicode.it.energyservices.entities.district.DistrictRepo;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -30,7 +32,7 @@ public class AddressSvc {
     }
 
     // cancella un address per id
-    public void deleteAddress(Long id) {
+    public void deleteAddress(Long id,  @AuthenticationPrincipal UserDetails userDetail) {
         if (!addressRepo.existsById(id)) {
             throw new EntityNotFoundException("L'indirizzo indicato non esiste");
         }
@@ -38,7 +40,7 @@ public class AddressSvc {
     }
 
     // salva un nuovo Address
-    public Address saveAddress(AddressCreateRequest request) {
+    public Address saveAddress(AddressCreateRequest request, @AuthenticationPrincipal UserDetails userDetails) {
         City city = cityRepo.findById(request.getIdCity())
                 .orElseThrow(() -> new EntityNotFoundException("La città cercata non esiste"));
 
@@ -52,7 +54,7 @@ public class AddressSvc {
     }
 
     // modifica un address esistente
-    public Address updateAddress(Long id, AddressCreateRequest updatedRequest) {
+    public Address updateAddress(Long id, AddressCreateRequest updatedRequest,@AuthenticationPrincipal UserDetails userDetails ) {
 
         Address existingAddress = addressRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("L'indirizzo cercato non esiste"));
