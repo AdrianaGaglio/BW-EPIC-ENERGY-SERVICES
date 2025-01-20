@@ -11,5 +11,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private  Long id;
 
+    private String name;
+
 
 }
