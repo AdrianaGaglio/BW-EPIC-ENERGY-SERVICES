@@ -19,7 +19,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Validated
 public class AppUserSvc {
-    private final AppUserRepository appUserRepo;
+    private final AppUserRepo appUserRepo;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
@@ -36,6 +36,7 @@ public class AppUserSvc {
         AppUser appUser = new AppUser();
         BeanUtils.copyProperties(registerRequest, appUser);
         appUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        appUser.setRoles(registerRequest.getCustomer() != null ? Set.of(Role.ROLE_CUSTOMER) : Set.of(Role.ROLE_USER));
         appUserRepo.save(appUser);
 
         if(registerRequest.getCustomer() != null) {
@@ -45,4 +46,23 @@ public class AppUserSvc {
 
         return "Registrazione avvenuta con successo";
     }
+
+    public String registerAdmin(@Valid RegisterRequest registerRequest) {
+        if (appUserRepo.existsByEmail(registerRequest.getEmail())) {
+            throw new EmailAlreadyUsedException("Email already used");
+        }
+        if (appUserRepo.existsByUsername(registerRequest.getUsername())) {
+            throw new AlreadyExistsException("Username already used");
+        }
+        AppUser appUser = new AppUser();
+        BeanUtils.copyProperties(registerRequest, appUser);
+        appUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        appUser.setRoles(Set.of(Role.ROLE_ADMIN));
+        appUserRepo.save(appUser);
+
+        return "Admin registrato con successo";
+
+    }
+
+
 }

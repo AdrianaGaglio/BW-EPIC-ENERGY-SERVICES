@@ -1,7 +1,7 @@
 package epicode.it.energyservices.auth.jwt;
 
 import epicode.it.energyservices.auth.AppUser;
-import epicode.it.energyservices.auth.AppUserRepository;
+import epicode.it.energyservices.auth.AppUserRepo;
 import epicode.it.energyservices.auth.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenUtil {
     @Autowired
-    private AppUserRepository appUserRepo;
+    private AppUserRepo appUserRepo;
 
     @Value("${jwt.secret}")
     private String secret;
