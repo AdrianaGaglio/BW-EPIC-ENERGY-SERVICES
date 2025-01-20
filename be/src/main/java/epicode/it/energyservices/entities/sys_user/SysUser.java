@@ -1,5 +1,6 @@
 package epicode.it.energyservices.entities.sys_user;
 
+import epicode.it.energyservices.auth.AppUser;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,5 +12,8 @@ public abstract class SysUser {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    @OneToOne
+    private AppUser appUser;
 
 }

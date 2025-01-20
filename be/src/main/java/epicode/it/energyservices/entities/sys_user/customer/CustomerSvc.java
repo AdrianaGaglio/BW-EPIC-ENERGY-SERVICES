@@ -1,7 +1,9 @@
 package epicode.it.energyservices.entities.sys_user.customer;
 
+import epicode.it.energyservices.auth.AppUser;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -49,7 +51,8 @@ public class CustomerSvc {
         return "Customer deleted successfully";
     }
 
-    public Customer create(@Valid CustomerRequest request) {
+    @Transactional
+    public Customer create(AppUser appUser, @Valid CustomerRequest request) {
         if (customerRepo.existsByVatCode(request.getVatCode()))
             throw new EntityExistsException("Customer vatCode already exists");
         if (customerRepo.existsByDenomination(request.getDenomination()))
@@ -60,6 +63,9 @@ public class CustomerSvc {
 
         Customer c = new Customer();
         BeanUtils.copyProperties(request, c);
+        c.setType(Type.valueOf(request.getType()));
+        c.setAppUser(appUser);
+
         // leggere indirizzi e mettere nell'hashmap
 
         return customerRepo.save(c);

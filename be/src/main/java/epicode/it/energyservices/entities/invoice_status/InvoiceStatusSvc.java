@@ -40,4 +40,8 @@ public class InvoiceStatusSvc {
         invoiceStatusRepo.delete(foundInvoiceStatus);
         return "InvoiceStatus deleted successfully";
     }
+
+    public InvoiceStatus findByName(String name) {
+        return invoiceStatusRepo.findByName(name).orElseThrow(() -> new EntityNotFoundException("Status " + name + " not exists"));
+    }
 }
