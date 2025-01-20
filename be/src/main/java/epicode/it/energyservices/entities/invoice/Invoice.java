@@ -1,6 +1,7 @@
 package epicode.it.energyservices.entities.invoice;
 
 import epicode.it.energyservices.entities.invoice_status.InvoiceStatus;
+import epicode.it.energyservices.entities.sys_user.customer.Customer;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,8 +19,12 @@ public class Invoice {
 
     private double amount;
 
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(nullable = false, unique = true)
+    @SequenceGenerator(name = "invoice_seq", sequenceName = "invoice_sequence", allocationSize = 1)
     private int number;
+
+    @ManyToOne
+    private Customer customer;
 
     @ManyToOne
     private InvoiceStatus status;

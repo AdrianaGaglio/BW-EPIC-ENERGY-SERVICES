@@ -34,7 +34,6 @@ public class Customer extends SysUser {
     @Column(name="contact_phone")
     private String contactPhone;
 
-    private String image;
 
     @Enumerated(EnumType.STRING)
     private Type type;

@@ -70,6 +70,8 @@ public class JwtTokenUtil {
                 .compact();
     }
 
+
+
     public Set<Role> getRolesFromToken(String token) {
         Claims claims = getAllClaimsFromToken(token);
         List<String> rolesAsString = ((List<?>) claims.get("roles"))
