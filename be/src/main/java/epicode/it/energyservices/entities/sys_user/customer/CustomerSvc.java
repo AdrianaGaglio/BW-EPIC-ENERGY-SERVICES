@@ -1,6 +1,9 @@
 package epicode.it.energyservices.entities.sys_user.customer;
 
 import epicode.it.energyservices.auth.AppUser;
+import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerMapper;
+import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerRequest;
+import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerResponse;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -19,15 +22,21 @@ import java.util.List;
 @Validated
 public class CustomerSvc {
     private final CustomerRepo customerRepo;
+    private final CustomerMapper mapper;
 
     public List<Customer> getAll() {
 
         return customerRepo.findAll();
     }
 
-    public Page<Customer> getAllPageable(Pageable pageable) {
+    public Page<CustomerResponse> getAllPageable(Pageable pageable) {
+        Page<Customer> pagedCustomer = customerRepo.findAll(pageable);
+        Page<CustomerResponse> response = pagedCustomer.map(e -> {
+            CustomerResponse customerResponse = mapper.toCustomerResponse(e);
+            return customerResponse;
+        });
+        return response;
 
-        return customerRepo.findAll(pageable);
     }
 
     public Customer getById(Long id) {
@@ -71,4 +80,6 @@ public class CustomerSvc {
         return customerRepo.save(c);
 
     }
+
+
 }
