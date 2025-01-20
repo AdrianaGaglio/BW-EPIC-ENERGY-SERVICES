@@ -1,12 +1,9 @@
-package epicode.it.energyservices.entities.sys_user.customer;
+package epicode.it.energyservices.entities.sys_user.customer.dto;
 
+import epicode.it.energyservices.entities.sys_user.customer.Type;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
-import java.time.LocalDate;
-import java.util.HashMap;
 
 @Data
 public class CustomerRequest {
