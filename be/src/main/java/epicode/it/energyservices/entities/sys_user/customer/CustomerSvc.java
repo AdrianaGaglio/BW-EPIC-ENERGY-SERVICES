@@ -63,7 +63,7 @@ public class CustomerSvc {
 
         Customer c = new Customer();
         BeanUtils.copyProperties(request, c);
-        c.setType(Type.valueOf(request.getType()));
+        c.setType(request.getType());
         c.setAppUser(appUser);
 
         // leggere indirizzi e mettere nell'hashmap

@@ -1,7 +1,10 @@
 package epicode.it.energyservices.auth;
 
 
+import epicode.it.energyservices.auth.dto.LoginRequest;
 import epicode.it.energyservices.auth.dto.RegisterRequest;
+import epicode.it.energyservices.entities.sys_user.customer.CustomerRequest;
+import epicode.it.energyservices.entities.sys_user.customer.Type;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -26,5 +29,35 @@ public class AuthRunner implements ApplicationRunner {
 
         appUserSvc.registerAdmin(admin);
 
+        RegisterRequest user = new RegisterRequest();
+        user.setName("User");
+        user.setSurname("User");
+        user.setUsername("user");
+        user.setEmail("user@user.com");
+        user.setPassword("userpwd");
+        appUserSvc.registerUser(user);
+
+        RegisterRequest customer = new RegisterRequest();
+        customer.setName("Customer");
+        customer.setSurname("Customer");
+        customer.setUsername("customer");
+        customer.setEmail("customer@customer.com");
+        customer.setPassword("customerpwd");
+
+        CustomerRequest addInfoCustomer = new CustomerRequest();
+        addInfoCustomer.setType(Type.SPA);
+        addInfoCustomer.setPec("customer.pec@customer.com");
+        addInfoCustomer.setPhone("1234567890");
+        addInfoCustomer.setDenomination("EPICODE");
+        addInfoCustomer.setVatCode("0987654321");
+        addInfoCustomer.setContactPhone("1236805893");
+        customer.setCustomer(addInfoCustomer);
+        appUserSvc.registerUser(customer);
+
+
+        LoginRequest login = new LoginRequest();
+        login.setIdentifier("admin");
+        login.setPassword("adminpwd");
+        System.out.println(appUserSvc.Login(login) + " TOKEN");
     }
 }
