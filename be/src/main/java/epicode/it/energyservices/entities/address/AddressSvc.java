@@ -7,5 +7,5 @@ import org.springframework.validation.annotation.Validated;
 @Service
 @AllArgsConstructor
 @Validated
-public class AddressService {
+public class AddressSvc {
 }

@@ -16,5 +16,4 @@ public class City {
     @JoinColumn(name = "district_id", referencedColumnName = "id")
     private District district;
 
-
 }

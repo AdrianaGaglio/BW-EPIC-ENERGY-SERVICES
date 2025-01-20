@@ -10,8 +10,7 @@ public class District {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String nome;
+    private String name;
     private String code;
-
 
 }
