@@ -1,5 +1,6 @@
 package epicode.it.energyservices.entities.invoice_status;
 
+import epicode.it.energyservices.entities.invoice_status.dto.InvoiceStatusRequest;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

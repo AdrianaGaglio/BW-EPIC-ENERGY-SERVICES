@@ -1,7 +1,11 @@
 package epicode.it.energyservices.entities.invoice;
 
+import epicode.it.energyservices.entities.invoice.dto.InvoiceRequest;
+import epicode.it.energyservices.entities.invoice.dto.InvoiceUpdateRequest;
 import epicode.it.energyservices.entities.invoice_status.InvoiceStatus;
 import epicode.it.energyservices.entities.invoice_status.InvoiceStatusSvc;
+import epicode.it.energyservices.entities.sys_user.customer.Customer;
+import epicode.it.energyservices.entities.sys_user.customer.CustomerSvc;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -12,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -20,6 +25,7 @@ import java.util.List;
 public class InvoiceSvc {
     private final InvoiceRepo invoiceRepo;
     private final InvoiceStatusSvc invoiceStatusSvc;
+    private final CustomerSvc customerSvc;
 
     public List<Invoice> getAll() {
         return invoiceRepo.findAll();
@@ -53,7 +59,32 @@ public class InvoiceSvc {
     public Invoice create(@Valid InvoiceRequest request) {
         Invoice i = new Invoice();
         BeanUtils.copyProperties(request, i);
-        i.setStatus(invoiceStatusSvc.findByName(request.getStatus()));
+        InvoiceStatus status = request.getStatus() != null ? invoiceStatusSvc.findByName(request.getStatus()) : invoiceStatusSvc.findByName("DRAFT");
+        i.setCustomer(customerSvc.getById(request.getCustomerId()));
+        i.setStatus(status);
         return invoiceRepo.save(i);
     }
+
+    public Invoice updateStatus(Long id, @Valid InvoiceUpdateRequest request) {
+        Invoice i = getById(id);
+        InvoiceStatus newStatus = invoiceStatusSvc.findByName(request.getStatus().toUpperCase());
+        i.setStatus(newStatus);
+        return invoiceRepo.save(i);
+    }
+
+    public List<Invoice> getAllByStatus(String status, String direction) {
+        InvoiceStatus invoiceStatus = invoiceStatusSvc.findByName(status.toUpperCase());
+        return invoiceRepo.findAllByStatusOrderByDate(invoiceStatus.getId(), direction.toUpperCase());
+    }
+
+    public List<Invoice> getAllByCustomer(Long customerId, String direction) {
+        return invoiceRepo.findAllByCustomerOrderByDate(customerId, direction.toUpperCase());
+    }
+
+    public List<Invoice> getAllByDate(LocalDate date) {
+        return invoiceRepo.findAllByDate(date);
+    }
+
+
+
 }
