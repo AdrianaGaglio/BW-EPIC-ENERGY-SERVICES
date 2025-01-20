@@ -1,7 +1,11 @@
 package epicode.it.energyservices.auth;
 
+import epicode.it.energyservices.auth.dto.LoginRequest;
 import epicode.it.energyservices.auth.dto.RegisterRequest;
 import epicode.it.energyservices.auth.jwt.JwtTokenUtil;
+import epicode.it.energyservices.entities.sys_user.customer.CustomerSvc;
+import epicode.it.energyservices.entities.sys_user.employee.Employee;
+import epicode.it.energyservices.entities.sys_user.employee.EmployeeSvc;
 import epicode.it.energyservices.exceptions.AlreadyExistsException;
 import epicode.it.energyservices.exceptions.EmailAlreadyUsedException;
 import jakarta.transaction.Transactional;
@@ -9,6 +13,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +31,8 @@ public class AppUserSvc {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
+    private final CustomerSvc customerSvc;
+    private final EmployeeSvc employeeSvc;
 
     @Transactional
     public String registerUser(@Valid RegisterRequest registerRequest) {
@@ -36,13 +46,19 @@ public class AppUserSvc {
         AppUser appUser = new AppUser();
         BeanUtils.copyProperties(registerRequest, appUser);
         appUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        appUser.setRoles(registerRequest.getCustomer() != null ? Set.of(Role.ROLE_CUSTOMER) : Set.of(Role.ROLE_USER));
-        appUserRepo.save(appUser);
+        appUser.setRoles(registerRequest.getCustomer() != null ? Set.of(Role.CUSTOMER) : Set.of(Role.USER));
 
-        if(registerRequest.getCustomer() != null) {
+        if (registerRequest.getCustomer() != null) {
+            appUser.setSysUser(customerSvc.create(appUser, registerRequest.getCustomer()));
+        } else {
+            Employee employee = new Employee();
+            employee.setAppUser(appUser);
+            appUser.setSysUser(employee);
+            employeeSvc.save(employee);
 
         }
 
+        appUserRepo.save(appUser);
 
         return "Registrazione avvenuta con successo";
     }
@@ -57,12 +73,28 @@ public class AppUserSvc {
         AppUser appUser = new AppUser();
         BeanUtils.copyProperties(registerRequest, appUser);
         appUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        appUser.setRoles(Set.of(Role.ROLE_ADMIN));
+        appUser.setRoles(Set.of(Role.ADMIN));
         appUserRepo.save(appUser);
 
         return "Admin registrato con successo";
 
     }
 
+    public String Login(@Valid LoginRequest loginRequest) {
+        {
+            try {
+                System.out.println(loginRequest);
+                Authentication authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(loginRequest.getIdentifier(), loginRequest.getPassword())
+                );
 
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                return jwtTokenUtil.generateToken(userDetails);
+            } catch (AuthenticationException e) {
+                throw new SecurityException("Credenziali non valide", e);
+            }
+        }
+
+
+    }
 }

@@ -25,6 +25,10 @@ public class EmployeeSvc {
         return employeeRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Employee not found"));
     }
 
+    public Employee save(Employee e) {
+        return employeeRepo.save(e);
+    }
+
     public int count() {
         return (int) employeeRepo.count();
     }
