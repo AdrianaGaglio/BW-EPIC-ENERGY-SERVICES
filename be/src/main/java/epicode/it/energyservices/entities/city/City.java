@@ -12,7 +12,8 @@ public class City {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String name;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name = "district_id", referencedColumnName = "id")
     private District district;
 
