@@ -1,6 +1,6 @@
 package epicode.it.energyservices.entities.invoice;
 
-import epicode.it.energyservices.entities.invoice_status.InvoiceStatus;
+import epicode.it.energyservices.entities.invoice.dto.InvoiceRequest;
 import epicode.it.energyservices.entities.invoice_status.InvoiceStatusSvc;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;

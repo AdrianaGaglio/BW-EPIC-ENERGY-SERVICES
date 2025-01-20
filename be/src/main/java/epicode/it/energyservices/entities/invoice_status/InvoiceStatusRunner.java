@@ -2,6 +2,7 @@ package epicode.it.energyservices.entities.invoice_status;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import epicode.it.energyservices.entities.invoice_status.dto.InvoiceStatusRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
