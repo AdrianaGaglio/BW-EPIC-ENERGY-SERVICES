@@ -74,17 +74,33 @@ public class InvoiceSvc {
 
     public List<Invoice> getAllByStatus(String status, String direction) {
         InvoiceStatus invoiceStatus = invoiceStatusSvc.findByName(status.toUpperCase());
-        return invoiceRepo.findAllByStatusOrderByDate(invoiceStatus.getId(), direction.toUpperCase());
+        if (direction.equals("ASC")) {
+            return invoiceRepo.findAllByStatusOrderByDateAsc(invoiceStatus.getId());
+        } else {
+            return invoiceRepo.findAllByStatusOrderByDateDesc(invoiceStatus.getId());
+        }
     }
 
     public List<Invoice> getAllByCustomer(Long customerId, String direction) {
-        return invoiceRepo.findAllByCustomerOrderByDate(customerId, direction.toUpperCase());
+        if (direction.equals("ASC")) {
+            return invoiceRepo.findAllByCustomerOrderByDateAsc(customerId);
+        } else {
+            return invoiceRepo.findAllByCustomerOrderByDateDesc(customerId);
+        }
+
     }
 
     public List<Invoice> getAllByDate(LocalDate date) {
         return invoiceRepo.findAllByDate(date);
     }
 
+    public List<Invoice> getAllByYear(int year) {
+        return invoiceRepo.findAllByYear(year);
+    }
+
+    public List<Invoice> getAllByAmountBetween(double min, double max) {
+        return invoiceRepo.findAllByAmountBetweenOrderByAmountAsc(min, max);
+    }
 
 
 }

@@ -12,14 +12,22 @@ import java.util.Optional;
 
 public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
 
-    @Query("SELECT i FROM Invoice i WHERE i.status.id = :statusId ORDER BY i.date :direction")
-    public List<Invoice> findAllByStatusOrderByDate(@Param("statusId") Long statusId, @Param("direction") String direction);
+    @Query("SELECT i FROM Invoice i WHERE i.status.id = :statusId ORDER BY i.date ASC")
+    public List<Invoice> findAllByStatusOrderByDateAsc(@Param("statusId") Long statusId);
 
-    @Query("SELECT i FROM Invoce i WHERE i.customer.id = :customerId ORDER BY i.date :direction")
-    public List<Invoice> findAllByCustomerOrderByDate(@Param("customerId") Long customerId, @Param("direction") String direction);
+    @Query("SELECT i FROM Invoice i WHERE i.status.id = :statusId ORDER BY i.date DESC")
+    public List<Invoice> findAllByStatusOrderByDateDesc(@Param("statusId") Long statusId);
+
+    @Query("SELECT i FROM Invoice i WHERE i.customer.id = :customerId ORDER BY i.date ASC")
+    public List<Invoice> findAllByCustomerOrderByDateAsc(@Param("customerId") Long customerId);
+
+    @Query("SELECT i FROM Invoice i WHERE i.customer.id = :customerId ORDER BY i.date DESC")
+    public List<Invoice> findAllByCustomerOrderByDateDesc(@Param("customerId") Long customerId);
 
     public List<Invoice> findAllByDate(LocalDate date);
 
     @Query("SELECT i FROM Invoice i WHERE EXTRACT(YEAR FROM i.date) = :year")
     public List<Invoice> findAllByYear(int year);
+
+    public List<Invoice> findAllByAmountBetweenOrderByAmountAsc(double min, double max);
 }
