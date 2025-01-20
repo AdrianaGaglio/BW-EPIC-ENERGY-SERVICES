@@ -1,7 +1,9 @@
 package epicode.it.energyservices.entities.invoice_status;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -43,5 +45,11 @@ public class InvoiceStatusSvc {
 
     public InvoiceStatus findByName(String name) {
         return invoiceStatusRepo.findByName(name).orElseThrow(() -> new EntityNotFoundException("Status " + name + " not exists"));
+    }
+
+    public InvoiceStatus create(@Valid InvoiceStatusRequest request) {
+        InvoiceStatus status = new InvoiceStatus();
+        BeanUtils.copyProperties(request, status);
+        return invoiceStatusRepo.save(status);
     }
 }

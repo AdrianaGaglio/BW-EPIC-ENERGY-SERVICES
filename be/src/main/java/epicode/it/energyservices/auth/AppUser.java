@@ -1,5 +1,6 @@
 package epicode.it.energyservices.auth;
 
+import epicode.it.energyservices.entities.sys_user.SysUser;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Set;
@@ -29,6 +30,6 @@ public class AppUser {
     private String surname;
     private String avatar;
 
-//    @OneToOne
-//    private SysUser sysUser;
+    @OneToOne
+    private SysUser sysUser;
 }
