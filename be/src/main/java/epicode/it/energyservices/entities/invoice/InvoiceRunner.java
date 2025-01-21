@@ -25,19 +25,21 @@ public class InvoiceRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        for (int i = 0; i < 5; i++) {
-            InvoiceRequest request = new InvoiceRequest();
-            LocalDate date = faker.date().future(30, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            request.setDate(date);
-            request.setAmount(faker.number().randomDouble(2, 2, 1000));
-            request.setStatus(statusSvc.getAll().get(faker.random().nextInt(0, statusSvc.getAll().size())).getName());
-            request.setCustomerId(faker.random().nextInt(1, 10).longValue());
+        if (statusSvc.count() == 0) {
+            for (int i = 0; i < 5; i++) {
+                InvoiceRequest request = new InvoiceRequest();
+                LocalDate date = faker.date().future(30, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                request.setDate(date);
+                request.setAmount(faker.number().randomDouble(2, 2, 1000));
+                request.setStatus(statusSvc.getAll().get(faker.random().nextInt(0, statusSvc.getAll().size() - 1)).getName());
+                request.setCustomerId(faker.random().nextInt(1, 10).longValue());
 
-            try {
-                invoiceSvc.create(request);
-            } catch (RuntimeException e) {
-                System.out.println(request);
-                System.out.println(e.getMessage());
+                try {
+                    invoiceSvc.create(request);
+                } catch (RuntimeException e) {
+                    System.out.println(request);
+                    System.out.println(e.getMessage());
+                }
             }
         }
 
