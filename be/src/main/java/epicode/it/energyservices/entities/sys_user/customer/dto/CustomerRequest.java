@@ -25,5 +25,7 @@ public class CustomerRequest {
 
     private Type type;
 
+    private String image;
+
 //    aggiungere lista indirizzi
 }

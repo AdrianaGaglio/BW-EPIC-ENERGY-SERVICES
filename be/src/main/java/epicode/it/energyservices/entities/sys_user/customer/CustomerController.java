@@ -21,26 +21,31 @@ public class CustomerController {
     private CustomerSvc customerSvc;
 
     @GetMapping("/all")
+//    Accessibile solo ad ADMIN/USER
     public Page<CustomerResponse> getAll(@ParameterObject Pageable pageable) {
         return customerSvc.getAllPageable(pageable);
     }
 
     @GetMapping("/byYearlyTurnoverBetween")
+    //    Accessibile solo ad ADMIN/USER
     public List<CustomerResponse> getByYearlyTurnoverBetween(@Param("min") double min,@Param("max") double max) {
         return customerSvc.getByYearlyTurnoverBetween(min, max);
     }
 
     @GetMapping("/byDenominationContaining")
+    //    Accessibile solo ad ADMIN/USER
     public List<CustomerResponse> getByDenominationContaining(@Param("searchTerm") String searchTerm) {
         return customerSvc.getByDenominationContaining(searchTerm.toLowerCase());
     }
 
     @GetMapping("/byCreationDateBetween")
+    //    Accessibile solo ad ADMIN/USER
     public List<CustomerResponse> getByCreationDateBetween(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate) {
         return customerSvc.getByCreationDateBetween(startDate, endDate);
     }
 
     @GetMapping("/byLastContactBetween")
+    //    Accessibile solo ad ADMIN/USER
     public List<CustomerResponse> getByLastContactBetween(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate) {
         return customerSvc.getByLastContactBetween(startDate, endDate);
     }

@@ -20,6 +20,7 @@ public class RegisterRequest {
     private String surname;
 
     private CustomerRequest customer;
+
     private String avatar;
 
 }

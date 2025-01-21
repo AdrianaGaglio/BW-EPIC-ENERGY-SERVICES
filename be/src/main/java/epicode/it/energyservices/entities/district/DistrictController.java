@@ -14,7 +14,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/districts")
-@PreAuthorize("isAuthenticated()")
 public class DistrictController {
 
     private final DistrictSvc districtSvc;

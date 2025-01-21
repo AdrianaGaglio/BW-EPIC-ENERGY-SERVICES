@@ -15,9 +15,9 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/cities")
-@PreAuthorize("isAuthenticated()")
 public class CityController {
     private final CitySvc citySvcSvc;
+
     @GetMapping("/{id}")
     public ResponseEntity<City> getCityById(@PathVariable Long id){
         return ResponseEntity.ok(citySvcSvc.findCityById(id));

@@ -8,6 +8,7 @@ import epicode.it.energyservices.entities.sys_user.employee.Employee;
 import epicode.it.energyservices.entities.sys_user.employee.EmployeeSvc;
 import epicode.it.energyservices.exceptions.AlreadyExistsException;
 import epicode.it.energyservices.exceptions.EmailAlreadyUsedException;
+import epicode.it.energyservices.utils.Utils;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,12 @@ public class AppUserSvc {
         appUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         appUser.setRoles(registerRequest.getCustomer() != null ? Set.of(Role.CUSTOMER) : Set.of(Role.USER));
 
+        boolean hasImage = registerRequest.getAvatar() != null && !registerRequest.getAvatar().isEmpty();
+        if (hasImage) {
+            appUser.setAvatar(registerRequest.getAvatar());
+        } else {
+            appUser.setAvatar(Utils.getAvatar(registerRequest));
+        }
         if (registerRequest.getCustomer() != null) {
             appUser.setSysUser(customerSvc.create(appUser, registerRequest.getCustomer()));
         } else {
@@ -55,7 +62,6 @@ public class AppUserSvc {
             employee.setAppUser(appUser);
             appUser.setSysUser(employee);
             employeeSvc.save(employee);
-
         }
 
         appUserRepo.save(appUser);

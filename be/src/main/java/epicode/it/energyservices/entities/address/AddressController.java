@@ -13,27 +13,35 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/addresses")
-@PreAuthorize("isAuthenticated()")
 public class AddressController {
     private final AddressSvc addressService;
 
     @GetMapping
+    //    Accessibile solo ad ADMIN/USER
     public ResponseEntity<List<Address>> getAllAddresses(){
         return ResponseEntity.ok(addressService.findAllAddress());
     }
+
     @DeleteMapping("/{id}")
+    //    Accessibile solo ad ADMIN
     public ResponseEntity<String> deleteAddress(@PathVariable Long id,  @AuthenticationPrincipal UserDetails userDetails){
         addressService.deleteAddress(id, userDetails);
         return new ResponseEntity<>("address eliminato", HttpStatus.NO_CONTENT);
     }
+
     @GetMapping("/{id}")
+    //    Accessibile solo ad ADMIN/USER o proprietario dell'indirizzo
     public ResponseEntity<Address> getAddressById(@PathVariable Long id){
         return ResponseEntity.ok(addressService.findAddressById(id));
     }
+
     @PutMapping("/{id}")
+    //    Accessibile solo ad ADMIN/USER o proprietario dell'indirizzo
     public ResponseEntity<Address> modifyAddress(@RequestBody AddressCreateRequest addressCreaRequest, @PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails){
         return ResponseEntity.ok(addressService.updateAddress(id,addressCreaRequest, userDetails));
     }
+
+    // verificare se necessario (gestione indirizzi a partire dalla creazione utente)
     @PostMapping
     public ResponseEntity<Address> createAddress(@RequestBody AddressCreateRequest addressCreateRequest, @AuthenticationPrincipal UserDetails userDetails) {
         Address savedAddress = addressService.saveAddress(addressCreateRequest, userDetails);

@@ -18,9 +18,8 @@ public class AuthController {
     private AppUserSvc appUserSvc;
 
     @PostMapping("/register")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
-      return new ResponseEntity<>(appUserSvc.registerUser(registerRequest), HttpStatus.CREATED);
+        return new ResponseEntity<>(appUserSvc.registerUser(registerRequest), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
