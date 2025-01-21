@@ -3,7 +3,7 @@ package epicode.it.energyservices.auth;
 
 import epicode.it.energyservices.auth.dto.LoginRequest;
 import epicode.it.energyservices.auth.dto.RegisterRequest;
-import epicode.it.energyservices.entities.sys_user.customer.CustomerRequest;
+import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerRequest;
 import epicode.it.energyservices.entities.sys_user.customer.Type;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
@@ -37,22 +37,25 @@ public class AuthRunner implements ApplicationRunner {
         user.setPassword("userpwd");
         appUserSvc.registerUser(user);
 
-        RegisterRequest customer = new RegisterRequest();
-        customer.setName("Customer");
-        customer.setSurname("Customer");
-        customer.setUsername("customer");
-        customer.setEmail("customer@customer.com");
-        customer.setPassword("customerpwd");
+        for (int i = 0; i < 1000; i++)
+        {
+            RegisterRequest customer = new RegisterRequest();
+            customer.setName("Customer + i");
+            customer.setSurname("Customer" + i);
+            customer.setUsername("customer" + i);
+            customer.setEmail("customer@customer.com" + i);
+            customer.setPassword("customerpwd");
 
-        CustomerRequest addInfoCustomer = new CustomerRequest();
-        addInfoCustomer.setType(Type.SPA);
-        addInfoCustomer.setPec("customer.pec@customer.com");
-        addInfoCustomer.setPhone("1234567890");
-        addInfoCustomer.setDenomination("EPICODE");
-        addInfoCustomer.setVatCode("0987654321");
-        addInfoCustomer.setContactPhone("1236805893");
-        customer.setCustomer(addInfoCustomer);
-        appUserSvc.registerUser(customer);
+            CustomerRequest addInfoCustomer = new CustomerRequest();
+            addInfoCustomer.setType(Type.SPA);
+            addInfoCustomer.setPec("customer.pec@customer.com" + i);
+            addInfoCustomer.setPhone("1234567890" + i);
+            addInfoCustomer.setDenomination("EPICODE" + i);
+            addInfoCustomer.setVatCode("0987654321" + i);
+            addInfoCustomer.setContactPhone("1236805893" + i);
+            customer.setCustomer(addInfoCustomer);
+            appUserSvc.registerUser(customer);
+        }
 
 
         LoginRequest login = new LoginRequest();

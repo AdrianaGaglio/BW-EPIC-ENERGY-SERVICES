@@ -1,6 +1,6 @@
 package epicode.it.energyservices.auth.dto;
 
-import epicode.it.energyservices.entities.sys_user.customer.CustomerRequest;
+import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerRequest;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
