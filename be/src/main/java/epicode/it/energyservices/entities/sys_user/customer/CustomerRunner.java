@@ -3,6 +3,7 @@ package epicode.it.energyservices.entities.sys_user.customer;
 import com.github.javafaker.Faker;
 import epicode.it.energyservices.auth.AppUserSvc;
 import epicode.it.energyservices.auth.dto.RegisterRequest;
+import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

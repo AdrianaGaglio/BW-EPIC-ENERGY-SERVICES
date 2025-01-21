@@ -37,25 +37,25 @@ public class AuthRunner implements ApplicationRunner {
         user.setPassword("userpwd");
         appUserSvc.registerUser(user);
 
-        for (int i = 0; i < 1000; i++)
-        {
-            RegisterRequest customer = new RegisterRequest();
-            customer.setName("Customer + i");
-            customer.setSurname("Customer" + i);
-            customer.setUsername("customer" + i);
-            customer.setEmail("customer@customer.com" + i);
-            customer.setPassword("customerpwd");
-
-            CustomerRequest addInfoCustomer = new CustomerRequest();
-            addInfoCustomer.setType(Type.SPA);
-            addInfoCustomer.setPec("customer.pec@customer.com" + i);
-            addInfoCustomer.setPhone("1234567890" + i);
-            addInfoCustomer.setDenomination("EPICODE" + i);
-            addInfoCustomer.setVatCode("0987654321" + i);
-            addInfoCustomer.setContactPhone("1236805893" + i);
-            customer.setCustomer(addInfoCustomer);
-            appUserSvc.registerUser(customer);
-        }
+//        for (int i = 0; i < 1000; i++)
+//        {
+//            RegisterRequest customer = new RegisterRequest();
+//            customer.setName("Customer + i");
+//            customer.setSurname("Customer" + i);
+//            customer.setUsername("customer" + i);
+//            customer.setEmail("customer@customer.com" + i);
+//            customer.setPassword("customerpwd");
+//
+//            CustomerRequest addInfoCustomer = new CustomerRequest();
+//            addInfoCustomer.setType(Type.SPA);
+//            addInfoCustomer.setPec("customer.pec@customer.com" + i);
+//            addInfoCustomer.setPhone("1234567890" + i);
+//            addInfoCustomer.setDenomination("EPICODE" + i);
+//            addInfoCustomer.setVatCode("0987654321" + i);
+//            addInfoCustomer.setContactPhone("1236805893" + i);
+//            customer.setCustomer(addInfoCustomer);
+//            appUserSvc.registerUser(customer);
+//        }
 
 
         LoginRequest login = new LoginRequest();
