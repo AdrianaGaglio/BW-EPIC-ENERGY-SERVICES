@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/customer")
+@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 public class CustomerController {
     @Autowired
     private CustomerSvc customerSvc;

@@ -55,8 +55,12 @@ public class InvoiceController {
 
         if (userDetails.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER"))
-                        && !invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())) {
+        ) {
+            if (!invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())){
             throw new InvalidParameterException("You are not the owner of this invoice");
+            } else {
+                return ResponseEntity.ok(mapper.toInvoiceResponseForCustomer(invoice));
+            }
 
         }
         return ResponseEntity.ok(mapper.toInvoiceResponse(invoice));

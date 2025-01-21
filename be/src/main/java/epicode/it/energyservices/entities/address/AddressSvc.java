@@ -1,9 +1,8 @@
 package epicode.it.energyservices.entities.address;
 
+import epicode.it.energyservices.entities.address.dto.AddressCreateRequest;
 import epicode.it.energyservices.entities.city.City;
 import epicode.it.energyservices.entities.city.CityRepo;
-import epicode.it.energyservices.entities.district.District;
-import epicode.it.energyservices.entities.district.DistrictRepo;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -54,7 +53,7 @@ public class AddressSvc {
     }
 
     // modifica un address esistente
-    public Address updateAddress(Long id, AddressCreateRequest updatedRequest,@AuthenticationPrincipal UserDetails userDetails ) {
+    public Address updateAddress(Long id, AddressCreateRequest updatedRequest, @AuthenticationPrincipal UserDetails userDetails ) {
 
         Address existingAddress = addressRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("The address you are looking for does not exist"));

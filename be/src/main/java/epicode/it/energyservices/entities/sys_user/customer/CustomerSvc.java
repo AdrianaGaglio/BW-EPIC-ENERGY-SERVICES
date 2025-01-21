@@ -2,12 +2,11 @@ package epicode.it.energyservices.entities.sys_user.customer;
 
 import epicode.it.energyservices.auth.AppUser;
 import epicode.it.energyservices.entities.address.Address;
-import epicode.it.energyservices.entities.address.AddressCreateRequest;
+import epicode.it.energyservices.entities.address.dto.AddressCreateRequest;
 import epicode.it.energyservices.entities.city.CitySvc;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerMapper;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerRequest;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerResponse;
-import epicode.it.energyservices.utils.Utils;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;

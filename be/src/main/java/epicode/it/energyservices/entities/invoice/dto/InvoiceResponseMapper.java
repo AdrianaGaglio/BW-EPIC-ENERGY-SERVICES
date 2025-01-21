@@ -17,7 +17,7 @@ public class InvoiceResponseMapper {
 
     public InvoiceResponse toInvoiceResponse(Invoice e) {
         InvoiceResponse invoiceResponse = modelMapper.map(e, InvoiceResponse.class);
-        invoiceResponse.setCustomer(customerMapper.toCustomerResponse(e.getCustomer()));
+        invoiceResponse.setCustomer(customerMapper.toCustomerResponseForInvoice(e.getCustomer()));
         invoiceResponse.setStatus(e.getStatus().getName());
         return invoiceResponse;
     }
