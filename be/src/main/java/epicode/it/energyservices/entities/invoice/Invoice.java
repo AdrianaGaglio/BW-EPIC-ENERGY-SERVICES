@@ -20,8 +20,7 @@ public class Invoice {
     private double amount;
 
     @Column(nullable = false, unique = true)
-    @SequenceGenerator(name = "invoice_seq", sequenceName = "invoice_sequence", allocationSize = 1)
-    private int number;
+    private int number = 1;
 
     @ManyToOne
     private Customer customer;

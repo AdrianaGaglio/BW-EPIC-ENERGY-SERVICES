@@ -7,6 +7,7 @@ import org.apache.catalina.connector.Response;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class InvoiceController {
     }
 
     @GetMapping("/by-status")
-    public ResponseEntity<List<Invoice>> getAllByStatus(@RequestParam String status, String direction) {
+    public ResponseEntity<List<Invoice>> getAllByStatus(@RequestParam String status, @RequestParam(required = false) String direction) {
         if (direction == null || direction.isEmpty()) direction = "ASC";
         return ResponseEntity.ok(invoiceSvc.getAllByStatus(status, direction));
     }

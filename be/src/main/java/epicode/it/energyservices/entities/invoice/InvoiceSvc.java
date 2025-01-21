@@ -59,8 +59,11 @@ public class InvoiceSvc {
     public Invoice create(@Valid InvoiceRequest request) {
         Invoice i = new Invoice();
         BeanUtils.copyProperties(request, i);
+        int nextNumber = invoiceRepo.findMaxNumber().orElse(0) + 1;
+        i.setNumber(nextNumber);
         InvoiceStatus status = request.getStatus() != null ? invoiceStatusSvc.findByName(request.getStatus()) : invoiceStatusSvc.findByName("DRAFT");
-        i.setCustomer(customerSvc.getById(request.getCustomerId()));
+        Customer c = customerSvc.getById(request.getCustomerId());
+        i.setCustomer(c);
         i.setStatus(status);
         return invoiceRepo.save(i);
     }
