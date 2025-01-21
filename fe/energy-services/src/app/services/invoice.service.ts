@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { iInvoiceresponse } from '../interfaces/iinvoiceresponse';
 import { iInvoiceresponseforcustomer } from '../interfaces/iinvoiceresponseforcustomer';
 import { DecodeTokenService } from './decode-token.service';
@@ -17,24 +17,34 @@ export class InvoiceService {
     private decodeToken: DecodeTokenService
   ) {}
 
-  url: string = environment.baseUrl + '/invoice';
+  url: string = environment.baseUrl + 'invoice';
+
+  invoices$ = new BehaviorSubject<iInvoiceresponse[]>([]);
 
   getAll(): Observable<iInvoiceresponse[]> {
-    return this.http.get<iInvoiceresponse[]>(this.url);
+    return this.http
+      .get<iInvoiceresponse[]>(this.url)
+      .pipe(tap((res) => this.invoices$.next(res)));
   }
 
-  getAllPaged(): Observable<iInvoiceresponse[]> {
-    return this.http.get<iInvoiceresponse[]>(this.url + '/paged');
+  getAllPaged(
+    page: number,
+    size: number,
+    sort: string
+  ): Observable<iInvoiceresponse[]> {
+    return this.http.get<iInvoiceresponse[]>(
+      this.url + '/paged' + `?page=${page}&size=${size}&sort=${sort}`
+    );
   }
 
   getAllByCustomer(): Observable<iInvoiceresponseforcustomer[]> {
     return this.http.get<iInvoiceresponseforcustomer[]>(
-      this.url + '/bycustomer'
+      this.url + '/byCustomer'
     );
   }
 
   getById(id: number): Observable<any> {
-    if (this.decodeToken.userRoles$.value.includes('ROLE_CUSTOMER')) {
+    if (this.decodeToken.userRoles$.value.includes('CUSTOMER')) {
       return this.http.get<iInvoiceresponseforcustomer>(
         `${this.url}/invoce/${id}`
       );
@@ -43,7 +53,7 @@ export class InvoiceService {
   }
 
   getByNumber(number: number): Observable<any> {
-    if (this.decodeToken.userRoles$.value.includes('ROLE_CUSTOMER')) {
+    if (this.decodeToken.userRoles$.value.includes('CUSTOMER')) {
       return this.http.get<iInvoiceresponseforcustomer>(
         `${this.url}/by-number/${number}`
       );
@@ -67,7 +77,39 @@ export class InvoiceService {
     direction: string = 'ASC'
   ): Observable<iInvoiceresponse[]> {
     return this.http.get<iInvoiceresponse[]>(
-      `${this.url}/by-status&status=${status}&direction=${direction}`
+      `${this.url}/by-status?status=${status}&direction=${direction}`
+    );
+  }
+
+  getAllByCustomerInfo(
+    customerId?: any,
+    vatcode?: string,
+    pec?: string,
+    direction: string = 'ASC'
+  ): Observable<iInvoiceresponse[]> {
+    return this.http.get<iInvoiceresponse[]>(
+      `${this.url}/bycustomer?customerId=${customerId}&vatcode=${vatcode}&pec=${pec}&direction=${direction}`
+    );
+  }
+
+  getAllByDate(date: string): Observable<iInvoiceresponse[]> {
+    return this.http.get<iInvoiceresponse[]>(
+      `${this.url}/by-date?date=${date}`
+    );
+  }
+
+  getAllByYear(year: number): Observable<iInvoiceresponse[]> {
+    return this.http.get<iInvoiceresponse[]>(
+      `${this.url}/by-year?year=${year}`
+    );
+  }
+
+  getAllByAmountRange(
+    min: number,
+    max: number
+  ): Observable<iInvoiceresponse[]> {
+    return this.http.get<iInvoiceresponse[]>(
+      `${this.url}/by-amount-range?min=${min}&max=${max}`
     );
   }
 }

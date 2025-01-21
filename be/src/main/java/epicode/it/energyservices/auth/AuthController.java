@@ -1,5 +1,6 @@
 package epicode.it.energyservices.auth;
 
+import epicode.it.energyservices.auth.dto.AuthResponse;
 import epicode.it.energyservices.auth.dto.LoginRequest;
 import epicode.it.energyservices.auth.dto.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
         return new ResponseEntity<>(appUserSvc.Login(loginRequest), HttpStatus.OK);
     }
 }

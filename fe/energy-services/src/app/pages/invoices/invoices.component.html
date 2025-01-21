@@ -1,1 +1,17 @@
-<p>invoices works!</p>
+<h3>Search invoices</h3>
+<form>
+  <fieldset>
+    <legend>Invoice number</legend>
+    <div class="d-flex align-items-center">
+      <input
+        class="form-control"
+        type="number"
+        name="invoiceNumber"
+        id="invoiceNumber"
+        placeholder="Invoice Number"
+        [(ngModel)]="invoiceNumber"
+      />
+      <button class="btn btn-primary">Search</button>
+    </div>
+  </fieldset>
+</form>

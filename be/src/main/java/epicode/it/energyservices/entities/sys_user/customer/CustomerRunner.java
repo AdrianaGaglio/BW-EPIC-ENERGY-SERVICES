@@ -64,7 +64,7 @@ public class CustomerRunner implements ApplicationRunner {
                 }
 
                 request.setUsername(request.getName().toLowerCase().charAt(0) + surname);
-                request.setEmail(request.getName() + "." + surname + "@gmail.com");
+                request.setEmail(request.getName().toLowerCase() + "." + surname + "@mail.com");
                 request.setPassword("password");
 
                 request.setCustomer(customer);

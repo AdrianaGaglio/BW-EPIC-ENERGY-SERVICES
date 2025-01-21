@@ -33,12 +33,13 @@ export class AuthsrvService {
     // qui uso una post perchè proteggere i dati sensibili e creare un token lato server
     return this.http.post<iAccess>(this.loginUrl, userDates).pipe(
       tap((dati) => {
-        this.userAuthSubject$.next(dati);
+        console.log(dati);
 
-        localStorage.setItem('dati', JSON.stringify(dati));
+        this.userAuthSubject$.next(dati);
+        localStorage.setItem('accessData', JSON.stringify(dati));
 
         //recupero la data di scadenza del token
-        const date = this.jwtHelper.getTokenExpirationDate(dati.accessToken);
+        const date = this.jwtHelper.getTokenExpirationDate(dati.token);
         if (date) this.autoLogout(date);
       })
     );
@@ -46,7 +47,7 @@ export class AuthsrvService {
 
   logout() {
     this.userAuthSubject$.next(null);
-    localStorage.removeItem('dati');
+    localStorage.removeItem('accessData');
     this.router.navigate(['login']);
   }
 
@@ -65,7 +66,7 @@ export class AuthsrvService {
 
     const accessdata: iAccess = JSON.parse(userJson);
 
-    if (this.jwtHelper.isTokenExpired(accessdata.accessToken)) {
+    if (this.jwtHelper.isTokenExpired(accessdata.token)) {
       localStorage.removeItem('accessData');
       return;
     }

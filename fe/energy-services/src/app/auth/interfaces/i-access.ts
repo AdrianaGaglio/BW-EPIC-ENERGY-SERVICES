@@ -1,6 +1,5 @@
-import { iUser } from "./i-user"
+import { iUser } from './i-user';
 
 export interface iAccess {
-  accessToken:string
-  user: iUser
+  token: string;
 }

@@ -1,5 +1,6 @@
 package epicode.it.energyservices.auth;
 
+import epicode.it.energyservices.auth.dto.AuthResponse;
 import epicode.it.energyservices.auth.dto.LoginRequest;
 import epicode.it.energyservices.auth.dto.RegisterRequest;
 import epicode.it.energyservices.auth.jwt.JwtTokenUtil;
@@ -100,7 +101,7 @@ public class AppUserSvc {
         return "Admin registrato con successo";
     }
 
-    public String Login(@Valid LoginRequest loginRequest) {
+    public AuthResponse Login(@Valid LoginRequest loginRequest) {
         {
             try {
                 Authentication authentication = authenticationManager.authenticate(
@@ -108,7 +109,7 @@ public class AppUserSvc {
                 );
 
                 UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                return jwtTokenUtil.generateToken(userDetails);
+                return new AuthResponse(jwtTokenUtil.generateToken(userDetails));
             } catch (AuthenticationException e) {
                 throw new SecurityException("Credenziali non valide", e);
             }
