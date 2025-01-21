@@ -30,4 +30,5 @@ public class CustomerRequest {
     private AddressCreateRequest registeredOfficeAddress;
 
     private AddressCreateRequest operationalHeadquartersAddress;
+
 }

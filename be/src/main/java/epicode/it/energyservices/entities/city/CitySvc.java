@@ -25,4 +25,8 @@ public class CitySvc {
         return cityRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("The city you are looking for does not exist"));
     }
+
+    public int count() {
+        return (int) cityRepo.count();
+    }
 }

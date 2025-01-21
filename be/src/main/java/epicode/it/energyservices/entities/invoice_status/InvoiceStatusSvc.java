@@ -45,7 +45,7 @@ public class InvoiceStatusSvc {
     }
 
     public InvoiceStatus findByName(String name) {
-        return invoiceStatusRepo.findByName(name).orElseThrow(() -> new EntityNotFoundException("Status " + name + " not exists"));
+        return invoiceStatusRepo.findByName(name.toUpperCase()).orElseThrow(() -> new EntityNotFoundException("Status " + name + " not exists"));
     }
 
     public InvoiceStatus create(@Valid InvoiceStatusRequest request) {

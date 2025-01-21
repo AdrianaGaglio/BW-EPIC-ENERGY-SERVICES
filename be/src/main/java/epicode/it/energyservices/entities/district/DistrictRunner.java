@@ -12,11 +12,17 @@ import org.springframework.stereotype.Component;
 public class DistrictRunner implements ApplicationRunner {
     @Autowired
     private DistrictImportSvc districtImportSvc;
+
+    @Autowired
+    private DistrictSvc districtSvc;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        String filePath = getClass().getClassLoader().getResource("province-italiane.csv").getPath();
 
-        districtImportSvc.importCsvDistrict(filePath);
+        if (districtSvc.count() == 0) {
+            String filePath = getClass().getClassLoader().getResource("province-italiane.csv").getPath();
+            districtImportSvc.importCsvDistrict(filePath);
+        }
 
     }
 }

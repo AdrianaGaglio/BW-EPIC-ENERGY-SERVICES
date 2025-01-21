@@ -76,12 +76,16 @@ public class InvoiceSvc {
         return response;
     }
 
-    public InvoiceResponse updateStatus(Long id, @Valid InvoiceUpdateRequest request) {
-        Invoice i = getById(id);
+    public Invoice getByNumber(int number) {
+        return invoiceRepo.findFirstByNumber(number).orElseThrow(() -> new EntityNotFoundException("Invoice not found"));
+    }
+
+    public InvoiceResponse updateStatus(int number, @Valid InvoiceUpdateRequest request) {
+        Invoice i = getByNumber(number);
         InvoiceStatus newStatus = invoiceStatusSvc.findByName(request.getStatus().toUpperCase());
         i.setStatus(newStatus);
         InvoiceResponse response = mapper.toInvoiceResponse(invoiceRepo.save(i));
-        emailSvc.sendEmail(emailMapper.fromInvoicetoEmailRequest("Invoice status changed", i));
+        emailSvc.sendEmailHtml(emailMapper.fromInvoicetoEmailRequest("Invoice status changed", i));
         return response;
     }
 

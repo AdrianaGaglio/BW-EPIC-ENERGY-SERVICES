@@ -17,9 +17,11 @@ import org.springframework.stereotype.Component;
 public class AuthRunner implements ApplicationRunner {
     private final AppUserSvc appUserSvc;
 
-
     @Override
     public void run(ApplicationArguments args) throws Exception {
+
+        if(appUserSvc.existByUsername("admin") || appUserSvc.existByUsername("user")) return;
+
         RegisterRequest admin = new RegisterRequest();
         admin.setName("Admin");
         admin.setSurname("Admin");

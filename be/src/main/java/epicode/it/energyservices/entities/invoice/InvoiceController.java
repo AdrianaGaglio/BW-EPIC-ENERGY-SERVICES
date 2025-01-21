@@ -62,12 +62,15 @@ public class InvoiceController {
         return ResponseEntity.ok(mapper.toInvoiceResponse(invoice));
     }
 
+    @GetMapping("/by-number")
+    public ResponseEntity<InvoiceResponse> getById(@RequestParam int number) {
+        return ResponseEntity.ok(mapper.toInvoiceResponse(invoiceSvc.getByNumber(number)));
+    }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{number}")
 //    Accessibile solo a USER
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<InvoiceResponse> updateStatus(@PathVariable Long id, @RequestBody InvoiceUpdateRequest request) {
-        return ResponseEntity.ok(invoiceSvc.updateStatus(id, request));
+    public ResponseEntity<InvoiceResponse> updateStatus(@PathVariable int number, @RequestBody InvoiceUpdateRequest request) {
+        return ResponseEntity.ok(invoiceSvc.updateStatus(number, request));
     }
 
     @PostMapping

@@ -13,10 +13,15 @@ public class CityRunner implements ApplicationRunner {
     @Autowired
     private CityImportSvc cityImportSvc;
 
+    @Autowired
+    private CitySvc citySvc;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        String filePath = getClass().getClassLoader().getResource("comuni-italiani.csv").getPath();
-        cityImportSvc.importCsv(filePath);
+        if (citySvc.count() == 0) {
+            String filePath = getClass().getClassLoader().getResource("comuni-italiani.csv").getPath();
+            cityImportSvc.importCsv(filePath);
+        }
     }
 }
 

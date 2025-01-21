@@ -15,7 +15,7 @@ public class EmailController {
     @PostMapping("/{isHtml}")
     public ResponseEntity<String> sendHtmlEmail(@RequestBody EmailRequest request, @RequestParam boolean isHtml) {
         if (isHtml) {
-            return new ResponseEntity<>(emailSvc.sendEmailHtml(request), HttpStatus.CREATED);
+            return new ResponseEntity<>(emailSvc.sendEmail(request), HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(emailSvc.sendEmail(request), HttpStatus.CREATED);
         }
