@@ -16,7 +16,7 @@ public class UploadSvc {
     private Cloudinary cloudinary;
 
     public String uploadFile(MultipartFile file) throws IOException {
-        Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("folder", "energy-services", "resource_type", "auto"));
+        Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("folder", "energy-services", "resource_type", "auto", "filename", file.getOriginalFilename()));
         return uploadResult.get("url").toString(); // Restituisce l'URL del file caricato
     }
 }

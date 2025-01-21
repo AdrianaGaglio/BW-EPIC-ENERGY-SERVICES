@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -17,6 +18,9 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class EmailSvc {
 
+    @Value("${spring.mail.username}")
+    private String from;
+
     @Autowired
     private JavaMailSender mailSender;
 
@@ -27,7 +31,7 @@ public class EmailSvc {
         message.setTo(request.getTo());
         message.setSubject(request.getSubject());
         message.setText(request.getBody());
-        message.setFrom("info@epic-energy-services.it");
+        message.setFrom(from);
 
         mailSender.send(message);
         return "Mail successfully sent to " + request.getTo();
@@ -44,7 +48,7 @@ public class EmailSvc {
             helper.setTo(request.getTo());
             helper.setSubject(request.getSubject());
             helper.setText(request.getBody(), true);
-            helper.setFrom("info@epic-energy-services.it");
+            helper.setFrom(from);
 
             mailSender.send(message);
         } catch (MessagingException e) {
