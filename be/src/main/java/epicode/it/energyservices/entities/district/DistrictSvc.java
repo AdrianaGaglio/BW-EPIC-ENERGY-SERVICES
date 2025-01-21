@@ -23,4 +23,8 @@ public class DistrictSvc {
         return districtRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Il district cercato non esiste"));
     }
+
+    public int count() {
+        return (int) districtRepo.count();
+    }
 }

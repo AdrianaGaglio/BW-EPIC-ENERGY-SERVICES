@@ -16,41 +16,46 @@ import org.springframework.stereotype.Component;
 public class CustomerRunner implements ApplicationRunner {
     private final Faker faker;
     private final AppUserSvc appUserSvc;
+    private final CustomerSvc customerSvc;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        for (int i = 0; i < 10; i++) {
 
-            CustomerRequest customer = new CustomerRequest();
-            customer.setDenomination(faker.company().name());
-            customer.setVatCode(faker.number().digits(11));
-            customer.setPec(faker.internet().emailAddress());
-            customer.setPhone(faker.phoneNumber().cellPhone());
-            customer.setContactPhone(faker.phoneNumber().cellPhone());
-            int random = faker.random().nextInt(0, 3);
-            customer.setType(Type.values()[random]);
 
-            RegisterRequest request = new RegisterRequest();
-            request.setName(faker.name().firstName());
-            request.setSurname(faker.name().lastName());
+        if(customerSvc.count() == 0) {
+            for (int i = 0; i < 10; i++) {
 
-            String surname = request.getSurname().toLowerCase();
-            if (surname.contains(" ") || surname.contains("'")) {
-                surname = surname.replace(" ", "");
-                surname = surname.replace("'", "");
-            }
+                CustomerRequest customer = new CustomerRequest();
+                customer.setDenomination(faker.company().name());
+                customer.setVatCode(faker.number().digits(11));
+                customer.setPec(faker.internet().emailAddress());
+                customer.setPhone(faker.phoneNumber().cellPhone());
+                customer.setContactPhone(faker.phoneNumber().cellPhone());
+                int random = faker.random().nextInt(0, 3);
+                customer.setType(Type.values()[random]);
 
-            request.setUsername(request.getName().toLowerCase().charAt(0) + surname);
-            request.setEmail(request.getName() + "." + surname + "@gmail.com");
-            request.setPassword("password");
+                RegisterRequest request = new RegisterRequest();
+                request.setName(faker.name().firstName());
+                request.setSurname(faker.name().lastName());
 
-            request.setCustomer(customer);
+                String surname = request.getSurname().toLowerCase();
+                if (surname.contains(" ") || surname.contains("'")) {
+                    surname = surname.replace(" ", "");
+                    surname = surname.replace("'", "");
+                }
 
-            try {
-                appUserSvc.registerUser(request);
-            } catch (RuntimeException e) {
-                System.out.println("===> " + request);
-                System.out.println(e.getMessage());
+                request.setUsername(request.getName().toLowerCase().charAt(0) + surname);
+                request.setEmail(request.getName() + "." + surname + "@gmail.com");
+                request.setPassword("password");
+
+                request.setCustomer(customer);
+
+                try {
+                    appUserSvc.registerUser(request);
+                } catch (RuntimeException e) {
+                    System.out.println("===> " + request);
+                    System.out.println(e.getMessage());
+                }
             }
         }
 

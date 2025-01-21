@@ -21,6 +21,7 @@ public class EmailMapper {
         request.setTo(invoice.getCustomer().getAppUser().getEmail());
         String number = invoice.getNumber() < 10 ? "00" + invoice.getNumber() : invoice.getNumber() < 100 ? "0" + invoice.getNumber() : invoice.getNumber() + "";
         request.setSubject("Energyservices - " + text + " #" + number);
+        request.setBody(fromInvoiceToEmailBody(text, invoice));
         return request;
     }
 
@@ -28,12 +29,12 @@ public class EmailMapper {
         EmailRequest request = new EmailRequest();
         request.setTo(user.getEmail());
         request.setSubject("Energyservices - " + text);
-        request.setBody(text + "\n" + "Username: " + user.getUsername() + "\nUser first name: " + user.getName() + "\nUser last name: " + user.getSurname());
+        request.setBody(fromAppUserToEmailBody(text, user));
         return request;
     }
 
     public String fromInvoiceToEmailBody(String text, Invoice invoice) {
-        String template = loadTemplate("src/main/resources/templates/invoiceMail.html");
+        String template = loadTemplate("src/main/resources/templates/invoice.html");
         Map<String, String> values = new HashMap<>();
         values.put("text", text);
         values.put("number", invoice.getNumber() < 10 ? "00" + invoice.getNumber() : invoice.getNumber() < 100 ? "0" + invoice.getNumber() : invoice.getNumber() + "");
@@ -44,7 +45,7 @@ public class EmailMapper {
     }
 
     public String fromAppUserToEmailBody(String text, AppUser user) {
-        String template = loadTemplate("src/main/resources/templates/userMail.html");
+        String template = loadTemplate("src/main/resources/templates/user.html");
         Map<String, String> values = new HashMap<>();
         values.put("text", text);
         values.put("username", user.getUsername());

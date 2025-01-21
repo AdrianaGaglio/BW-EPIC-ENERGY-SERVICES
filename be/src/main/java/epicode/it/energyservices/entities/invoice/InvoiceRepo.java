@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -34,5 +35,7 @@ public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
 
     @Query("SELECT MAX(i.number) FROM Invoice i")
     Optional<Integer> findMaxNumber();
+
+    Optional<Invoice> findFirstByNumber(int number);
 
 }

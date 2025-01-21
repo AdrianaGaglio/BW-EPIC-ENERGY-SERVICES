@@ -41,7 +41,7 @@ public class EmailSvc {
         return "Mail successfully sent to " + request.getTo();
     }
 
-    public String sendEmailHtml(String emailContent, @Valid EmailRequest request) {
+    public String sendEmailHtml(@Valid EmailRequest request) {
 
         try {
             MimeMessage message = mailSender.createMimeMessage();
@@ -49,7 +49,7 @@ public class EmailSvc {
 
             helper.setTo(request.getTo());
             helper.setSubject(request.getSubject());
-            helper.setText(emailContent, true);
+            helper.setText(request.getBody(), true);
             helper.setFrom(from);
 
             mailSender.send(message);

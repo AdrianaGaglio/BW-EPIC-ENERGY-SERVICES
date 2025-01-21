@@ -40,6 +40,14 @@ public class AppUserSvc {
     private final EmailSvc emailSvc;
     private final EmailMapper emailMapper;
 
+    boolean existByUsername(String username) {
+        return appUserRepo.existsByUsername(username.toLowerCase());
+    }
+
+    boolean existByEmail(String email) {
+        return appUserRepo.existsByEmail(email.toLowerCase());
+    }
+
     @Transactional
     public String registerUser(@Valid RegisterRequest registerRequest) {
         if (appUserRepo.existsByEmail(registerRequest.getEmail())) {
@@ -71,7 +79,7 @@ public class AppUserSvc {
 
         appUserRepo.save(appUser);
 
-        emailSvc.sendEmailHtml(emailMapper.fromAppUserToEmailBody("New account created", appUser), emailMapper.fromAppUserToEmailRequest("New account created", appUser));
+        emailSvc.sendEmailHtml(emailMapper.fromAppUserToEmailRequest("New account created", appUser));
 
         return "Registrazione avvenuta con successo";
     }
