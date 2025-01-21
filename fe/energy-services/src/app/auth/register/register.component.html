@@ -1,23 +1,61 @@
 <div class="container-fluid cover">
-    <div class="row">
-      <div class="col"></div>
-      <div class="col">
-        <div class="p-3">
-          <h1>Registrati</h1>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col">
+      <div class="p-3">
+        <h1>Registrati</h1>
 
-          <form [formGroup]="form" (ngSubmit)="register()">
+        <form [formGroup]="form" (ngSubmit)="register()">
+          <!-- Campi utente -->
+          <fieldset>
+            <legend>Dati Utente</legend>
             <div class="form-group">
-              <input type="text" name="name" placeholder="nome" class="form-control" formControlName="name">
-              <input type="text" name="surname" placeholder="cognome" class="form-control mt-3" formControlName="surname">
-              <input type="text" name="email" placeholder="mail" class="form-control mt-3" formControlName="email">
-              <input type="password" name="password" placeholder="password" class="form-control mt-3" formControlName="password">
+              <input type="text" placeholder="Nome" class="form-control" formControlName="name">
+              <input type="text" placeholder="Cognome" class="form-control mt-3" formControlName="surname">
+              <input type="email" placeholder="Email" class="form-control mt-3" formControlName="email">
+              <input type="password" placeholder="Password" class="form-control mt-3" formControlName="password">
+              <input type="text" placeholder="Username" class="form-control mt-3" formControlName="username">
             </div>
-            <button type="submit" class="btn btn-primary mt-3" [disabled]="form.invalid">Registrati</button>
-          </form>
+          </fieldset>
 
-        </div>
+          <!-- Campi cliente -->
+          <fieldset formGroupName="customer" class="mt-4">
+            <legend>Dati Cliente</legend>
+            <div class="form-group">
+              <input type="text" placeholder="Denominazione" class="form-control" formControlName="denomination">
+              <input type="text" placeholder="Partita IVA" class="form-control mt-3" formControlName="vatCode">
+              <input type="email" placeholder="PEC" class="form-control mt-3" formControlName="pec">
+              <input type="text" placeholder="Telefono" class="form-control mt-3" formControlName="phone">
+              <input type="text" placeholder="Telefono Contatto" class="form-control mt-3" formControlName="contactPhone">
+              <select class="form-control mt-3" formControlName="type">
+                <option value="">Seleziona Tipo</option>
+                <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+              </select>
+            </div>
+
+            <!-- Sede Legale -->
+            <fieldset formGroupName="registeredOfficeAddress" class="mt-4">
+              <legend>Sede Legale</legend>
+              <input type="text" placeholder="Via" class="form-control" formControlName="street">
+              <input type="text" placeholder="Numero Civico" class="form-control mt-3" formControlName="addressNumber">
+              <input type="number" placeholder="CAP" class="form-control mt-3" formControlName="cap">
+              <input type="number" placeholder="ID Città" class="form-control mt-3" formControlName="idCity">
+            </fieldset>
+
+            <!-- Sede Operativa -->
+            <fieldset formGroupName="operationalHeadquartersAddress" class="mt-4">
+              <legend>Sede Operativa</legend>
+              <input type="text" placeholder="Via" class="form-control" formControlName="street">
+              <input type="text" placeholder="Numero Civico" class="form-control mt-3" formControlName="addressNumber">
+              <input type="number" placeholder="CAP" class="form-control mt-3" formControlName="cap">
+              <input type="number" placeholder="ID Città" class="form-control mt-3" formControlName="idCity">
+            </fieldset>
+          </fieldset>
+
+          <button type="submit" class="btn btn-primary mt-4" [disabled]="form.invalid">Registrati</button>
+        </form>
+
       </div>
     </div>
-    </div>
-
-
+  </div>
+</div>

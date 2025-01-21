@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthsrvService } from '../authsrv.service';
 import { Router } from '@angular/router';
 
@@ -9,33 +9,54 @@ import { Router } from '@angular/router';
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
+  form: FormGroup;
+  types = ['PA', 'SAS', 'SPA', 'SRL'];
 
-  form: FormGroup
-
-  constructor(private authSrv: AuthsrvService, private router: Router){
-    this.form = new FormGroup({
-        name: new FormControl('', [Validators.required]),
-        surname: new FormControl('',[Validators.required]),
-        email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', [Validators.required])
-    })
+  constructor(private authSrv: AuthsrvService, private router: Router, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      name: ['', [Validators.required]],
+      surname: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      username: ['', [Validators.required]],
+      customer: this.fb.group({
+        denomination: ['', [Validators.required]],
+        vatCode: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
+        pec: ['', [Validators.required, Validators.email]],
+        phone: ['', [Validators.required]],
+        contactPhone: ['', [Validators.required]],
+        type: ['', [Validators.required]],
+        registeredOfficeAddress: this.fb.group({
+          street: ['', [Validators.required]],
+          addressNumber: ['', [Validators.required]],
+          cap: [null, [Validators.required, Validators.min(10000), Validators.max(99999)]],
+          idCity: [null, [Validators.required]],
+        }),
+        operationalHeadquartersAddress: this.fb.group({
+          street: ['', [Validators.required]],
+          addressNumber: ['', [Validators.required]],
+          cap: [null, [Validators.required, Validators.min(10000), Validators.max(99999)]],
+          idCity: [null, [Validators.required]],
+        }),
+      }),
+      avatar: ['']
+    });
   }
 
-  register(){
-    if(this.form.valid){
+  register(): void {
+    if (this.form.valid) {
       console.log(this.form.value);
-      this.authSrv.register(this.form.value).subscribe(
-        {
-          next: (data) => {
-            console.log('registrazione effettuata con successo')
-            this.router.navigate(['home'])
-          },
-          error:(data) => {
-            console.log('errore registrazione')
-          }
+      this.authSrv.register(this.form.value).subscribe({
+        next: (data) => {
+          console.log('Registrazione effettuata con successo:', data);
+          this.router.navigate(['home']);
+        },
+        error: (error) => {
+          console.error('Errore nella registrazione:', error);
         }
-      )
+      });
+    } else {
+      console.error('Form non valido:', this.form.errors);
     }
   }
-
 }
