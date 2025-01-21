@@ -1,11 +1,14 @@
 package epicode.it.energyservices.entities.invoice;
 
 import epicode.it.energyservices.entities.invoice.dto.InvoiceRequest;
+import epicode.it.energyservices.entities.invoice.dto.InvoiceResponse;
+import epicode.it.energyservices.entities.invoice.dto.InvoiceResponseMapper;
 import epicode.it.energyservices.entities.invoice.dto.InvoiceUpdateRequest;
 import epicode.it.energyservices.entities.invoice_status.InvoiceStatus;
 import epicode.it.energyservices.entities.invoice_status.InvoiceStatusSvc;
 import epicode.it.energyservices.entities.sys_user.customer.Customer;
 import epicode.it.energyservices.entities.sys_user.customer.CustomerSvc;
+import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerResponse;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -26,13 +29,19 @@ public class InvoiceSvc {
     private final InvoiceRepo invoiceRepo;
     private final InvoiceStatusSvc invoiceStatusSvc;
     private final CustomerSvc customerSvc;
+    private final InvoiceResponseMapper mapper;
 
-    public List<Invoice> getAll() {
-        return invoiceRepo.findAll();
+    public List<InvoiceResponse> getAll() {
+        return mapper.toInvoiceResponseList(invoiceRepo.findAll());
     }
 
-    public Page<Invoice> getAllPageable(Pageable pageable) {
-        return invoiceRepo.findAll(pageable);
+    public Page<InvoiceResponse> getAllPageable(Pageable pageable) {
+        Page<Invoice> pagedInvoices = invoiceRepo.findAll(pageable);
+        Page<InvoiceResponse> response = pagedInvoices.map(e -> {
+            InvoiceResponse invoiceResponse = mapper.toInvoiceResponse(e);
+            return invoiceResponse;
+        });
+        return response;
     }
 
     public Invoice getById(Long id) {
@@ -43,20 +52,8 @@ public class InvoiceSvc {
         return (int) invoiceRepo.count();
     }
 
-    public String delete(Long id) {
-        Invoice e = getById(id);
-        invoiceRepo.delete(e);
-        return "Invoice deleted successfully";
-    }
-
-    public String delete(Invoice e) {
-        Invoice foundInvoice = getById(e.getId());
-        invoiceRepo.delete(foundInvoice);
-        return "Invoice deleted successfully";
-    }
-
     @Transactional
-    public Invoice create(@Valid InvoiceRequest request) {
+    public InvoiceResponse create(@Valid InvoiceRequest request) {
         Invoice i = new Invoice();
         BeanUtils.copyProperties(request, i);
         int nextNumber = invoiceRepo.findMaxNumber().orElse(0) + 1;
@@ -65,44 +62,44 @@ public class InvoiceSvc {
         Customer c = customerSvc.getById(request.getCustomerId());
         i.setCustomer(c);
         i.setStatus(status);
-        return invoiceRepo.save(i);
+        return mapper.toInvoiceResponse(invoiceRepo.save(i));
     }
 
-    public Invoice updateStatus(Long id, @Valid InvoiceUpdateRequest request) {
+    public InvoiceResponse updateStatus(Long id, @Valid InvoiceUpdateRequest request) {
         Invoice i = getById(id);
         InvoiceStatus newStatus = invoiceStatusSvc.findByName(request.getStatus().toUpperCase());
         i.setStatus(newStatus);
-        return invoiceRepo.save(i);
+        return mapper.toInvoiceResponse(invoiceRepo.save(i));
     }
 
-    public List<Invoice> getAllByStatus(String status, String direction) {
+    public List<InvoiceResponse> getAllByStatus(String status, String direction) {
         InvoiceStatus invoiceStatus = invoiceStatusSvc.findByName(status.toUpperCase());
         if (direction.equals("ASC")) {
-            return invoiceRepo.findAllByStatusOrderByDateAsc(invoiceStatus.getId());
+            return mapper.toInvoiceResponseList(invoiceRepo.findAllByStatusOrderByDateAsc(invoiceStatus.getId()));
         } else {
-            return invoiceRepo.findAllByStatusOrderByDateDesc(invoiceStatus.getId());
+            return mapper.toInvoiceResponseList(invoiceRepo.findAllByStatusOrderByDateDesc(invoiceStatus.getId()));
         }
     }
 
-    public List<Invoice> getAllByCustomer(Long customerId, String direction) {
+    public List<InvoiceResponse> getAllByCustomer(Long customerId, String vatCode, String pec, String direction) {
         if (direction.equals("ASC")) {
-            return invoiceRepo.findAllByCustomerOrderByDateAsc(customerId);
+            return mapper.toInvoiceResponseList(invoiceRepo.findAllByCustomerOrderByDateAsc(customerId, vatCode, pec));
         } else {
-            return invoiceRepo.findAllByCustomerOrderByDateDesc(customerId);
+            return mapper.toInvoiceResponseList(invoiceRepo.findAllByCustomerOrderByDateDesc(customerId, vatCode, pec));
         }
 
     }
 
-    public List<Invoice> getAllByDate(LocalDate date) {
-        return invoiceRepo.findAllByDate(date);
+    public List<InvoiceResponse> getAllByDate(LocalDate date) {
+        return mapper.toInvoiceResponseList(invoiceRepo.findAllByDate(date));
     }
 
-    public List<Invoice> getAllByYear(int year) {
-        return invoiceRepo.findAllByYear(year);
+    public List<InvoiceResponse> getAllByYear(int year) {
+        return mapper.toInvoiceResponseList(invoiceRepo.findAllByYear(year));
     }
 
-    public List<Invoice> getAllByAmountBetween(double min, double max) {
-        return invoiceRepo.findAllByAmountBetweenOrderByAmountAsc(min, max);
+    public List<InvoiceResponse> getAllByAmountBetween(double min, double max) {
+        return mapper.toInvoiceResponseList(invoiceRepo.findAllByAmountBetweenOrderByAmountAsc(min, max));
     }
 
 

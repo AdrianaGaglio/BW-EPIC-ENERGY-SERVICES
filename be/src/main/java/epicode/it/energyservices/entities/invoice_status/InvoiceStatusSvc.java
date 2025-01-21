@@ -25,7 +25,7 @@ public class InvoiceStatusSvc {
     }
 
     public InvoiceStatus getById(Long id) {
-        return invoiceStatusRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("InvoiceStatus not found"));
+        return invoiceStatusRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Invoice status not found"));
     }
 
     public int count() {
@@ -35,13 +35,13 @@ public class InvoiceStatusSvc {
     public String delete(Long id) {
         InvoiceStatus e = getById(id);
         invoiceStatusRepo.delete(e);
-        return "InvoiceStatus deleted successfully";
+        return "Invoice status deleted successfully";
     }
 
     public String delete(InvoiceStatus e) {
         InvoiceStatus foundInvoiceStatus = getById(e.getId());
         invoiceStatusRepo.delete(foundInvoiceStatus);
-        return "InvoiceStatus deleted successfully";
+        return "Invoice status deleted successfully";
     }
 
     public InvoiceStatus findByName(String name) {
