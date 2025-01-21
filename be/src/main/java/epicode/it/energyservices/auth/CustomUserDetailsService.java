@@ -16,7 +16,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         AppUser user = appUserRepo.findByUsernameOrEmail(identifier, identifier)
                 .orElseThrow(()-> new UsernameNotFoundException("User not found"));
 
-        System.out.println(user.getPassword());
         String[] roles = user.getRoles()
                 .stream()
                 .map(Enum::name)

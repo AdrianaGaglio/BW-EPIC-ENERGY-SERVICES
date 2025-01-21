@@ -83,7 +83,6 @@ public class AppUserSvc {
     public String Login(@Valid LoginRequest loginRequest) {
         {
             try {
-                System.out.println(loginRequest);
                 Authentication authentication = authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(loginRequest.getIdentifier(), loginRequest.getPassword())
                 );

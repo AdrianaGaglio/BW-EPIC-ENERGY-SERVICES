@@ -61,6 +61,6 @@ public class AuthRunner implements ApplicationRunner {
         LoginRequest login = new LoginRequest();
         login.setIdentifier("admin");
         login.setPassword("adminpwd");
-        System.out.println(appUserSvc.Login(login) + " TOKEN");
+
     }
 }
