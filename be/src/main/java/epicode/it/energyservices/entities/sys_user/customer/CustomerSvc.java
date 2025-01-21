@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -38,6 +39,25 @@ public class CustomerSvc {
         return response;
 
     }
+
+    public List<CustomerResponse> getByYearlyTurnoverBetween(double min, double max) {
+        List<Customer> customers = customerRepo.findAllByYearlyTurnoverBetween(min, max);
+        return mapper.toCustomerResponseList(customers);
+    }
+    public List<CustomerResponse> getByCreationDateBetween(LocalDate startDate, LocalDate endDate) {
+        List<Customer> customers = customerRepo.findAllByCreationDateBetween(startDate, endDate);
+        return mapper.toCustomerResponseList(customers);
+    }
+
+    public List<CustomerResponse> getByLastContactBetween(LocalDate startDate, LocalDate endDate) {
+        List<Customer> customers = customerRepo.findAllByLastContactBetween(startDate, endDate);
+        return mapper.toCustomerResponseList(customers);
+    }
+    public List<CustomerResponse> getByDenominationContaining(String searchTerm) {
+        List<Customer> customers = customerRepo.findAllByDenominationContaining(searchTerm);
+        return mapper.toCustomerResponseList(customers);
+    }
+
 
     public Customer getById(Long id) {
         return customerRepo.findById(id).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
