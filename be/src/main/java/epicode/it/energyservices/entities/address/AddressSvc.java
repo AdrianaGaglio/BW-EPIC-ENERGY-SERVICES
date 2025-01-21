@@ -28,8 +28,10 @@ public class AddressSvc {
     private final CustomerSvc customerSvc;
 
     // restituisco tutti gli adresses
-    public List<Address> findAllAddress() {
-        return addressRepo.findAll();
+    public List<AddressResponse> findAllAddress() {
+        List<Address> address = addressRepo.findAll();
+
+        return mapper.toAddressResponseList(address);
     }
 
     // restituisco un address cercando per id

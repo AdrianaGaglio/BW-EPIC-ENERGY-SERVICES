@@ -25,7 +25,7 @@ public class AddressController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN') || hasRole('USER') ")
-    public ResponseEntity<List<Address>> getAllAddresses(){
+    public ResponseEntity<List<AddressResponse>> getAllAddresses(){
         return ResponseEntity.ok(addressService.findAllAddress());
     }
 
