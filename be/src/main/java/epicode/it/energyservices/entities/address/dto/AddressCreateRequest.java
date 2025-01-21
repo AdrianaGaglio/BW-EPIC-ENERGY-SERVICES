@@ -1,4 +1,4 @@
-package epicode.it.energyservices.entities.address;
+package epicode.it.energyservices.entities.address.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

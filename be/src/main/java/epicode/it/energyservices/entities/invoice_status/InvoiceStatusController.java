@@ -4,6 +4,7 @@ import epicode.it.energyservices.entities.invoice_status.dto.InvoiceStatusReques
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/invoice_status")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class InvoiceStatusController {
     private final InvoiceStatusSvc invoiceStatusSvc;
 

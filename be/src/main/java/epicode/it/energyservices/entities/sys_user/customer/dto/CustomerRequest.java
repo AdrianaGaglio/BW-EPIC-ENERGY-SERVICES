@@ -1,7 +1,6 @@
 package epicode.it.energyservices.entities.sys_user.customer.dto;
 
-import epicode.it.energyservices.entities.address.Address;
-import epicode.it.energyservices.entities.address.AddressCreateRequest;
+import epicode.it.energyservices.entities.address.dto.AddressCreateRequest;
 import epicode.it.energyservices.entities.sys_user.customer.Type;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

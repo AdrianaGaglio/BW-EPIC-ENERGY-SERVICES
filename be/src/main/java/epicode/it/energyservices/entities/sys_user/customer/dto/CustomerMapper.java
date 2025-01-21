@@ -19,4 +19,9 @@ public class CustomerMapper {
     public List<CustomerResponse> toCustomerResponseList(List<Customer> customers) {
         return customers.stream().map(this::toCustomerResponse).toList();
     }
+
+    public CustomerResponseForInvoice toCustomerResponseForInvoice(Customer e) {
+        CustomerResponseForInvoice customerResponseForInvoice = modelMapper.map(e, CustomerResponseForInvoice.class);
+        return customerResponseForInvoice;
+    }
 }

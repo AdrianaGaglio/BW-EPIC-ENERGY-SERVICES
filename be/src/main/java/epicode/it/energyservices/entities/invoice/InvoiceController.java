@@ -50,13 +50,17 @@ public class InvoiceController {
     @GetMapping("/{id}")
 //    Accessibile solo ad ADMIN/USER o CUSTOMER legato alla fattura
     @PreAuthorize("hasAnyRole('ADMIN', 'USER','CUSTOMER')")
-    public ResponseEntity<InvoiceResponse> getById(@PathVariable Long id, @AuthenticationPrincipal User userDetails) {
+    public ResponseEntity<?> getById(@PathVariable Long id, @AuthenticationPrincipal User userDetails) {
         Invoice invoice = invoiceSvc.getById(id);
 
         if (userDetails.getAuthorities().stream()
-                .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER")
-                        && !invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername()))) {
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER"))
+        ) {
+            if (!invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())){
             throw new InvalidParameterException("You are not the owner of this invoice");
+            } else {
+                return ResponseEntity.ok(mapper.toInvoiceResponseForCustomer(invoice));
+            }
 
         }
         return ResponseEntity.ok(mapper.toInvoiceResponse(invoice));

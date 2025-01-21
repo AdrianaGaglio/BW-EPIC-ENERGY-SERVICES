@@ -1,5 +1,6 @@
 package epicode.it.energyservices.entities.address;
 
+import epicode.it.energyservices.entities.address.dto.AddressCreateRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
