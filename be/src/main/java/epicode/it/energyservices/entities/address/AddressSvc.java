@@ -40,8 +40,8 @@ public class AddressSvc {
     }
 
     // salva un nuovo Address
-    public Address saveAddress(AddressCreateRequest request, @AuthenticationPrincipal UserDetails userDetails) {
-        City city = cityRepo.findById(request.getIdCity())
+    public Address saveAddress(Address request) {
+/*        City city = cityRepo.findById(request.getIdCity())
                 .orElseThrow(() -> new EntityNotFoundException("The city you are looking for does not exist"));
 
         Address newAddress = new Address();
@@ -49,8 +49,8 @@ public class AddressSvc {
         newAddress.setAddressNumber(request.getAddressNumber());
         newAddress.setLocation(request.getLocation());
         newAddress.setCap(request.getCap());
-        newAddress.setCity(city);
-        return addressRepo.save(newAddress);
+        newAddress.setCity(city);*/
+        return addressRepo.save(request);
     }
 
     // modifica un address esistente
@@ -64,7 +64,6 @@ public class AddressSvc {
 
         existingAddress.setStreet(updatedRequest.getStreet());
         existingAddress.setAddressNumber(updatedRequest.getAddressNumber());
-        existingAddress.setLocation(updatedRequest.getLocation());
         existingAddress.setCap(updatedRequest.getCap());
         existingAddress.setCity(city);
 

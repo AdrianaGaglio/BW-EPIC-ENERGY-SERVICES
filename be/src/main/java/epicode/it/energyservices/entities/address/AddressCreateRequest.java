@@ -10,8 +10,6 @@ public class AddressCreateRequest {
     private String street;
     @NotBlank (message = "address can't be empty")
     private String addressNumber;
-    @NotBlank (message = "location can't be empty")
-    private String location;
     @NotNull (message = "cap can't be empty")
     private int cap;
     @NotNull (message = "idCity can't be empty")

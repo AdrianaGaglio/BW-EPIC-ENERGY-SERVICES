@@ -23,6 +23,6 @@ public class CitySvc {
     // restituisco una city cercando per id
     public City findCityById(Long id) {
         return cityRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("The district you are looking for does not exist"));
+                .orElseThrow(() -> new EntityNotFoundException("The city you are looking for does not exist"));
     }
 }
