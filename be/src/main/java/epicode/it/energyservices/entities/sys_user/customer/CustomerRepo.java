@@ -9,8 +9,11 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface CustomerRepo extends JpaRepository<Customer, Long> {
+
+    Optional<Customer> findByAppUserUsername(String username);
 
     boolean existsByVatCode(String vatCode);
 

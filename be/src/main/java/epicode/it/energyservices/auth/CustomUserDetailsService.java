@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
@@ -20,6 +22,8 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .stream()
                 .map(Enum::name)
                 .toArray(String[]::new);
+
+Arrays.stream(roles).map(Role::valueOf).forEach(System.out::println);
 
         return User.builder()
                 .username(user.getUsername())

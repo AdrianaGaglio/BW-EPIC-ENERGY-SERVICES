@@ -31,6 +31,7 @@ public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
 
     public List<Invoice> findAllByAmountBetweenOrderByAmountAsc(double min, double max);
 
+    public List<Invoice> findAllByCustomerId(Long customerId);
 
     @Query("SELECT MAX(i.number) FROM Invoice i")
     Optional<Integer> findMaxNumber();
