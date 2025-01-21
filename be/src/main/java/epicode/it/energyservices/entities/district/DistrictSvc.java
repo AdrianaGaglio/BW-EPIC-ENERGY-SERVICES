@@ -21,6 +21,6 @@ public class DistrictSvc {
     // restituisco un district cercando per id
     public District findDistrictById(Long id) {
         return districtRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Il district cercato non esiste"));
+                .orElseThrow(() -> new EntityNotFoundException("The district you are looking for does not exist"));
     }
 }

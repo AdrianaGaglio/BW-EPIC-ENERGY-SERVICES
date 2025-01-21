@@ -28,13 +28,13 @@ public class AddressSvc {
     // restituisco un address cercando per id
     public Address findAddressById(Long id) {
         return addressRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Il district cercato non esiste"));
+                .orElseThrow(() -> new EntityNotFoundException("The district you are looking for does not exist"));
     }
 
     // cancella un address per id
     public void deleteAddress(Long id,  @AuthenticationPrincipal UserDetails userDetail) {
         if (!addressRepo.existsById(id)) {
-            throw new EntityNotFoundException("L'indirizzo indicato non esiste");
+            throw new EntityNotFoundException("The address indicated does not exist");
         }
         addressRepo.deleteById(id);
     }
@@ -42,7 +42,7 @@ public class AddressSvc {
     // salva un nuovo Address
     public Address saveAddress(AddressCreateRequest request, @AuthenticationPrincipal UserDetails userDetails) {
         City city = cityRepo.findById(request.getIdCity())
-                .orElseThrow(() -> new EntityNotFoundException("La città cercata non esiste"));
+                .orElseThrow(() -> new EntityNotFoundException("The city you are looking for does not exist"));
 
         Address newAddress = new Address();
         newAddress.setStreet(request.getStreet());
@@ -57,10 +57,10 @@ public class AddressSvc {
     public Address updateAddress(Long id, AddressCreateRequest updatedRequest,@AuthenticationPrincipal UserDetails userDetails ) {
 
         Address existingAddress = addressRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("L'indirizzo cercato non esiste"));
+                .orElseThrow(() -> new EntityNotFoundException("The address you are looking for does not exist"));
 
         City city = cityRepo.findById(updatedRequest.getIdCity())
-                .orElseThrow(() -> new EntityNotFoundException("La città cercata non esiste"));
+                .orElseThrow(() -> new EntityNotFoundException("The city you are looking for does not exist"));
 
         existingAddress.setStreet(updatedRequest.getStreet());
         existingAddress.setAddressNumber(updatedRequest.getAddressNumber());
