@@ -67,8 +67,21 @@ public class InvoiceController {
     }
 
     @GetMapping("/by-number")
-    public ResponseEntity<InvoiceResponse> getById(@RequestParam int number) {
-        return ResponseEntity.ok(mapper.toInvoiceResponse(invoiceSvc.getByNumber(number)));
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER','CUSTOMER')")
+    public ResponseEntity<?> getByNumber(@RequestParam int number, @AuthenticationPrincipal User userDetails) {
+        Invoice invoice = invoiceSvc.getByNumber(number);
+
+        if (userDetails.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER"))
+        ) {
+            if (!invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())){
+                throw new InvalidParameterException("You are not the owner of this invoice");
+            } else {
+                return ResponseEntity.ok(mapper.toInvoiceResponseForCustomer(invoice));
+            }
+
+        }
+        return ResponseEntity.ok(mapper.toInvoiceResponse(invoice));
     }
 
     @PutMapping("/{number}")
