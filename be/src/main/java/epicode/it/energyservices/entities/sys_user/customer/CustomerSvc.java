@@ -36,6 +36,10 @@ public class CustomerSvc {
         return customerRepo.findAll();
     }
 
+    public Customer getByUsername(String username) {
+        return customerRepo.findByAppUserUsername(username).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+    }
+
     public Page<CustomerResponse> getAllPageable(Pageable pageable) {
         Page<Customer> pagedCustomer = customerRepo.findAll(pageable);
         Page<CustomerResponse> response = pagedCustomer.map(e -> {

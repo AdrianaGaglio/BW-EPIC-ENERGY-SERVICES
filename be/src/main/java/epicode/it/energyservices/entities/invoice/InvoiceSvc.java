@@ -1,9 +1,6 @@
 package epicode.it.energyservices.entities.invoice;
 
-import epicode.it.energyservices.entities.invoice.dto.InvoiceRequest;
-import epicode.it.energyservices.entities.invoice.dto.InvoiceResponse;
-import epicode.it.energyservices.entities.invoice.dto.InvoiceResponseMapper;
-import epicode.it.energyservices.entities.invoice.dto.InvoiceUpdateRequest;
+import epicode.it.energyservices.entities.invoice.dto.*;
 import epicode.it.energyservices.entities.invoice_status.InvoiceStatus;
 import epicode.it.energyservices.entities.invoice_status.InvoiceStatusSvc;
 import epicode.it.energyservices.entities.sys_user.customer.Customer;
@@ -37,6 +34,11 @@ public class InvoiceSvc {
 
     public List<InvoiceResponse> getAll() {
         return mapper.toInvoiceResponseList(invoiceRepo.findAll());
+    }
+
+    public List<InvoiceResponseForCustomer> getAllByCustomer(String username) {
+        Long customerId = customerSvc.getByUsername(username).getId();
+        return mapper.toInvoiceResponseForCustomerList(invoiceRepo.findAllByCustomerId(customerId));
     }
 
     public Page<InvoiceResponse> getAllPageable(Pageable pageable) {

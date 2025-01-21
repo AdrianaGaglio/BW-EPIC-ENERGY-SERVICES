@@ -8,6 +8,7 @@ import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -21,6 +22,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = EntityNotFoundException.class)
     protected ResponseEntity<ErrorMessage> entityNotFound(EntityNotFoundException ex) {
+        ErrorMessage e = new ErrorMessage(ex.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(value = UsernameNotFoundException.class)
+    protected ResponseEntity<ErrorMessage> usernameNotFound(UsernameNotFoundException ex) {
         ErrorMessage e = new ErrorMessage(ex.getMessage(), HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
     }

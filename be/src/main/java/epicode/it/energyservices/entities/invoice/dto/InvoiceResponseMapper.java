@@ -25,4 +25,14 @@ public class InvoiceResponseMapper {
     public List<InvoiceResponse> toInvoiceResponseList(List<Invoice> invoices) {
         return invoices.stream().map(this::toInvoiceResponse).toList();
     }
+
+    public InvoiceResponseForCustomer toInvoiceResponseForCustomer(Invoice e) {
+        InvoiceResponseForCustomer invoiceResponse = modelMapper.map(e, InvoiceResponseForCustomer.class);
+        invoiceResponse.setStatus(e.getStatus().getName());
+        return invoiceResponse;
+    }
+
+    public List<InvoiceResponseForCustomer> toInvoiceResponseForCustomerList(List<Invoice> invoices) {
+        return invoices.stream().map(this::toInvoiceResponseForCustomer).toList();
+    }
 }
