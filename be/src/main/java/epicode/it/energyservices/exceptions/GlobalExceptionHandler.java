@@ -4,6 +4,7 @@ import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
+import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,34 +20,48 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = EntityNotFoundException.class)
-    protected ResponseEntity<Object> entityNotFound(EntityNotFoundException ex) {
-        return new ResponseEntity<>("Error: "+ex.getMessage(), HttpStatus.NOT_FOUND);
+    protected ResponseEntity<ErrorMessage> entityNotFound(EntityNotFoundException ex) {
+        ErrorMessage e = new ErrorMessage(ex.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(e, HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(value = EntityExistsException.class)
-    protected ResponseEntity<Object> entityExists(EntityExistsException ex) {
-        return new ResponseEntity<>("Error: "+ex.getMessage(), HttpStatus.NOT_FOUND);
+    protected ResponseEntity<ErrorMessage> entityExists(EntityExistsException ex) {
+        ErrorMessage e = new ErrorMessage(ex.getMessage(), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(e, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
-    protected ResponseEntity<Object> httpMessageNotReadable(HttpMessageNotReadableException ex) {
-        return new ResponseEntity<>("Error: "+ex.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-    @ExceptionHandler(value = SecurityException.class)
-    protected ResponseEntity<Object> securityException(SecurityException ex) {
-        return new ResponseEntity<>("Error: "+ex.getMessage(), HttpStatus.BAD_REQUEST);
+    protected ResponseEntity<ErrorMessage> httpMessageNotReadable(HttpMessageNotReadableException ex) {
+        ErrorMessage e = new ErrorMessage(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(value = SecurityException.class)
+    protected ResponseEntity<ErrorMessage> securityException(SecurityException ex) {
+        ErrorMessage e = new ErrorMessage(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(value = AlreadyExistsException.class)
-    protected ResponseEntity<Object> alreadyExists(AlreadyExistsException ex) {
-        return new ResponseEntity<>("Error: "+ex.getMessage(), HttpStatus.CONFLICT);
-    } @ExceptionHandler(value = EmailAlreadyUsedException.class)
-    protected ResponseEntity<Object> emailAlreadyExists(EmailAlreadyUsedException ex) {
-        return new ResponseEntity<>("Error: "+ex.getMessage(), HttpStatus.CONFLICT);
+    protected ResponseEntity<ErrorMessage> alreadyExists(AlreadyExistsException ex) {
+        ErrorMessage e = new ErrorMessage(ex.getMessage(), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(e, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(value = EmailAlreadyUsedException.class)
+    protected ResponseEntity<ErrorMessage> emailAlreadyExists(EmailAlreadyUsedException ex) {
+        ErrorMessage e = new ErrorMessage(ex.getMessage(), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(e, HttpStatus.CONFLICT);
+    }
 
-    @ExceptionHandler(ConstraintViolationException.class)
+    @ExceptionHandler(value = InvalidParameterException.class)
+    protected ResponseEntity<ErrorMessage> handleInvalidParameterException(InvalidParameterException ex) {
+        ErrorMessage e = new ErrorMessage(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = ConstraintViolationException.class)
     public ResponseEntity<Map<String, String>> handleConstraintViolationException(ConstraintViolationException ex) {
         Map<String, String> errors = new HashMap<>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
