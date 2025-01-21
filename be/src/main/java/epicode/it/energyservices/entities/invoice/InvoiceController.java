@@ -67,7 +67,7 @@ public class InvoiceController {
     }
 
     @GetMapping("/by-number")
-    public ResponseEntity<InvoiceResponse> getById(@RequestParam int number) {
+    public ResponseEntity<InvoiceResponse> getByNumber(@RequestParam int number) {
         return ResponseEntity.ok(mapper.toInvoiceResponse(invoiceSvc.getByNumber(number)));
     }
 
