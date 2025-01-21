@@ -1,4 +1,4 @@
-import { iAddress } from './../auth/interfaces/i-address';
+import { iAddressResponse } from './iaddressresponse';
 import { iInvoice } from './iinvoice';
 
 export interface iCustomer {
@@ -11,6 +11,9 @@ export interface iCustomer {
   phone: string;
   contactPhone: string;
   type: string;
-  iAddress: iAddress[];
+  addresses: {
+    RegisteredOfficeAddress: iAddressResponse;
+    OperationalHeadquartersAddress: iAddressResponse;
+  };
   invoices: iInvoice[];
 }

@@ -48,6 +48,9 @@ public class CustomerSvc {
         return response;
 
     }
+    public Customer update(Customer customer) {
+        return customerRepo.save(customer);
+    }
 
     public List<CustomerResponse> getByYearlyTurnoverBetween(double min, double max) {
         List<Customer> customers = customerRepo.findAllByYearlyTurnoverBetween(min, max);
