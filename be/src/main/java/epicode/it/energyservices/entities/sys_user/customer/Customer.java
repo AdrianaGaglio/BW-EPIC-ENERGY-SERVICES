@@ -1,5 +1,6 @@
 package epicode.it.energyservices.entities.sys_user.customer;
 
+import epicode.it.energyservices.entities.address.Address;
 import epicode.it.energyservices.entities.invoice.Invoice;
 import epicode.it.energyservices.entities.sys_user.SysUser;
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Entity
@@ -38,9 +40,12 @@ public class Customer extends SysUser {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    private HashMap<String, String> addresses = new HashMap<>(); // collegare a entità indirizzo
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Map<String, Address> addresses = new HashMap<>();
 
     @OneToMany
     private List<Invoice> invoices = new ArrayList<>();
+
+
 
 }

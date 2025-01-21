@@ -3,6 +3,10 @@ package epicode.it.energyservices.entities.sys_user.customer;
 import com.github.javafaker.Faker;
 import epicode.it.energyservices.auth.AppUserSvc;
 import epicode.it.energyservices.auth.dto.RegisterRequest;
+import epicode.it.energyservices.entities.address.Address;
+import epicode.it.energyservices.entities.address.AddressCreateRequest;
+import epicode.it.energyservices.entities.city.City;
+import epicode.it.energyservices.entities.city.CitySvc;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
@@ -12,10 +16,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@Order(1)
+@Order(3)
 public class CustomerRunner implements ApplicationRunner {
     private final Faker faker;
     private final AppUserSvc appUserSvc;
+    private final CitySvc citySvc;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -29,6 +34,25 @@ public class CustomerRunner implements ApplicationRunner {
             customer.setContactPhone(faker.phoneNumber().cellPhone());
             int random = faker.random().nextInt(0, 3);
             customer.setType(Type.values()[random]);
+
+            City city = citySvc.findCityById((long) faker.number().numberBetween(1, 1000));
+            AddressCreateRequest addressRequest = new AddressCreateRequest();
+            addressRequest.setAddressNumber(String.valueOf(faker.number().numberBetween(1, 1000)));
+            addressRequest.setCap(faker.number().numberBetween(10000, 99999));
+            addressRequest.setStreet(faker.address().streetAddress());
+            addressRequest.setIdCity(city.getId());
+
+
+            City city1 = citySvc.findCityById((long) faker.number().numberBetween(1, 1001));
+            AddressCreateRequest addressRequest1 = new AddressCreateRequest();
+            addressRequest1.setAddressNumber(String.valueOf(faker.number().numberBetween(1, 1000)));
+            addressRequest1.setCap(faker.number().numberBetween(10000, 99999));
+            addressRequest1.setStreet(faker.address().streetAddress());
+            addressRequest1.setIdCity(city1.getId());
+
+
+            customer.setOperationalHeadquartersAddress(addressRequest);
+            customer.setRegisteredOfficeAddress(addressRequest1);
 
             RegisterRequest request = new RegisterRequest();
             request.setName(faker.name().firstName());

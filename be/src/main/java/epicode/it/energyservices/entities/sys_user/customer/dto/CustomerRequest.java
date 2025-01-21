@@ -1,5 +1,7 @@
 package epicode.it.energyservices.entities.sys_user.customer.dto;
 
+import epicode.it.energyservices.entities.address.Address;
+import epicode.it.energyservices.entities.address.AddressCreateRequest;
 import epicode.it.energyservices.entities.sys_user.customer.Type;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -25,7 +27,7 @@ public class CustomerRequest {
 
     private Type type;
 
-    private String image;
+    private AddressCreateRequest registeredOfficeAddress;
 
-//    aggiungere lista indirizzi
+    private AddressCreateRequest operationalHeadquartersAddress;
 }

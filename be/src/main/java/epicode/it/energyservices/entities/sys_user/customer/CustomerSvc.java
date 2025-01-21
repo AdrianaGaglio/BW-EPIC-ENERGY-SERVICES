@@ -1,9 +1,13 @@
 package epicode.it.energyservices.entities.sys_user.customer;
 
 import epicode.it.energyservices.auth.AppUser;
+import epicode.it.energyservices.entities.address.Address;
+import epicode.it.energyservices.entities.address.AddressCreateRequest;
+import epicode.it.energyservices.entities.city.CitySvc;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerMapper;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerRequest;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerResponse;
+import epicode.it.energyservices.utils.Utils;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -24,6 +29,7 @@ import java.util.List;
 public class CustomerSvc {
     private final CustomerRepo customerRepo;
     private final CustomerMapper mapper;
+    private final CitySvc citySvc;
 
     public List<Customer> getAll() {
 
@@ -78,11 +84,6 @@ public class CustomerSvc {
         return "Customer deleted successfully";
     }
 
-    public String delete(Customer e) {
-        Customer foundCustomer = getById(e.getId());
-        customerRepo.delete(foundCustomer);
-        return "Customer deleted successfully";
-    }
 
     @Transactional
     public Customer create(AppUser appUser, @Valid CustomerRequest request) {
@@ -90,19 +91,43 @@ public class CustomerSvc {
             throw new EntityExistsException("Customer vatCode already exists");
         if (customerRepo.existsByDenomination(request.getDenomination()))
             throw new EntityExistsException("Customer denomination already exists");
-        if (customerRepo.existsByPec(request.getPec())) throw new EntityExistsException("Customer pec already exists");
+        if (customerRepo.existsByPec(request.getPec()))
+            throw new EntityExistsException("Customer pec already exists");
         if (customerRepo.existsByPhone(request.getPhone()))
             throw new EntityExistsException("Customer phone already exists");
 
-        Customer c = new Customer();
-        BeanUtils.copyProperties(request, c);
-        c.setType(request.getType());
-        c.setAppUser(appUser);
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(request, customer);
+        customer.setType(request.getType());
+        customer.setAppUser(appUser);
 
-        // leggere indirizzi e mettere nell'hashmap
+        HashMap<String, Address> addressMap = new HashMap<>();
 
-        return customerRepo.save(c);
+        if (request.getOperationalHeadquartersAddress() != null) {
+            AddressCreateRequest operationalAddress = request.getOperationalHeadquartersAddress();
+            Address a = new Address();
+            a.setCap(operationalAddress.getCap());
+            a.setCity(citySvc.findCityById(operationalAddress.getIdCity()));
+            a.setStreet(operationalAddress.getStreet());
+            a.setAddressNumber(operationalAddress.getAddressNumber());
+            a.setCustomer(customer);
+            addressMap.put("OperationalHeadquartersAddress", a);
+        }
 
+        if (request.getRegisteredOfficeAddress() != null) {
+            AddressCreateRequest registeredAddress = request.getRegisteredOfficeAddress();
+            Address a = new Address();
+            a.setCap(registeredAddress.getCap());
+            a.setCity(citySvc.findCityById(registeredAddress.getIdCity()));
+            a.setStreet(registeredAddress.getStreet());
+            a.setAddressNumber(registeredAddress.getAddressNumber());
+            a.setCustomer(customer);
+            addressMap.put("RegisteredOfficeAddress", a);
+        }
+
+        customer.setAddresses(addressMap);
+
+        return customerRepo.save(customer);
     }
 
 

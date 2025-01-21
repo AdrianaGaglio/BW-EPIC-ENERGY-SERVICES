@@ -6,6 +6,8 @@ import epicode.it.energyservices.entities.invoice_status.InvoiceStatusSvc;
 import epicode.it.energyservices.entities.sys_user.customer.Customer;
 import epicode.it.energyservices.entities.sys_user.customer.CustomerSvc;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerResponse;
+import epicode.it.energyservices.utils.email.EmailMapper;
+import epicode.it.energyservices.utils.email.EmailSvc;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -27,6 +29,8 @@ public class InvoiceSvc {
     private final InvoiceStatusSvc invoiceStatusSvc;
     private final CustomerSvc customerSvc;
     private final InvoiceResponseMapper mapper;
+    private final EmailMapper emailMapper;
+    private final EmailSvc emailSvc;
 
     public List<InvoiceResponse> getAll() {
         return mapper.toInvoiceResponseList(invoiceRepo.findAll());
@@ -64,14 +68,21 @@ public class InvoiceSvc {
         Customer c = customerSvc.getById(request.getCustomerId());
         i.setCustomer(c);
         i.setStatus(status);
-        return mapper.toInvoiceResponse(invoiceRepo.save(i));
+
+        InvoiceResponse response = mapper.toInvoiceResponse(invoiceRepo.save(i));
+
+        if (!i.getStatus().getName().equals("DRAFT"))
+            emailSvc.sendEmailHtml(emailMapper.fromInvoicetoEmailRequest("New invoice", i));
+        return response;
     }
 
     public InvoiceResponse updateStatus(Long id, @Valid InvoiceUpdateRequest request) {
         Invoice i = getById(id);
         InvoiceStatus newStatus = invoiceStatusSvc.findByName(request.getStatus().toUpperCase());
         i.setStatus(newStatus);
-        return mapper.toInvoiceResponse(invoiceRepo.save(i));
+        InvoiceResponse response = mapper.toInvoiceResponse(invoiceRepo.save(i));
+        emailSvc.sendEmail(emailMapper.fromInvoicetoEmailRequest("Invoice status changed", i));
+        return response;
     }
 
     public List<InvoiceResponse> getAllByStatus(String status, String direction) {
@@ -89,7 +100,6 @@ public class InvoiceSvc {
         } else {
             return mapper.toInvoiceResponseList(invoiceRepo.findAllByCustomerOrderByDateDesc(customerId, vatCode, pec));
         }
-
     }
 
     public List<InvoiceResponse> getAllByDate(LocalDate date) {
@@ -103,6 +113,5 @@ public class InvoiceSvc {
     public List<InvoiceResponse> getAllByAmountBetween(double min, double max) {
         return mapper.toInvoiceResponseList(invoiceRepo.findAllByAmountBetweenOrderByAmountAsc(min, max));
     }
-
 
 }

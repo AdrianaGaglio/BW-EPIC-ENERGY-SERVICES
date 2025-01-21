@@ -9,9 +9,12 @@ import epicode.it.energyservices.entities.sys_user.employee.EmployeeSvc;
 import epicode.it.energyservices.exceptions.AlreadyExistsException;
 import epicode.it.energyservices.exceptions.EmailAlreadyUsedException;
 import epicode.it.energyservices.utils.Utils;
+import epicode.it.energyservices.utils.email.EmailMapper;
+import epicode.it.energyservices.utils.email.EmailSvc;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.eclipse.angus.mail.smtp.SMTPSenderFailedException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,6 +37,8 @@ public class AppUserSvc {
     private final JwtTokenUtil jwtTokenUtil;
     private final CustomerSvc customerSvc;
     private final EmployeeSvc employeeSvc;
+    private final EmailSvc emailSvc;
+    private final EmailMapper emailMapper;
 
     @Transactional
     public String registerUser(@Valid RegisterRequest registerRequest) {
@@ -66,6 +71,8 @@ public class AppUserSvc {
 
         appUserRepo.save(appUser);
 
+        emailSvc.sendEmail(emailMapper.fromAppUserToEmailRequest("New account created", appUser));
+
         return "Registrazione avvenuta con successo";
     }
 
@@ -83,7 +90,6 @@ public class AppUserSvc {
         appUserRepo.save(appUser);
 
         return "Admin registrato con successo";
-
     }
 
     public String Login(@Valid LoginRequest loginRequest) {

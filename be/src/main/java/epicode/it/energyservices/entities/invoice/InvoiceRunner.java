@@ -25,8 +25,8 @@ public class InvoiceRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        if (statusSvc.count() != 0) {
-            for (int i = 0; i < 50; i++) {
+        if (invoiceSvc.count() == 0) {
+            for (int i = 0; i < 5; i++) {
                 InvoiceRequest request = new InvoiceRequest();
                 LocalDate date = faker.date().future(30, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 request.setDate(date);
