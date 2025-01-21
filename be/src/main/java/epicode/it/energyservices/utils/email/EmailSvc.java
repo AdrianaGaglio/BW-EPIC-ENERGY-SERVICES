@@ -3,8 +3,6 @@ package epicode.it.energyservices.utils.email;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -12,6 +10,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 
@@ -37,17 +41,15 @@ public class EmailSvc {
         return "Mail successfully sent to " + request.getTo();
     }
 
-    public String sendEmailHtml(@Valid EmailRequest request) {
+    public String sendEmailHtml(String emailContent, @Valid EmailRequest request) {
 
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);
 
-            //SimpleMailMessage message = new SimpleMailMessage();
-
             helper.setTo(request.getTo());
             helper.setSubject(request.getSubject());
-            helper.setText(request.getBody(), true);
+            helper.setText(emailContent, true);
             helper.setFrom(from);
 
             mailSender.send(message);
@@ -56,4 +58,6 @@ public class EmailSvc {
         }
         return "Mail successfully sent to " + request.getTo();
     }
+
+
 }

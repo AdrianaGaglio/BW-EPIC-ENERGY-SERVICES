@@ -70,7 +70,7 @@ public class InvoiceSvc {
         InvoiceResponse response = mapper.toInvoiceResponse(invoiceRepo.save(i));
 
         if (!i.getStatus().getName().equals("DRAFT"))
-            emailSvc.sendEmailHtml(emailMapper.fromInvoicetoEmailRequest("New invoice", i));
+            emailSvc.sendEmailHtml(emailMapper.fromInvoiceToEmailBody("New invoice", i), emailMapper.fromInvoicetoEmailRequest("New invoice", i));
         return response;
     }
 
@@ -79,7 +79,7 @@ public class InvoiceSvc {
         InvoiceStatus newStatus = invoiceStatusSvc.findByName(request.getStatus().toUpperCase());
         i.setStatus(newStatus);
         InvoiceResponse response = mapper.toInvoiceResponse(invoiceRepo.save(i));
-        emailSvc.sendEmail(emailMapper.fromInvoicetoEmailRequest("Invoice status changed", i));
+        emailSvc.sendEmailHtml(emailMapper.fromInvoiceToEmailBody("Invoice status changed", i), emailMapper.fromInvoicetoEmailRequest("Invoice status changed", i));
         return response;
     }
 

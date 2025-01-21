@@ -71,7 +71,7 @@ public class AppUserSvc {
 
         appUserRepo.save(appUser);
 
-        emailSvc.sendEmail(emailMapper.fromAppUserToEmailRequest("New account created", appUser));
+        emailSvc.sendEmailHtml(emailMapper.fromAppUserToEmailBody("New account created", appUser), emailMapper.fromAppUserToEmailRequest("New account created", appUser));
 
         return "Registrazione avvenuta con successo";
     }
