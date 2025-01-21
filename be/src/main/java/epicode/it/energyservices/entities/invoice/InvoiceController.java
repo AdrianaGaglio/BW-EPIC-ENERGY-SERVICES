@@ -71,6 +71,7 @@ public class InvoiceController {
     public ResponseEntity<?> getByNumber(@RequestParam int number, @AuthenticationPrincipal User userDetails) {
         Invoice invoice = invoiceSvc.getByNumber(number);
 
+        //Adriana dovresti vederlo
         if (userDetails.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER"))
         ) {
@@ -86,6 +87,7 @@ public class InvoiceController {
 
     @PutMapping("/{number}")
 //    Accessibile solo a USER
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<InvoiceResponse> updateStatus(@PathVariable int number, @RequestBody InvoiceUpdateRequest request) {
         return ResponseEntity.ok(invoiceSvc.updateStatus(number, request));
     }
