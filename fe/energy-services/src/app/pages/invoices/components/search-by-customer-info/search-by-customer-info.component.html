@@ -1,2 +1,56 @@
-Search by customer info
-<form></form>
+<form #form="ngForm" (submit)="getAllByCustomerInfo()">
+  <div class="d-flex align-items-bottom gap-2">
+    <div>
+      <label for="customerId" class="form-label">Customer:</label>
+      <input
+        id="customerId"
+        class="form-control"
+        type="number"
+        name="customerId"
+        [(ngModel)]="customerId"
+        [disabled]="vatCode != '' || pec != '' ? true : false"
+      />
+    </div>
+    <div>
+      <label for="vatCode" class="form-label">Customer vat code:</label>
+      <input
+        id="vatCode"
+        class="form-control"
+        type="text"
+        name="vatCode"
+        [(ngModel)]="vatCode"
+        [disabled]="
+          (customerId != '' && +customerId > 0) || pec != '' ? true : false
+        "
+      />
+    </div>
+    <div>
+      <label for="pec" class="form-label">Customer pec:</label>
+      <input
+        id="pec"
+        class="form-control"
+        type="text"
+        name="pec"
+        [(ngModel)]="pec"
+        [disabled]="
+          (customerId != '' && +customerId > 0) || vatCode != '' ? true : false
+        "
+      />
+    </div>
+    <div class="d-flex align-items-center align-self-end gap-3">
+      <div class="d-flex align-items-center gap-2">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="direction"
+          value="DESC"
+          #direction
+        />
+        <label for="direction">Want to order DESC?</label>
+      </div>
+      <button class="btn btn-success align-self-end">
+        <ng-icon name="bootstrapSearch"></ng-icon>
+      </button>
+    </div>
+  </div>
+</form>
