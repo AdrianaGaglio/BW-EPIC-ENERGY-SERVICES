@@ -1,18 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthsrvService } from '../authsrv.service';
 import { Router } from '@angular/router';
+import { CitysrvService } from '../../services/citysrv.service';
+import { iDistrictResponse } from '../../interfaces/idistrictresponse';
+import { iCityResponse } from '../../interfaces/icityresponse';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   form: FormGroup;
   types = ['PA', 'SAS', 'SPA', 'SRL'];
+  districts: iDistrictResponse[] = [];
+  cities: iCityResponse[] = [];
 
-  constructor(private authSrv: AuthsrvService, private router: Router, private fb: FormBuilder) {
+  constructor(
+    private authSrv: AuthsrvService,
+    private router: Router,
+    private fb: FormBuilder,
+    private cityService: CitysrvService
+  ) {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
       surname: ['', [Validators.required]],
@@ -30,7 +40,8 @@ export class RegisterComponent {
           street: ['', [Validators.required]],
           addressNumber: ['', [Validators.required]],
           cap: [null, [Validators.required, Validators.min(10000), Validators.max(99999)]],
-          idCity: [null, [Validators.required]],
+          districtId: ['', Validators.required],
+          idCity: ['', Validators.required],
         }),
         operationalHeadquartersAddress: this.fb.group({
           street: ['', [Validators.required]],
@@ -39,13 +50,25 @@ export class RegisterComponent {
           idCity: [null, [Validators.required]],
         }),
       }),
-      avatar: ['']
+      avatar: [''],
+    });
+  }
+
+  ngOnInit(): void {
+
+    this.cityService.getAllDistricts().subscribe({
+      next: (data) => {
+        this.districts = data;
+      },
+      error: (error) => {
+        console.error('Errore nel caricamento dei distretti:', error);
+      },
     });
   }
 
   register(): void {
     if (this.form.valid) {
-      console.log(this.form.value);
+      console.log('Dati inviati:', this.form.value);
       this.authSrv.register(this.form.value).subscribe({
         next: (data) => {
           console.log('Registrazione effettuata con successo:', data);
@@ -53,10 +76,26 @@ export class RegisterComponent {
         },
         error: (error) => {
           console.error('Errore nella registrazione:', error);
-        }
+        },
       });
     } else {
       console.error('Form non valido:', this.form.errors);
+    }
+  }
+
+  onDistrictChange(event: Event): void {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    if (selectedValue) {
+      this.cityService.getCitiesByDistrictId(Number(selectedValue)).subscribe({
+        next: (data) => {
+          this.cities = data;
+        },
+        error: (error) => {
+          console.error('Errore nel caricamento delle città:', error);
+        },
+      });
+    } else {
+      this.cities = [];
     }
   }
 }

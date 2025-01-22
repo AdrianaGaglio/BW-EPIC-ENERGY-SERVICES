@@ -53,20 +53,34 @@
               </select>
             </div>
 
+
             <!-- Sede Legale -->
             <fieldset formGroupName="registeredOfficeAddress" class="mt-4">
               <legend>Sede Legale</legend>
               <label for="registeredStreet">Via</label>
-              <input id="registeredStreet" type="text" placeholder="Via" class="form-control" formControlName="street">
+              <input id="registeredStreet" type="text" placeholder="Via" class="form-control" formControlName="street"/>
 
               <label for="registeredAddressNumber" class="mt-3">Numero Civico</label>
-              <input id="registeredAddressNumber" type="text" placeholder="Numero Civico" class="form-control" formControlName="addressNumber">
+              <input id="registeredAddressNumber" type="text" placeholder="Numero Civico" class="form-control" formControlName="addressNumber"/>
 
               <label for="registeredCap" class="mt-3">CAP</label>
-              <input id="registeredCap" type="number" placeholder="CAP" class="form-control" formControlName="cap">
+              <input id="registeredCap"type="number" placeholder="CAP" class="form-control" formControlName="cap"/>
 
-              <label for="registeredIdCity" class="mt-3">ID Città</label>
-              <input id="registeredIdCity" type="number" placeholder="ID Città" class="form-control" formControlName="idCity">
+              <label for="registeredDistrict" class="mt-3">Distretto</label>
+              <select id="registeredDistrict" class="form-control" formControlName="districtId" (change)="onDistrictChange($event)">
+              <option value="">Seleziona Distretto</option>
+              <option *ngFor="let district of districts" [value]="district.id">
+                {{ district.name }}
+              </option>
+            </select>
+
+              <label for="registeredCity" class="mt-3">Città</label>
+              <select id="registeredCity" class="form-control" formControlName="idCity">
+                <option [value]="null">Seleziona una città</option>
+                <option *ngFor="let city of cities" [value]="city.id">
+                  {{ city.name }}
+                </option>
+              </select>
             </fieldset>
 
             <!-- Sede Operativa -->
