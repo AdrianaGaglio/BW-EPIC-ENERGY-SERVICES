@@ -18,6 +18,8 @@ export class RegisterComponent implements OnInit {
   cities: iCityResponse[] = [];
   selected: boolean = false;
   selected1: boolean = false;
+  currentStep = 1;
+  progress:number = 25;
 
   constructor(
     private authSrv: AuthsrvService,
@@ -119,6 +121,21 @@ export class RegisterComponent implements OnInit {
       });
     } else {
       this.cities = [];
+    }
+  }
+
+  nextStep() {
+    if (this.currentStep < 4) {
+      this.progress += 25;
+      this.currentStep++;
+
+    }
+  }
+
+  prevStep() {
+    if (this.currentStep > 1) {
+      this.progress -= 25;
+      this.currentStep--;
     }
   }
 }
