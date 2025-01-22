@@ -20,6 +20,8 @@ export class RegisterComponent implements OnInit {
   selected1: boolean = false;
   currentStep = 1;
   progress:number = 25;
+  formvalid = false;
+  isCheck = false;
 
   constructor(
     private authSrv: AuthsrvService,
@@ -46,6 +48,7 @@ export class RegisterComponent implements OnInit {
           cap: [null, [Validators.required, Validators.min(10000), Validators.max(99999)]],
           districtId: ['', Validators.required],
           idCity: ['', Validators.required],
+          isCheck: [false],
         }),
         operationalHeadquartersAddress: this.fb.group({
           street: ['', [Validators.required]],
@@ -138,4 +141,32 @@ export class RegisterComponent implements OnInit {
       this.progress -= 25;
     }
   }
+
+  isValid(fieldName: string) {
+    return this.form.get(fieldName)?.valid;
+  }
+
+  isTouched(fieldName: string) {
+    return this.form.get(fieldName)?.touched;
+  }
+
+  isInValidTouched(fieldName: string) {
+    return !this.isValid(fieldName) && this.isTouched(fieldName);
+  }
+
+  goToLogin(){
+    this.router.navigate(['/auth'])
+  }
+  onCheckboxChange(): void {
+    const isCheck = this.form.get('customer.registeredOfficeAddress.isCheck')?.value;
+    if (isCheck) {
+      const legalAddress = this.form.get('customer.registeredOfficeAddress')?.value;
+      const operationalAddress = this.form.get('customer.operationalHeadquartersAddress');
+      operationalAddress?.patchValue(legalAddress);
+    } else {
+      const operationalAddress = this.form.get('customer.operationalHeadquartersAddress');
+      operationalAddress?.reset();
+    }
+  }
+
 }

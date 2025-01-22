@@ -1,39 +1,42 @@
 <div class="container-fluid cover">
   <div class="row">
-    <div class="col"></div>
-    <div class="col">
+    <div class="col col-12 col-md-5 background d-none d-md-block"></div>
+    <div class="col " >
       <div class="p-3">
-        <h1>
+        <h1 class="mb-4">
           Benvenuto/a <br />
           su EnergyService ⚡️
         </h1>
         <form [formGroup]="form" (ngSubmit)="login()">
           <div class="form-group">
+            <label for="mail">E-Mail</label>
             <input
               type="text"
               name="identifier"
-              placeholder="mail"
+              placeholder="mario@gmail.com"
               class="form-control"
               formControlName="identifier"
             />
+            <label for="password" class="mt-2">Password</label>
             <input
               type="password"
               name="password"
-              placeholder="password"
-              class="form-control mt-3"
+              placeholder="******"
+              class="form-control "
               formControlName="password"
             />
           </div>
+          <p class="mt-2">
+            Non hai ancora un account? <a routerLink="register">Registrati</a>
+          </p>
           <button
             type="submit"
-            class="btn btn-primary mt-3"
+            class="btn btn-primary mt-1"
             [disabled]="form.invalid"
           >
             Login
           </button>
-          <p class="mt-2">
-            Non hai ancora un account? <a routerLink="register">Registrati</a>
-          </p>
+
         </form>
       </div>
     </div>
