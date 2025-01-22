@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthsrvService } from '../authsrv.service';
@@ -5,6 +6,7 @@ import { Router } from '@angular/router';
 import { CitysrvService } from '../../services/citysrv.service';
 import { iDistrictResponse } from '../../interfaces/idistrictresponse';
 import { iCityResponse } from '../../interfaces/icityresponse';
+import { DecodeTokenService } from '../../services/decode-token.service';
 
 @Component({
   selector: 'app-register',
@@ -22,12 +24,16 @@ export class RegisterComponent implements OnInit {
   progress:number = 25;
   formvalid = false;
   isCheck = false;
+  roles: string[] = [];
+  admin = false;
+
 
   constructor(
     private authSrv: AuthsrvService,
     private router: Router,
     private fb: FormBuilder,
-    private cityService: CitysrvService
+    private cityService: CitysrvService,
+    private decodeToken: DecodeTokenService,
   ) {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
@@ -72,6 +78,16 @@ export class RegisterComponent implements OnInit {
         console.error('Errore nel caricamento dei distretti:', error);
       },
     });
+
+    this.roles = this.decodeToken.userRoles$.getValue();
+    console.log(this.roles);
+
+   // if (this.roles.includes('AMIN') || this.roles.length == 0) {
+     // this.admin = true;
+      //allora può registrare per tutti i ruoli e visualizza una scritta diversa
+    //} else {
+     // this.router.navigate(['home'])
+    //}
   }
 
   register(): void {
@@ -131,7 +147,6 @@ export class RegisterComponent implements OnInit {
     if (this.currentStep < 4) {
       this.currentStep++;
       this.progress += 25;
-
     }
   }
 
@@ -140,6 +155,11 @@ export class RegisterComponent implements OnInit {
       this.currentStep--;
       this.progress -= 25;
     }
+    if(this.isCheck === true)
+    this.form.get('customer.registeredOfficeAddress')?.patchValue({
+      isCheck: false,
+    });
+    this.isCheck = false;
   }
 
   isValid(fieldName: string) {
@@ -160,7 +180,8 @@ export class RegisterComponent implements OnInit {
   onCheckboxChange(): void {
     const isCheck = this.form.get('customer.registeredOfficeAddress.isCheck')?.value;
     console.log(isCheck);
-    if (isCheck == false) {
+    this.isCheck = isCheck;
+    if (isCheck ===  false) {
       const legalAddress = this.form.get('customer.registeredOfficeAddress')?.value;
       const operationalAddress = this.form.get('customer.operationalHeadquartersAddress');
       operationalAddress?.patchValue(legalAddress);
