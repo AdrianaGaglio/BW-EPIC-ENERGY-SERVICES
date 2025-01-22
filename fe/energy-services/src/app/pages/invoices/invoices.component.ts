@@ -33,6 +33,7 @@ export class InvoicesComponent {
   direction: string = 'ASC';
   date: string = '';
 
+  isPaged: boolean = true;
   page!: number;
   pages!: number[];
 
@@ -41,12 +42,14 @@ export class InvoicesComponent {
   ngOnInit() {
     this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
       this.invoices = res.content;
+      this.isPaged = true;
       this.pages = Array.from({ length: res.totalPages }, (_, i) => i + 1);
     });
   }
 
   getAll() {
     this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
+      this.isPaged = true;
       this.invoices = res.content;
     });
   }
@@ -68,7 +71,14 @@ export class InvoicesComponent {
   }
 
   openSearchByStatus() {
-    this.modalService.open(SearchByStatusComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(SearchByStatusComponent, {
+      size: 'xl',
+    });
+
+    modalRef.result.then((res) => {
+      this.isPaged = false;
+      this.invoices = res;
+    });
   }
 
   openSearchByNumber() {
@@ -77,23 +87,52 @@ export class InvoicesComponent {
     });
 
     modalRef.result.then((res) => {
+      this.isPaged = false;
       this.invoices = res;
     });
   }
 
   openSearchByCustomerInfo() {
-    this.modalService.open(SearchByCustomerInfoComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(SearchByCustomerInfoComponent, {
+      size: 'xl',
+    });
+
+    modalRef.result.then((res) => {
+      this.isPaged = false;
+      this.invoices = res;
+    });
   }
 
   openSearchByDate() {
-    this.modalService.open(SearchByDateComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(SearchByDateComponent, {
+      size: 'xl',
+    });
+
+    modalRef.result.then((res) => {
+      this.isPaged = false;
+      this.invoices = res;
+    });
   }
 
   openSearchByYear() {
-    this.modalService.open(SearchByYearComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(SearchByYearComponent, {
+      size: 'xl',
+    });
+
+    modalRef.result.then((res) => {
+      this.isPaged = false;
+      this.invoices = res;
+    });
   }
 
   openSearchByAmount() {
-    this.modalService.open(SearchByAmountComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(SearchByAmountComponent, {
+      size: 'xl',
+    });
+
+    modalRef.result.then((res) => {
+      this.isPaged = false;
+      this.invoices = res;
+    });
   }
 }

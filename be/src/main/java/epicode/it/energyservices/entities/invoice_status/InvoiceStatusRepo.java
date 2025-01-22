@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface InvoiceStatusRepo extends JpaRepository<InvoiceStatus, Long> {
 
-    public Optional<InvoiceStatus> findByName(String name);
+    public Optional<InvoiceStatus> findByNameOrderByNameAsc(String name);
 }

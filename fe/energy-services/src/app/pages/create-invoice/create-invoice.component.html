@@ -1,0 +1,83 @@
+<h3>Insert new invoice</h3>
+<div>
+  <div class="d-flex justify-content-end">
+    <button type="button" (click)="openModal()" class="btn btn-primary">
+      Add new invoice status
+    </button>
+  </div>
+  <form [formGroup]="newInvoice" (submit)="save()">
+    <div class="mb-3">
+      <div class="d-flex justify-content-between">
+        <label class="form-label" for="date">Invoice date:</label>
+        <span class="text-danger" *ngIf="isTouchedInvalid('date')">{{
+          message("date")
+        }}</span>
+      </div>
+      <input
+        type="date"
+        class="form-control"
+        id="date"
+        name="date"
+        formControlName="date"
+      />
+    </div>
+    <div class="mb-3">
+      <div class="d-flex justify-content-between">
+        <label class="form-label" for="date">Invoice amount:</label>
+        <span *ngIf="isTouchedInvalid('amount')" class="text-danger">{{
+          message("amount")
+        }}</span>
+      </div>
+      <input
+        type="number"
+        class="form-control"
+        id="amount"
+        name="amount"
+        step="0.01"
+        formControlName="amount"
+      />
+    </div>
+    <div class="mb-3">
+      <div class="d-flex justify-content-between">
+        <label class="form-label" for="date">Invoice status:</label>
+        <span *ngIf="isTouchedInvalid('status')" class="text-danger">{{
+          message("status")
+        }}</span>
+      </div>
+      <select
+        class="form-select"
+        name="status"
+        id="status"
+        formControlName="status"
+      >
+        <option value="">-- select invoice status --</option>
+        <option *ngFor="let s of statuses" [value]="s.name">
+          {{ s.name }} - {{ s.description }}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <div class="d-flex justify-content-between">
+        <label class="form-label" for="date">Customer:</label>
+        <span *ngIf="isTouchedInvalid('customerId')" class="text-danger">{{
+          message("customerId")
+        }}</span>
+      </div>
+      <select
+        class="form-select"
+        name="customerId"
+        id="customerId"
+        formControlName="customerId"
+      >
+        <option value="">-- select customer --</option>
+        <option *ngFor="let c of customers" [value]="c.id">
+          {{ c.denomination }}
+        </option>
+      </select>
+    </div>
+    <button class="btn btn-success" [disabled]="newInvoice.invalid">
+      <ng-icon name="bootstrapFloppy"></ng-icon>
+      Save
+    </button>
+  </form>
+</div>

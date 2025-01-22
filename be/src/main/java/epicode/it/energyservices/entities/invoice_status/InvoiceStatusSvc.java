@@ -45,12 +45,14 @@ public class InvoiceStatusSvc {
     }
 
     public InvoiceStatus findByName(String name) {
-        return invoiceStatusRepo.findByName(name.toUpperCase()).orElseThrow(() -> new EntityNotFoundException("Status " + name + " not exists"));
+        return invoiceStatusRepo.findByNameOrderByNameAsc(name.toUpperCase()).orElseThrow(() -> new EntityNotFoundException("Status " + name + " not exists"));
     }
 
     public InvoiceStatus create(@Valid InvoiceStatusRequest request) {
         InvoiceStatus status = new InvoiceStatus();
-        BeanUtils.copyProperties(request, status);
+        System.out.println("===>" + request);
+        status.setName(request.getName());
+        status.setDescription(request.getDescription());
         return invoiceStatusRepo.save(status);
     }
 }

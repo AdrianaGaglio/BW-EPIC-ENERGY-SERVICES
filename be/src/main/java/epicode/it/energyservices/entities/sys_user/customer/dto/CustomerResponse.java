@@ -16,6 +16,7 @@ import java.util.Map;
 
 @Data
 public class CustomerResponse {
+    private Long id;
     private String denomination;
     private String vatCode;
     private LocalDate creationDate;
