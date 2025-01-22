@@ -1,0 +1,12 @@
+<form
+  #form="ngForm"
+  (submit)="getCustomersByDenominationsContain(denomination.value)"
+>
+  <label for="denomination" class="form-label">Denomination:</label>
+  <div class="d-flex align-items-center gap-2">
+    <input id="denomination" class="form-control" type="text" #denomination />
+    <button class="btn btn-success">
+      <ng-icon name="bootstrapSearch"></ng-icon>
+    </button>
+  </div>
+</form>

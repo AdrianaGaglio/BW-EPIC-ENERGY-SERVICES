@@ -1,0 +1,9 @@
+<form #form="ngForm" (submit)="getByVatCode(vatCode.value)">
+  <label for="vatCode" class="form-label">VatCode:</label>
+  <div class="d-flex align-items-center gap-2">
+    <input id="vatCode" class="form-control" type="text" #vatCode />
+    <button class="btn btn-success">
+      <ng-icon name="bootstrapSearch"></ng-icon>
+    </button>
+  </div>
+</form>

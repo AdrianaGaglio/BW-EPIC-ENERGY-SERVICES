@@ -3,6 +3,10 @@ import { CustomerService } from '../../../../services/customer.service';
 import { iCustomer } from '../../../../interfaces/icustomer';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SearchByCreationdateComponent } from '../search-by-creationdate/search-by-creationdate.component';
+import { SearchByLastcontactComponent } from '../search-by-lastcontact/search-by-lastcontact.component';
+import { SearchByDenominationComponent } from '../search-by-denomination/search-by-denomination.component';
+import { SearchByYearlyturnoverComponent } from '../search-by-yearlyturnover/search-by-yearlyturnover.component';
+import { SearchByVatcodeComponent } from '../search-by-vatcode/search-by-vatcode.component';
 
 @Component({
   selector: 'app-foradminuser',
@@ -23,79 +27,56 @@ export class ForadminuserComponent {
       .getAllCustomers(numberPage, size, type)
       .subscribe((data) => {
         this.customers = data.content;
-        console.log(this.customers);
       });
-  }
-
-  getCustomersByCreationDate(startDate: string, endDate: string) {
-    this.customerSvc
-      .getCustomersByCreationDate(startDate, endDate)
-      .subscribe((data) => {
-        this.customers = data;
-      });
-  }
-
-  getCustomersByLastContact(startDate: Date, endDate: Date) {
-    this.customerSvc
-      .getCustomersByLastContact(startDate, endDate)
-      .subscribe((data) => {
-        this.customers = data;
-      });
-  }
-
-  getCustomersByDenominationsContain(searchTerm: string) {
-    this.customerSvc
-      .getCustomersByDenominationsContain(searchTerm)
-      .subscribe((data) => {
-        this.customers = data;
-      });
-  }
-
-  getCustomersByYearlyTurnover(min: number, max: number) {
-    this.customerSvc
-      .getCustomersByYearlyTurnover(min, max)
-      .subscribe((data) => {
-        this.customers = data;
-      });
-  }
-
-  getCustomerByVatCode(vatCode: string) {
-    this.customerSvc.getCustomerByVatCode(vatCode).subscribe((data) => {
-      this.customers.push(data);
-    });
-  }
-
-  getCustomerByUsername(username: string) {
-    this.customerSvc.getCustomerByUsername(username).subscribe((data) => {
-      this.customers.push(data);
-    });
   }
 
   openSearchByCreationDate() {
-    this.modalService.open(SearchByCreationdateComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(SearchByCreationdateComponent, {
+      size: 'xl',
+    });
+    modalRef.result.then((res) => {
+      this.customers = res;
+      console.log(this.customers);
+    });
   }
 
-  openSearchByStatus() {
-    // this.modalService.open(SearchByStatusComponent, { size: 'xl' });
+  openSearchByLastContact() {
+    const modalRef = this.modalService.open(SearchByLastcontactComponent, {
+      size: 'xl',
+    });
+    modalRef.result.then((res) => {
+      this.customers = res;
+      console.log(this.customers);
+    });
   }
 
-  openSearchByNumber() {
-    // this.modalService.open(SearchByNumberComponent, { size: 'xl' });
+  openSearchByDenomination() {
+    const modalRef = this.modalService.open(SearchByDenominationComponent, {
+      size: 'xl',
+    });
+    modalRef.result.then((res) => {
+      this.customers = res;
+      console.log(this.customers);
+    });
   }
 
-  openSearchByCustomerInfo() {
-    // this.modalService.open(SearchByCustomerInfoComponent, { size: 'xl' });
+  openSearchByYearlyTurnover() {
+    const modalRef = this.modalService.open(SearchByYearlyturnoverComponent, {
+      size: 'xl',
+    });
+    modalRef.result.then((res) => {
+      this.customers = res;
+      console.log(this.customers);
+    });
   }
 
-  openSearchByDate() {
-    // this.modalService.open(SearchByDateComponent, { size: 'xl' });
-  }
-
-  openSearchByYear() {
-    // this.modalService.open(SearchByYearComponent, { size: 'xl' });
-  }
-
-  openSearchByAmount() {
-    // this.modalService.open(SearchByAmountComponent, { size: 'xl' });
+  openSearchByVatcode() {
+    const modalRef = this.modalService.open(SearchByVatcodeComponent, {
+      size: 'xl',
+    });
+    modalRef.result.then((res) => {
+      this.customers = res;
+      console.log(this.customers);
+    });
   }
 }

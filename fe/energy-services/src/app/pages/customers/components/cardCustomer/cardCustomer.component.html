@@ -1,0 +1,64 @@
+<ng-container *ngIf="customer">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between">
+      <span>Customer Id: {{ customer.id }}</span>
+      <span>Creation Date: {{ customer.creationDate }}</span>
+    </div>
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <h5>
+          Denomination:
+          <span class="fw-bold">{{ customer.denomination }}</span>
+        </h5>
+        <h5>
+          VatCode: <span class="fw-bold">{{ customer.vatCode }}</span>
+        </h5>
+      </div>
+      <div class="d-flex flex-column">
+        <p class="mb-0 fw-bold">Details</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            Type: <span class="fw-bold"> {{ customer.type }}</span>
+          </li>
+          <li class="list-group-item">
+            Contact phone:
+            <span class="fw-bold"> {{ customer.contactPhone }}</span>
+          </li>
+          <li class="list-group-item">
+            PEC: <span class="fw-bold"> {{ customer.pec }}</span>
+          </li>
+          <li class="list-group-item">
+            Office address:
+            <span class="fw-bold">
+              {{ customer.addresses.RegisteredOfficeAddress.street }}
+              {{ customer.addresses.RegisteredOfficeAddress.city.name }}
+              {{
+                customer.addresses.RegisteredOfficeAddress.city.district.code
+              }}
+              {{ customer.addresses.RegisteredOfficeAddress.cap }}
+            </span>
+          </li>
+          <li class="list-group-item">
+            Headquarter address:
+            <span class="fw-bold">
+              {{ customer.addresses.OperationalHeadquartersAddress.street }}
+              {{ customer.addresses.OperationalHeadquartersAddress.city.name }}
+              {{
+                customer.addresses.OperationalHeadquartersAddress.city.district
+                  .code
+              }}
+              {{ customer.addresses.OperationalHeadquartersAddress.cap }}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-footer bg-transparent d-flex justify-content-end">
+      <button class="btn btn-outline-primary">See invoices</button>
+    </div>
+  </div>
+</ng-container>
+
+<!-- <li class="list-group-item" *ngIf="customer.yearlyTurnover > 0">
+  Yearly turnover: {{ customer.yearlyTurnover }} €
+</li> -->

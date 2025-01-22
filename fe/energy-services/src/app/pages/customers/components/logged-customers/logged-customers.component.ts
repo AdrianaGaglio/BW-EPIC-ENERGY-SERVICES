@@ -11,6 +11,10 @@ export class LoggedCustomersComponent {
   private customerSvc = inject(CustomerService);
 
   customer!: iCustomer;
+
+  ngOnInit() {
+    this.getCustomerByLoggedCustomer();
+  }
   getCustomerByLoggedCustomer() {
     this.customerSvc.getCustomerByLoggedCustomer().subscribe((data) => {
       this.customer = data;

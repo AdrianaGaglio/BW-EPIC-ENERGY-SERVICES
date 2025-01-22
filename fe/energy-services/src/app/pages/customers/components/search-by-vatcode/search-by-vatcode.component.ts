@@ -1,25 +1,23 @@
 import { Component, inject } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { iCustomer } from '../../../../interfaces/icustomer';
 import { CustomerService } from '../../../../services/customer.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-search-by-creationdate',
-  templateUrl: './search-by-creationdate.component.html',
-  styleUrl: './search-by-creationdate.component.scss',
+  selector: 'app-search-by-vatcode',
+  templateUrl: './search-by-vatcode.component.html',
+  styleUrl: './search-by-vatcode.component.scss',
 })
-export class SearchByCreationdateComponent {
+export class SearchByVatcodeComponent {
   private customerSvc = inject(CustomerService);
   private activeModal = inject(NgbActiveModal);
 
   customers: iCustomer[] = [];
 
-  getByCreationDate(startDate: string, endDate: string) {
-    console.log(startDate, endDate);
-
-    this.customerSvc.getCustomersByCreationDate(startDate, endDate).subscribe({
+  getByVatCode(vatCode: string) {
+    this.customerSvc.getCustomerByVatCode(vatCode).subscribe({
       next: (res) => {
-        this.customers = res;
+        this.customers.push(res);
         this.activeModal.close(this.customers);
       },
       error: (err) => {
