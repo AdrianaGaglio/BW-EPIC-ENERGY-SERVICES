@@ -3,6 +3,7 @@ import { CustomerService } from '../../../../services/customer.service';
 import { iCustomer } from '../../../../interfaces/icustomer';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SearchByCreationdateComponent } from '../search-by-creationdate/search-by-creationdate.component';
+import { SearchByLastcontactComponent } from '../search-by-lastcontact/search-by-lastcontact.component';
 
 @Component({
   selector: 'app-foradminuser',
@@ -23,25 +24,24 @@ export class ForadminuserComponent {
       .getAllCustomers(numberPage, size, type)
       .subscribe((data) => {
         this.customers = data.content;
-        console.log(this.customers);
       });
   }
 
-  getCustomersByCreationDate(startDate: string, endDate: string) {
-    this.customerSvc
-      .getCustomersByCreationDate(startDate, endDate)
-      .subscribe((data) => {
-        this.customers = data;
-      });
-  }
+  // getCustomersByCreationDate(startDate: string, endDate: string) {
+  //   this.customerSvc
+  //     .getCustomersByCreationDate(startDate, endDate)
+  //     .subscribe((data) => {
+  //       this.customers = data;
+  //     });
+  // }
 
-  getCustomersByLastContact(startDate: Date, endDate: Date) {
-    this.customerSvc
-      .getCustomersByLastContact(startDate, endDate)
-      .subscribe((data) => {
-        this.customers = data;
-      });
-  }
+  // getCustomersByLastContact(startDate: string, endDate: string) {
+  //   this.customerSvc
+  //     .getCustomersByLastContact(startDate, endDate)
+  //     .subscribe((data) => {
+  //       this.customers = data;
+  //     });
+  // }
 
   getCustomersByDenominationsContain(searchTerm: string) {
     this.customerSvc
@@ -72,11 +72,23 @@ export class ForadminuserComponent {
   }
 
   openSearchByCreationDate() {
-    this.modalService.open(SearchByCreationdateComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(SearchByCreationdateComponent, {
+      size: 'xl',
+    });
+    modalRef.result.then((res) => {
+      this.customers = res;
+      console.log(this.customers);
+    });
   }
 
-  openSearchByStatus() {
-    // this.modalService.open(SearchByStatusComponent, { size: 'xl' });
+  openSearchByLastContact() {
+    const modalRef = this.modalService.open(SearchByLastcontactComponent, {
+      size: 'xl',
+    });
+    modalRef.result.then((res) => {
+      this.customers = res;
+      console.log(this.customers);
+    });
   }
 
   openSearchByNumber() {

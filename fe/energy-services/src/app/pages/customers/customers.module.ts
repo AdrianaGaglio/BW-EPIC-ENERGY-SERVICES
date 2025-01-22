@@ -8,6 +8,7 @@ import { ForadminuserComponent } from './components/foradminuser/foradminuser.co
 import { FormsModule } from '@angular/forms';
 import { SearchByCreationdateComponent } from './components/search-by-creationdate/search-by-creationdate.component';
 import { NgIconsModule } from '@ng-icons/core';
+import { SearchByLastcontactComponent } from './components/search-by-lastcontact/search-by-lastcontact.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { NgIconsModule } from '@ng-icons/core';
     LoggedCustomersComponent,
     ForadminuserComponent,
     SearchByCreationdateComponent,
+    SearchByLastcontactComponent,
   ],
   imports: [CommonModule, CustomersRoutingModule, FormsModule, NgIconsModule],
 })

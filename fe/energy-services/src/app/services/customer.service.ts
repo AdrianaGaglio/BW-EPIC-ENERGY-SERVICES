@@ -39,7 +39,7 @@ export class CustomerService {
       this.baseUrl + `/by-vatCode?vatCode=${vatCode}`
     );
   }
-  getCustomersByLastContact(startDate: Date, endDate: Date) {
+  getCustomersByLastContact(startDate: string, endDate: string) {
     return this.HttpClient.get<iCustomer[]>(
       this.baseUrl +
         `/byLastContactBetween?startDate=${startDate}&endDate=${endDate}`

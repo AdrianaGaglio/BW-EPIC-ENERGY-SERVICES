@@ -35,7 +35,7 @@
       [(ngModel)]="searchBy"
       value="byNumber"
       autocomplete="off"
-      (change)="openSearchByNumber()"
+      (change)="openSearchByLastContact()"
     />
     <label class="btn btn-outline-primary" for="byNumber">Last Contact</label>
 
@@ -47,7 +47,7 @@
       value="byStatus"
       id="byStatus"
       autocomplete="off"
-      (change)="openSearchByStatus()"
+      (change)="openSearchByNumber()"
     />
     <label class="btn btn-outline-primary" for="byStatus">Denominations</label>
     <input
