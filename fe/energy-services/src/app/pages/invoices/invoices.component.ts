@@ -20,7 +20,9 @@ export class InvoicesComponent {
   constructor(private invoiceSvc: InvoiceService) {}
   private modalService = inject(NgbModal);
 
-  invoices!: iInvoiceresponse[] | iInvoiceresponseforcustomer[];
+  invoices!: iInvoiceresponse[];
+
+  customerInvoices!: iInvoiceresponseforcustomer[];
 
   invoiceId: number = 0;
   invoiceNumber: number = 0;
@@ -31,43 +33,34 @@ export class InvoicesComponent {
   direction: string = 'ASC';
   date: string = '';
 
+  page!: number;
+  pages!: number[];
+
   searchBy: string = 'all';
 
+  ngOnInit() {
+    this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
+      this.invoices = res.content;
+      this.pages = Array.from({ length: res.totalPages }, (_, i) => i + 1);
+    });
+  }
+
   getAll() {
-    this.invoiceSvc
-      .getAllPaged(0, 20, 'date,desc')
-      .subscribe((res) => (this.invoices = res.content));
+    this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
+      this.invoices = res.content;
+    });
+  }
+
+  changePage(num: number) {
+    this.invoiceSvc.getAllPaged(num, 10, 'number,desc').subscribe((res) => {
+      this.invoices = res.content;
+    });
   }
 
   getAllByCustomer() {
     this.invoiceSvc
       .getAllByCustomer()
-      .subscribe((res) => (this.invoices = res));
-  }
-
-  // getById(id: number) {
-  //   this.invoiceSvc.getById(id).subscribe((res) => {
-  //     this.invoices = [];
-  //     this.invoices.push(res);
-  //   });
-  // }
-
-  getAllByDate(date: string) {
-    this.invoiceSvc
-      .getAllByDate(date)
-      .subscribe((res) => (this.invoices = res));
-  }
-
-  getAllByYear(year: number) {
-    this.invoiceSvc
-      .getAllByYear(year)
-      .subscribe((res) => (this.invoices = res));
-  }
-
-  getAllByAmountRange(min: number, max: number) {
-    this.invoiceSvc
-      .getAllByAmountRange(min, max)
-      .subscribe((res) => (this.invoices = res));
+      .subscribe((res) => (this.customerInvoices = res));
   }
 
   openSearchByCustomer() {
@@ -79,7 +72,13 @@ export class InvoicesComponent {
   }
 
   openSearchByNumber() {
-    this.modalService.open(SearchByNumberComponent, { size: 'xl' });
+    const modalRef = this.modalService.open(SearchByNumberComponent, {
+      size: 'xl',
+    });
+
+    modalRef.result.then((res) => {
+      this.invoices = res;
+    });
   }
 
   openSearchByCustomerInfo() {

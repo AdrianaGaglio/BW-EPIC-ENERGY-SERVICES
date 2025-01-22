@@ -12,6 +12,7 @@ import { SearchByDateComponent } from './components/search-by-date/search-by-dat
 import { SearchByYearComponent } from './components/search-by-year/search-by-year.component';
 import { SearchByAmountComponent } from './components/search-by-amount/search-by-amount.component';
 import { NgIconsModule } from '@ng-icons/core';
+import { InvoiceCardModule } from '../../shared/invoice-card/invoice-card.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,12 @@ import { NgIconsModule } from '@ng-icons/core';
     SearchByYearComponent,
     SearchByAmountComponent,
   ],
-  imports: [CommonModule, InvoicesRoutingModule, FormsModule, NgIconsModule],
+  imports: [
+    CommonModule,
+    InvoicesRoutingModule,
+    FormsModule,
+    NgIconsModule,
+    InvoiceCardModule,
+  ],
 })
 export class InvoicesModule {}

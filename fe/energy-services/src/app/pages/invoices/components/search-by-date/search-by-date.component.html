@@ -1,2 +1,9 @@
-Search by date
-<form></form>
+<form #form="ngForm" (submit)="getAllByDate(date.value)">
+  <label for="date" class="form-label">Invoice date:</label>
+  <div class="d-flex align-items-center gap-2">
+    <input id="date" class="form-control" type="date" #date />
+    <button class="btn btn-success">
+      <ng-icon name="bootstrapSearch"></ng-icon>
+    </button>
+  </div>
+</form>
