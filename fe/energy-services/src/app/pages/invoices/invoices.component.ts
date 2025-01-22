@@ -37,14 +37,23 @@ export class InvoicesComponent {
   page!: number;
   pages!: number[];
 
+  customerFromlocalStorage: string | null = null;
   searchBy: string = 'all';
 
   ngOnInit() {
-    this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
-      this.invoices = res.content;
-      this.isPaged = true;
-      this.pages = Array.from({ length: res.totalPages }, (_, i) => i + 1);
-    });
+    this.customerFromlocalStorage =
+      sessionStorage.getItem('customerToInvoices');
+
+    if (this.customerFromlocalStorage) {
+      this.openSearchByCustomerInfo();
+      this.searchBy = 'byCustomerInfo';
+    } else {
+      this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
+        this.invoices = res.content;
+        this.isPaged = true;
+        this.pages = Array.from({ length: res.totalPages }, (_, i) => i + 1);
+      });
+    }
   }
 
   getAll() {
