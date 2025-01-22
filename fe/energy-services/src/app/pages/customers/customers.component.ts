@@ -23,8 +23,6 @@ export class CustomersComponent {
 
     if (this.roles.includes('CUSTOMER')) {
       this.isCustomer = true;
-    } else {
-      console.log('CAo');
     }
   }
 }

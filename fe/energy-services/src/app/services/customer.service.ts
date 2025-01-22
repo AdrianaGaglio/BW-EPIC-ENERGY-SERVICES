@@ -22,7 +22,7 @@ export class CustomerService {
     return this.HttpClient.get<Icustomerpageresponse>(url);
   }
 
-  getCustomersByCreationDate(startDate: Date, endDate: Date) {
+  getCustomersByCreationDate(startDate: string, endDate: string) {
     return this.HttpClient.get<iCustomer[]>(
       this.baseUrl +
         `/byCreationDateBetween?startDate=${startDate}&endDate=${endDate}`
