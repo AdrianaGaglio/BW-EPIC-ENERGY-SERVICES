@@ -12,6 +12,7 @@ public class InvoiceResponse {
     private LocalDate date;
     private double amount;
     private int number;
+    private String notes;
     private String status;
     private CustomerResponseForInvoice customer;
 }

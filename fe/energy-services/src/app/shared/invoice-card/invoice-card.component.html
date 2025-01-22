@@ -11,6 +11,7 @@
       <h5>
         Invoice amount: <span class="fw-bold">€{{ invoice.amount }}</span>
       </h5>
+      <p *ngIf="invoice.notes">#Notes: {{ invoice.notes }}</p>
       <h5>
         Invoice status: <span class="fw-bold">{{ invoice.status }}</span>
       </h5>
@@ -53,5 +54,11 @@
         </li>
       </ul>
     </div>
+  </div>
+  <div
+    class="card-footer d-flex justify-content-end"
+    *ngIf="roles.includes('ADMIN') || roles.includes('USER')"
+  >
+    <button class="btn btn-success" (click)="openModal(invoice)">Edit</button>
   </div>
 </div>

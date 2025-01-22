@@ -5,6 +5,7 @@ export interface iInvoiceresponse {
   date: string;
   amount: number;
   number: number;
+  notes: string;
   status: string;
   customer: iCustomerresponseforinvoice;
 }

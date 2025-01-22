@@ -7,4 +7,6 @@ import lombok.Data;
 public class InvoiceUpdateRequest {
     @NotBlank(message = "Invoice status is required")
     private String status;
+
+    private String notes;
 }

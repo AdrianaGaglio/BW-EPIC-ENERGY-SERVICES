@@ -50,7 +50,6 @@ public class InvoiceStatusSvc {
 
     public InvoiceStatus create(@Valid InvoiceStatusRequest request) {
         InvoiceStatus status = new InvoiceStatus();
-        System.out.println("===>" + request);
         status.setName(request.getName());
         status.setDescription(request.getDescription());
         return invoiceStatusRepo.save(status);

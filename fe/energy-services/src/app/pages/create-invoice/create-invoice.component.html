@@ -63,17 +63,29 @@
           message("customerId")
         }}</span>
       </div>
-      <select
-        class="form-select"
-        name="customerId"
-        id="customerId"
-        formControlName="customerId"
-      >
-        <option value="">-- select customer --</option>
-        <option *ngFor="let c of customers" [value]="c.id">
-          {{ c.denomination }}
-        </option>
-      </select>
+      <div class="d-flex align-items-center gap-2">
+        <select
+          class="form-select"
+          name="customerId"
+          id="customerId"
+          formControlName="customerId"
+        >
+          <option value="">-- select customer --</option>
+          <option *ngFor="let c of customers" [value]="c.id">
+            {{ c.denomination }}
+          </option>
+        </select>
+        <input
+          class="form-control"
+          type="text"
+          id="vatCode"
+          name="vatCode"
+          #vatCode
+          placeholder="Search by vat code (press enter)"
+          (keypress)="keydown($event)"
+          (change)="clean()"
+        />
+      </div>
     </div>
     <button class="btn btn-success" [disabled]="newInvoice.invalid">
       <ng-icon name="bootstrapFloppy"></ng-icon>

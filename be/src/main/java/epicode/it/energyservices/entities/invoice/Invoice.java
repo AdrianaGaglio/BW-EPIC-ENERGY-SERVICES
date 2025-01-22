@@ -19,6 +19,8 @@ public class Invoice {
 
     private double amount;
 
+    private String notes = "";
+
     @Column(nullable = false, unique = true)
     private int number = 1;
 

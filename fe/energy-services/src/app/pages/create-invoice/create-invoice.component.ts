@@ -45,6 +45,23 @@ export class CreateInvoiceComponent {
     );
   }
 
+  keydown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      let vatCode = (event.target as HTMLInputElement).value;
+      this.searchByVatCode(vatCode);
+    }
+  }
+
+  searchByVatCode(vatCode: string) {
+    this.customerSvc.getCustomerByVatCode(vatCode).subscribe((res) => {
+      this.newInvoice.get('customerId')?.setValue(res.id);
+    });
+  }
+
+  clean() {
+    this.newInvoice.get('customerId')?.reset();
+  }
+
   message(field: string) {
     if (this.newInvoice.get(field)?.hasError('required')) {
       return 'Field is required';

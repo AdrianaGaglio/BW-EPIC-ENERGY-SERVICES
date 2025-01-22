@@ -68,9 +68,9 @@ public class InvoiceSvc {
         Customer c = customerSvc.getById(request.getCustomerId());
         i.setCustomer(c);
         i.setStatus(status);
-
         InvoiceResponse response = mapper.toInvoiceResponse(invoiceRepo.save(i));
-
+        int currentYear = LocalDate.now().getYear();
+        c.setYearlyTurnover(getTotalByCustomerIdAndYear(request.getCustomerId(), currentYear));
         if (!i.getStatus().getName().equals("DRAFT"))
             emailSvc.sendEmailHtml(emailMapper.fromInvoicetoEmailRequest("New invoice", i));
         return response;
@@ -84,6 +84,7 @@ public class InvoiceSvc {
         Invoice i = getByNumber(number);
         InvoiceStatus newStatus = invoiceStatusSvc.findByName(request.getStatus().toUpperCase());
         i.setStatus(newStatus);
+        i.setNotes(request.getNotes());
         InvoiceResponse response = mapper.toInvoiceResponse(invoiceRepo.save(i));
         emailSvc.sendEmailHtml(emailMapper.fromInvoicetoEmailRequest("Invoice status changed", i));
         return response;
@@ -118,4 +119,7 @@ public class InvoiceSvc {
         return mapper.toInvoiceResponseList(invoiceRepo.findAllByAmountBetweenOrderByAmountAsc(min, max));
     }
 
+    public double getTotalByCustomerIdAndYear(Long id, int year) {
+        return invoiceRepo.findTotalAllByCustomerAndYear(id, year);
+    }
 }
