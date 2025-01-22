@@ -6,6 +6,7 @@ import { iInvoiceStatus } from '../../../interfaces/iinvoice-status';
 import { iInvoiceupdaterequest } from '../../../interfaces/iinvoiceupdaterequest';
 import { InvoiceService } from '../../../services/invoice.service';
 import { iInvoice } from '../../../interfaces/iinvoice';
+import { iInvoiceresponseforcustomer } from '../../../interfaces/iinvoiceresponseforcustomer';
 
 @Component({
   selector: 'app-update-invoice',
@@ -21,7 +22,7 @@ export class UpdateInvoiceComponent {
 
   statuses: iInvoiceStatus[] = [];
 
-  @Input() invoice!: iInvoiceresponse;
+  @Input() invoice!: iInvoiceresponse | iInvoiceresponseforcustomer;
 
   invoiceUpdate: iInvoiceupdaterequest = {
     status: '',

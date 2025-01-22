@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/invoice_status")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+@PreAuthorize("hasAnyRole('ADMIN', 'USER', 'CUSTOMER')")
 public class InvoiceStatusController {
     private final InvoiceStatusSvc invoiceStatusSvc;
 

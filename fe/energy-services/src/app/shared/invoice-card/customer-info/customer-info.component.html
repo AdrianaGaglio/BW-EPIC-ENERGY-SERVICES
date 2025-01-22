@@ -1,0 +1,29 @@
+<p class="mb-0 fw-bold">Customer details</p>
+<ul class="list-group list-group-flush">
+  <li class="list-group-item">{{ invoice.customer!.denomination }}</li>
+  <li class="list-group-item">Vat code: {{ invoice.customer!.vatCode }}</li>
+  <li class="list-group-item">
+    Contact phone: {{ invoice.customer!.contactPhone }}
+  </li>
+  <li class="list-group-item">PEC: {{ invoice.customer!.pec }}</li>
+  <li class="list-group-item" *ngIf="invoice.customer!.yearlyTurnover > 0">
+    Yearly turnover: {{ invoice.customer!.yearlyTurnover }} €
+  </li>
+  <li class="list-group-item">
+    Office address:
+    {{ invoice.customer!.addresses.RegisteredOfficeAddress.street }}
+    {{ invoice.customer!.addresses.RegisteredOfficeAddress.city.name }}
+    {{ invoice.customer!.addresses.RegisteredOfficeAddress.city.district.code }}
+    {{ invoice.customer!.addresses.RegisteredOfficeAddress.cap }}
+  </li>
+  <li class="list-group-item">
+    Headquarter address:
+    {{ invoice.customer!.addresses.OperationalHeadquartersAddress.street }}
+    {{ invoice.customer!.addresses.OperationalHeadquartersAddress.city.name }}
+    {{
+      invoice.customer!.addresses.OperationalHeadquartersAddress.city.district
+        .code
+    }}
+    {{ invoice.customer!.addresses.OperationalHeadquartersAddress.cap }}
+  </li>
+</ul>

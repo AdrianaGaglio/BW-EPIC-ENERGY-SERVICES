@@ -3,6 +3,8 @@ import { iInvoiceresponse } from '../../interfaces/iinvoiceresponse';
 import { DecodeTokenService } from '../../services/decode-token.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateInvoiceComponent } from './update-invoice/update-invoice.component';
+import { iInvoicestatus } from '../../interfaces/iinvoicestatus';
+import { iInvoiceresponseforcustomer } from '../../interfaces/iinvoiceresponseforcustomer';
 
 @Component({
   selector: 'app-invoice-card',
@@ -13,7 +15,7 @@ export class InvoiceCardComponent {
   constructor(private decodeToken: DecodeTokenService) {}
   private modalService = inject(NgbModal);
 
-  @Input() invoice!: iInvoiceresponse;
+  @Input() invoice!: iInvoiceresponse | iInvoiceresponseforcustomer;
 
   roles: string[] = [];
 
@@ -21,7 +23,7 @@ export class InvoiceCardComponent {
     this.roles = this.decodeToken.userRoles$.getValue();
   }
 
-  openModal(invoice: iInvoiceresponse) {
+  openModal(invoice: iInvoiceresponse | iInvoiceresponseforcustomer) {
     const modalRef = this.modalService.open(UpdateInvoiceComponent, {
       size: 'xl',
     });
