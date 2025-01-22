@@ -88,7 +88,7 @@ public class CustomerSvc {
     }
 
     public CustomerResponse findByVatCode(String vatCode) {
-        return mapper.toCustomerResponse(customerRepo.findByVatCode(vatCode));
+        return mapper.toCustomerResponse(customerRepo.findByVatCode(vatCode).orElseThrow(() -> new EntityNotFoundException("Customer not found")));
     }
 
     @Transactional
