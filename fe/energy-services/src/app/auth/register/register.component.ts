@@ -126,16 +126,16 @@ export class RegisterComponent implements OnInit {
 
   nextStep() {
     if (this.currentStep < 4) {
-      this.progress += 25;
       this.currentStep++;
+      this.progress += 25;
 
     }
   }
 
   prevStep() {
     if (this.currentStep > 1) {
-      this.progress -= 25;
       this.currentStep--;
+      this.progress -= 25;
     }
   }
 }

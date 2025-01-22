@@ -10,7 +10,7 @@
           <!-- Dati Utente -->
           <fieldset *ngIf="currentStep === 1">
             <legend>Dati Utente</legend>
-            <div class="form-group">
+            <div class="form-group" >
               <label for="name">Nome</label>
               <input id="name" type="text" placeholder="Nome" class="form-control" formControlName="name">
 
@@ -30,9 +30,10 @@
           </fieldset>
 
           <!-- Dati Cliente -->
+           <ng-container formGroupName ="customer" >
           <fieldset *ngIf="currentStep === 2">
             <legend>Dati Cliente</legend>
-            <div class="form-group">
+            <div class="form-group" >
               <label for="denomination">Denominazione</label>
               <input id="denomination" type="text" placeholder="Denominazione" class="form-control" formControlName="denomination">
 
@@ -61,7 +62,7 @@
           <!--  Sede Legale -->
           <fieldset *ngIf="currentStep === 3">
             <legend>Sede Legale</legend>
-            <div class="form-group">
+            <div class="form-group" formGroupName ="registeredOfficeAddress" >
               <label for="registeredStreet">Via</label>
               <input id="registeredStreet" type="text" placeholder="Via" class="form-control" formControlName="street">
 
@@ -94,7 +95,7 @@
           <!-- Sede Operativa -->
           <fieldset *ngIf="currentStep === 4">
             <legend>Sede Operativa</legend>
-            <div class="form-group">
+            <div class="form-group" formGroupName="operationalHeadquartersAddress">
               <label for="operationalStreet">Via</label>
               <input id="operationalStreet" type="text" placeholder="Via" class="form-control" formControlName="street">
 
@@ -123,6 +124,7 @@
             <button type="button" class="btn btn-secondary mt-4" (click)="prevStep()">Indietro</button>
             <button type="submit" class="btn btn-primary mt-4" [disabled]="form.invalid">Registrati</button>
           </fieldset>
+        </ng-container>
         </form>
       </div>
     </div>
