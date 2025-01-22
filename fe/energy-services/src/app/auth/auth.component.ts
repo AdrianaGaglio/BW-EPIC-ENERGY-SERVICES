@@ -19,13 +19,25 @@ export class AuthComponent {
     });
   }
 
-  login() {
-    if (this.form.valid) {
+  login(){
+    if(this.form.valid){
       //prendo i dati dal form e li inserisco in una varabile
       const formData: iLoginRequest = this.form.value;
-      this.authSvc.login(formData).subscribe();
-    } else {
-      console.log('form invalido');
+      this.authSvc.login(formData).subscribe(
+        {
+          next: (data) => {
+            console.log('login effettuato con successo')
+            this.router.navigate(['home'])
+          },
+          error:(data) => {
+            console.log('errore login')
+          }
+        }
+      )
+
+    }
+    else{
+      console.log('form invalido')
     }
   }
 }

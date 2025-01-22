@@ -10,11 +10,20 @@
           <fieldset>
             <legend>Dati Utente</legend>
             <div class="form-group">
-              <input type="text" placeholder="Nome" class="form-control" formControlName="name">
-              <input type="text" placeholder="Cognome" class="form-control mt-3" formControlName="surname">
-              <input type="email" placeholder="Email" class="form-control mt-3" formControlName="email">
-              <input type="password" placeholder="Password" class="form-control mt-3" formControlName="password">
-              <input type="text" placeholder="Username" class="form-control mt-3" formControlName="username">
+              <label for="name">Nome</label>
+              <input id="name" type="text" placeholder="Nome" class="form-control" formControlName="name">
+
+              <label for="surname" class="mt-3">Cognome</label>
+              <input id="surname" type="text" placeholder="Cognome" class="form-control" formControlName="surname">
+
+              <label for="email" class="mt-3">E-mail</label>
+              <input id="email" type="email" placeholder="Email" class="form-control" formControlName="email">
+
+              <label for="password" class="mt-3">Password</label>
+              <input id="password" type="password" placeholder="Password" class="form-control" formControlName="password">
+
+              <label for="username" class="mt-3">Username</label>
+              <input id="username" type="text" placeholder="Username" class="form-control" formControlName="username">
             </div>
           </fieldset>
 
@@ -22,12 +31,23 @@
           <fieldset formGroupName="customer" class="mt-4">
             <legend>Dati Cliente</legend>
             <div class="form-group">
-              <input type="text" placeholder="Denominazione" class="form-control" formControlName="denomination">
-              <input type="text" placeholder="Partita IVA" class="form-control mt-3" formControlName="vatCode">
-              <input type="email" placeholder="PEC" class="form-control mt-3" formControlName="pec">
-              <input type="text" placeholder="Telefono" class="form-control mt-3" formControlName="phone">
-              <input type="text" placeholder="Telefono Contatto" class="form-control mt-3" formControlName="contactPhone">
-              <select class="form-control mt-3" formControlName="type">
+              <label for="denomination">Denominazione</label>
+              <input id="denomination" type="text" placeholder="Denominazione" class="form-control" formControlName="denomination">
+
+              <label for="vatCode" class="mt-3">Partita IVA</label>
+              <input id="vatCode" type="text" placeholder="Partita IVA" class="form-control" formControlName="vatCode">
+
+              <label for="pec" class="mt-3">PEC</label>
+              <input id="pec" type="email" placeholder="PEC" class="form-control" formControlName="pec">
+
+              <label for="phone" class="mt-3">Telefono</label>
+              <input id="phone" type="text" placeholder="Telefono" class="form-control" formControlName="phone">
+
+              <label for="contactPhone" class="mt-3">Telefono Contatto</label>
+              <input id="contactPhone" type="text" placeholder="Telefono Contatto" class="form-control" formControlName="contactPhone">
+
+              <label for="type" class="mt-3">Tipo</label>
+              <select id="type" class="form-control" formControlName="type">
                 <option value="">Seleziona Tipo</option>
                 <option *ngFor="let type of types" [value]="type">{{ type }}</option>
               </select>
@@ -36,25 +56,38 @@
             <!-- Sede Legale -->
             <fieldset formGroupName="registeredOfficeAddress" class="mt-4">
               <legend>Sede Legale</legend>
-              <input type="text" placeholder="Via" class="form-control" formControlName="street">
-              <input type="text" placeholder="Numero Civico" class="form-control mt-3" formControlName="addressNumber">
-              <input type="number" placeholder="CAP" class="form-control mt-3" formControlName="cap">
-              <input type="number" placeholder="ID Città" class="form-control mt-3" formControlName="idCity">
+              <label for="registeredStreet">Via</label>
+              <input id="registeredStreet" type="text" placeholder="Via" class="form-control" formControlName="street">
+
+              <label for="registeredAddressNumber" class="mt-3">Numero Civico</label>
+              <input id="registeredAddressNumber" type="text" placeholder="Numero Civico" class="form-control" formControlName="addressNumber">
+
+              <label for="registeredCap" class="mt-3">CAP</label>
+              <input id="registeredCap" type="number" placeholder="CAP" class="form-control" formControlName="cap">
+
+              <label for="registeredIdCity" class="mt-3">ID Città</label>
+              <input id="registeredIdCity" type="number" placeholder="ID Città" class="form-control" formControlName="idCity">
             </fieldset>
 
             <!-- Sede Operativa -->
             <fieldset formGroupName="operationalHeadquartersAddress" class="mt-4">
               <legend>Sede Operativa</legend>
-              <input type="text" placeholder="Via" class="form-control" formControlName="street">
-              <input type="text" placeholder="Numero Civico" class="form-control mt-3" formControlName="addressNumber">
-              <input type="number" placeholder="CAP" class="form-control mt-3" formControlName="cap">
-              <input type="number" placeholder="ID Città" class="form-control mt-3" formControlName="idCity">
+              <label for="operationalStreet">Via</label>
+              <input id="operationalStreet" type="text" placeholder="Via" class="form-control" formControlName="street">
+
+              <label for="operationalAddressNumber" class="mt-3">Numero Civico</label>
+              <input id="operationalAddressNumber" type="text" placeholder="Numero Civico" class="form-control" formControlName="addressNumber">
+
+              <label for="operationalCap" class="mt-3">CAP</label>
+              <input id="operationalCap" type="number" placeholder="CAP" class="form-control" formControlName="cap">
+
+              <label for="operationalIdCity" class="mt-3">ID Città</label>
+              <input id="operationalIdCity" type="number" placeholder="ID Città" class="form-control" formControlName="idCity">
             </fieldset>
           </fieldset>
 
           <button type="submit" class="btn btn-primary mt-4" [disabled]="form.invalid">Registrati</button>
         </form>
-
       </div>
     </div>
   </div>
