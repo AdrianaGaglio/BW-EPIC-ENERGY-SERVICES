@@ -1,8 +1,23 @@
+import { RegisterComponent } from './../../../../auth/register/register.component';
 import { Component, Input } from '@angular/core';
+import { iInvoiceresponseforcustomer } from '../../../../interfaces/iinvoiceresponseforcustomer';
+import { iInvoiceresponse } from '../../../../interfaces/iinvoiceresponse';
+import { InvoiceService } from '../../../../services/invoice.service';
 
 @Component({
   selector: 'app-search-by-status',
   templateUrl: './search-by-status.component.html',
   styleUrl: './search-by-status.component.scss',
 })
-export class SearchByStatusComponent {}
+export class SearchByStatusComponent {
+  constructor(private invoiceSvc: InvoiceService) {}
+
+  invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
+
+  getAllByStatus(status: string) {
+    this.invoiceSvc.getAllByStatus(status).subscribe((res) => {
+      this.invoices = res;
+      console.log(this.invoices);
+    });
+  }
+}

@@ -1,2 +1,9 @@
-Search by status
-<form></form>
+<form #form="ngForm" (submit)="getAllByStatus(status.value)">
+  <label for="status" class="form-label">Invoice status:</label>
+  <div class="d-flex align-items-center gap-2">
+    <input id="status" class="form-control" type="text" #status />
+    <button class="btn btn-success">
+      <ng-icon name="bootstrapSearch"></ng-icon>
+    </button>
+  </div>
+</form>

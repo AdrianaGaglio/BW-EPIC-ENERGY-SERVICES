@@ -52,23 +52,6 @@ export class InvoicesComponent {
   //   });
   // }
 
-  getAllByStatus(status: string) {
-    this.invoiceSvc
-      .getAllByStatus(status)
-      .subscribe((res) => (this.invoices = res));
-  }
-
-  getAllByCustomerInfo(
-    customerId?: number,
-    vatCode?: string,
-    pec?: string,
-    direction: string = 'ASC'
-  ) {
-    this.invoiceSvc
-      .getAllByCustomerInfo(customerId, vatCode, pec, direction)
-      .subscribe((res) => (this.invoices = res));
-  }
-
   getAllByDate(date: string) {
     this.invoiceSvc
       .getAllByDate(date)

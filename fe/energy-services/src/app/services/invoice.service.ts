@@ -85,13 +85,19 @@ export class InvoiceService {
   }
 
   getAllByCustomerInfo(
-    customerId?: any,
-    vatcode?: string,
-    pec?: string,
+    param: any,
     direction: string = 'ASC'
   ): Observable<iInvoiceresponse[]> {
+    let params: string = '';
+    if (typeof param == 'number') {
+      params += `customerId=${param}`;
+    } else if (typeof param == 'string' && !param.includes('@')) {
+      params += `vatCode=${param}`;
+    } else if (typeof param == 'string' && param.includes('@')) {
+      params += `pec=${param}`;
+    }
     return this.http.get<iInvoiceresponse[]>(
-      `${this.url}/bycustomer?customerId=${customerId}&vatcode=${vatcode}&pec=${pec}&direction=${direction}`
+      `${this.url}/by-customer?${params}&direction=${direction}`
     );
   }
 
