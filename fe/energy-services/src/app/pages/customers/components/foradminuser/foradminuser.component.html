@@ -81,8 +81,23 @@
     <label class="btn btn-outline-primary" for="byVatcode">Vat Code</label>
   </div>
 </div>
-<div class="mt-3 d-flex gap-3 flex-wrap">
-  <ng-container *ngFor="let customer of customers">
-    <app-card-customer [customer]="customer"></app-card-customer>
-  </ng-container>
+<div *ngIf="customers" class="row py-3 gy-3">
+  <div *ngIf="isPaged">
+    <div class="d-flex align-items-center">
+      <p class="mb-0">Pages:</p>
+      <span
+        (click)="changePage(num - 1)"
+        class="badge text-primary"
+        *ngFor="let num of pages"
+        role="button"
+        >{{ num }}</span
+      >
+    </div>
+  </div>
+
+  <div class="mt-3 d-flex gap-3 flex-wrap">
+    <ng-container *ngFor="let customer of customers">
+      <app-card-customer [customer]="customer"></app-card-customer>
+    </ng-container>
+  </div>
 </div>
