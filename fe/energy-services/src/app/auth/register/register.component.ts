@@ -1,3 +1,4 @@
+import { DecodeTokenService } from './../../services/decode-token.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthsrvService } from '../authsrv.service';
@@ -28,7 +29,8 @@ export class RegisterComponent implements OnInit {
     private authSrv: AuthsrvService,
     private router: Router,
     private fb: FormBuilder,
-    private cityService: CitysrvService
+    private cityService: CitysrvService,
+    private DecodeTokenService: DecodeTokenService
   ) {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
@@ -73,6 +75,9 @@ export class RegisterComponent implements OnInit {
         console.error('Errore nel caricamento dei distretti:', error);
       },
     });
+
+    //se sono loggato come admin allora posso decidere se registrare un customer o uno user
+
   }
 
   register(): void {
