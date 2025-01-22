@@ -30,50 +30,6 @@ export class ForadminuserComponent {
       });
   }
 
-  // getCustomersByCreationDate(startDate: string, endDate: string) {
-  //   this.customerSvc
-  //     .getCustomersByCreationDate(startDate, endDate)
-  //     .subscribe((data) => {
-  //       this.customers = data;
-  //     });
-  // }
-
-  // getCustomersByLastContact(startDate: string, endDate: string) {
-  //   this.customerSvc
-  //     .getCustomersByLastContact(startDate, endDate)
-  //     .subscribe((data) => {
-  //       this.customers = data;
-  //     });
-  // }
-
-  // getCustomersByDenominationsContain(searchTerm: string) {
-  //   this.customerSvc
-  //     .getCustomersByDenominationsContain(searchTerm)
-  //     .subscribe((data) => {
-  //       this.customers = data;
-  //     });
-  // }
-
-  getCustomersByYearlyTurnover(min: number, max: number) {
-    this.customerSvc
-      .getCustomersByYearlyTurnover(min, max)
-      .subscribe((data) => {
-        this.customers = data;
-      });
-  }
-
-  getCustomerByVatCode(vatCode: string) {
-    this.customerSvc.getCustomerByVatCode(vatCode).subscribe((data) => {
-      this.customers.push(data);
-    });
-  }
-
-  getCustomerByUsername(username: string) {
-    this.customerSvc.getCustomerByUsername(username).subscribe((data) => {
-      this.customers.push(data);
-    });
-  }
-
   openSearchByCreationDate() {
     const modalRef = this.modalService.open(SearchByCreationdateComponent, {
       size: 'xl',

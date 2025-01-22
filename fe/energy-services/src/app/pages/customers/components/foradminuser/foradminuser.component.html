@@ -11,6 +11,7 @@
       [(ngModel)]="searchBy"
       value="all"
       checked
+      (change)="getAllCustomers(0, 25)"
     />
     <label class="btn btn-outline-primary" for="all">All</label>
     <input
@@ -79,4 +80,9 @@
     />
     <label class="btn btn-outline-primary" for="byVatcode">Vat Code</label>
   </div>
+</div>
+<div class="mt-3 d-flex gap-3 flex-wrap">
+  <ng-container *ngFor="let customer of customers">
+    <app-card-customer [customer]="customer"></app-card-customer>
+  </ng-container>
 </div>
