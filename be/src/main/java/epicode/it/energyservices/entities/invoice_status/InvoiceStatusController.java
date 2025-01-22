@@ -12,17 +12,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/invoice_status")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 public class InvoiceStatusController {
     private final InvoiceStatusSvc invoiceStatusSvc;
 
     @PostMapping
-    public ResponseEntity<InvoiceStatus> create(InvoiceStatusRequest request) {
+    public ResponseEntity<InvoiceStatus> create(@RequestBody InvoiceStatusRequest request) {
         return new ResponseEntity<>(invoiceStatusSvc.create(request), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(Long id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         return new ResponseEntity<>(invoiceStatusSvc.delete(id), HttpStatus.NO_CONTENT);
     }
 
