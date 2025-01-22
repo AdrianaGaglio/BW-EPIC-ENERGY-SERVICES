@@ -6,7 +6,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "districts")
-public class District {
+public class  District {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;

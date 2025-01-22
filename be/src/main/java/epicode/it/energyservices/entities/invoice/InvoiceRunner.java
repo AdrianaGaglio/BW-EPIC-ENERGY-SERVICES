@@ -24,6 +24,7 @@ public class InvoiceRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        System.out.println("INVOICE RUNNER STARTED");
 
         if (invoiceSvc.count() == 0) {
             for (int i = 0; i < 50; i++) {
@@ -43,6 +44,7 @@ public class InvoiceRunner implements ApplicationRunner {
             }
         }
 
+        System.out.println("Invoice Runner finished");
 
     }
 }

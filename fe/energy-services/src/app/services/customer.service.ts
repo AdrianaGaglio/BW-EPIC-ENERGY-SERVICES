@@ -28,11 +28,24 @@ export class CustomerService {
         `/byCreationDateBetween?startDate=${startDate}&endDate=${endDate}`
     );
   }
+
+  getCustomerByUsername(username: string) {
+    return this.HttpClient.get(
+      this.baseUrl + `/by-username?username=${username}`
+    );
+  }
+  getCustomerByVatCode(vatCode: string) {
+    return this.HttpClient.get(this.baseUrl + `/by-vatCode?vatCode=${vatCode}`);
+  }
   getCustomersByLastContact(startDate: Date, endDate: Date) {
     return this.HttpClient.get(
       this.baseUrl +
         `/byLastContactBetween?startDate=${startDate}&endDate=${endDate}`
     );
+  }
+
+  getCustomerByLoggedCustomer() {
+    return this.HttpClient.get(this.baseUrl + `/by-customer-username`);
   }
 
   getCustomersByDenominationsContain(searchTerm: string) {

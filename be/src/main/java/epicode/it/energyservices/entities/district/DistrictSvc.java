@@ -24,6 +24,10 @@ public class DistrictSvc {
                 .orElseThrow(() -> new EntityNotFoundException("The district you are looking for does not exist"));
     }
 
+    public List<District> findByRegion(String region) {
+        return districtRepo.findByRegionIgnoreCase(region);
+    }
+
     public int count() {
         return (int) districtRepo.count();
     }

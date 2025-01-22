@@ -26,6 +26,10 @@ public class CitySvc {
                 .orElseThrow(() -> new EntityNotFoundException("The city you are looking for does not exist"));
     }
 
+    public List<City> findAllByDistrictId(Long id) {
+        return cityRepo.findAllByDistrictId(id);
+    }
+
     public int count() {
         return (int) cityRepo.count();
     }
