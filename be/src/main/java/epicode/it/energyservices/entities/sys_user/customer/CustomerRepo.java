@@ -31,8 +31,8 @@ public interface CustomerRepo extends JpaRepository<Customer, Long> {
     List<Customer> findAllByDenominationContaining(@Param("searchTerm") String searchTerm);
 
     @Query("SELECT c FROM Customer c WHERE c.appUser.username = :username")
-    Customer findByUsername(@Param("username") String username);
+    Optional<Customer> findByUsername(@Param("username") String username);
 
-    Customer findByVatCode(String vatCode);
+    Optional<Customer> findByVatCode(String vatCode);
 
 }

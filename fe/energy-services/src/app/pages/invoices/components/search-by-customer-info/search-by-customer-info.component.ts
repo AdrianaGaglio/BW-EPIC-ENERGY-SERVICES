@@ -25,12 +25,26 @@ export class SearchByCustomerInfoComponent {
   pec: string = '';
   direction: string = 'ASC';
 
+  customerFromlocalStorageJSON: string | null = null;
+
   customers: iCustomer[] = [];
 
   ngOnInit() {
-    this.customerSvc
-      .getAll()
-      .subscribe((res: iCustomer[]) => (this.customers = res));
+    this.customerFromlocalStorageJSON =
+      sessionStorage.getItem('customerToInvoices');
+
+    if (this.customerFromlocalStorageJSON) {
+      const customerFromlocalStorage: iCustomer = JSON.parse(
+        this.customerFromlocalStorageJSON
+      );
+      this.customerId = customerFromlocalStorage.id.toString();
+      this.getAllByCustomerInfo();
+      sessionStorage.removeItem('customerToInvoices');
+    } else {
+      this.customerSvc
+        .getAll()
+        .subscribe((res: iCustomer[]) => (this.customers = res));
+    }
   }
 
   getAllByCustomerInfo() {
