@@ -28,7 +28,7 @@ public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
     public List<Invoice> findAllByDate(LocalDate date);
 
     @Query("SELECT i FROM Invoice i WHERE EXTRACT(YEAR FROM i.date) = :year")
-    public List<Invoice> findAllByYear(int year);
+    public List<Invoice> findAllByYear(@Param("year") int year);
 
     public List<Invoice> findAllByAmountBetweenOrderByAmountAsc(double min, double max);
 
@@ -42,4 +42,7 @@ public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
     @Query("SELECT i FROM Invoice i WHERE i.customer.vatCode = :vatCode")
     public List<Invoice> findAllByVatCode(@Param("vatCode") String vatCode);
 
+    @Query("SELECT SUM(i.amount) FROM Invoice i WHERE i.customer.id = :customerId AND EXTRACT(YEAR FROM i.date) = :year")
+    public double findTotalAllByCustomerAndYear(@Param("customerId") Long customerId, @Param("year") int year);
 }
+

@@ -29,7 +29,7 @@ public class InvoiceRunner implements ApplicationRunner {
         if (invoiceSvc.count() == 0) {
             for (int i = 0; i < 50; i++) {
                 InvoiceRequest request = new InvoiceRequest();
-                LocalDate date = faker.date().future(30, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate date = LocalDate.of(faker.random().nextInt(2020,2025), faker.random().nextInt(1, 12), faker.random().nextInt(1, 28));
                 request.setDate(date);
                 request.setAmount(faker.number().randomDouble(2, 2, 1000));
                 request.setStatus(statusSvc.getAll().get(faker.random().nextInt(0, statusSvc.getAll().size() - 1)).getName());

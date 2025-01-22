@@ -12,7 +12,6 @@ import java.time.LocalDate;
 public class InvoiceRequest {
 
     @NotNull(message = "Date is required")
-    @FutureOrPresent(message = "Date cannot be in the past")
     private LocalDate date;
 
     @NotNull(message = "Amount is required")
