@@ -28,12 +28,12 @@ export class InvoicesComponent {
       .subscribe((res) => (this.invoices = res));
   }
 
-  getById(id: number) {
-    this.invoiceSvc.getById(id).subscribe((res) => {
-      this.invoices = [];
-      this.invoices.push(res);
-    });
-  }
+  // getById(id: number) {
+  //   this.invoiceSvc.getById(id).subscribe((res) => {
+  //     this.invoices = [];
+  //     this.invoices.push(res);
+  //   });
+  // }
 
   getByNumber(number: number) {
     this.invoiceSvc
