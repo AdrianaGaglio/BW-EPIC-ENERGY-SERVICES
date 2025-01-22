@@ -22,6 +22,10 @@ public class CityController {
     public ResponseEntity<City> getCityById(@PathVariable Long id){
         return ResponseEntity.ok(citySvcSvc.findCityById(id));
     }
+    @GetMapping("/byDistrictId/{districtId}")
+    public ResponseEntity<List<City>> getCityByDistrictId(@PathVariable Long districtId){
+        return ResponseEntity.ok(citySvcSvc.findAllByDistrictId(districtId));
+    }
 
     @GetMapping
     public ResponseEntity<List<City>> getAllCities(){

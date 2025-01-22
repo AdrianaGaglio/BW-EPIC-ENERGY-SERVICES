@@ -4,10 +4,7 @@ import epicode.it.energyservices.entities.address.Address;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +17,11 @@ public class DistrictController {
     @GetMapping("/{id}")
     public ResponseEntity<District> getDistrictById(@PathVariable Long id){
         return ResponseEntity.ok(districtSvc.findDistrictById(id));
+    }
+
+    @GetMapping("region/{region}")
+    public ResponseEntity<List<District>> getDistrictByRegion(@PathVariable String region){
+        return ResponseEntity.ok(districtSvc.findByRegion(region));
     }
 
     @GetMapping

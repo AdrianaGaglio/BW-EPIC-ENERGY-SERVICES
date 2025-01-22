@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/customer")
-@PreAuthorize("hasAnyRole('ADMIN', 'USER')")
 public class CustomerController {
     @Autowired
     private CustomerSvc customerSvc;
@@ -27,41 +26,52 @@ public class CustomerController {
     private CustomerMapper mapper;
 
     @GetMapping("/all")
-//    Accessibile solo ad ADMIN/USER
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Page<CustomerResponse>> getAll(@ParameterObject Pageable pageable) {
         return ResponseEntity.ok(customerSvc.getAllPageable(pageable));
     }
 
     @GetMapping("/byYearlyTurnoverBetween")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     //    Accessibile solo ad ADMIN/USER
     public ResponseEntity<List<CustomerResponse>> getByYearlyTurnoverBetween(@Param("min") double min,@Param("max") double max) {
         return ResponseEntity.ok(customerSvc.getByYearlyTurnoverBetween(min, max));
     }
 
     @GetMapping("/byDenominationContaining")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     //    Accessibile solo ad ADMIN/USER
     public ResponseEntity<List<CustomerResponse>> getByDenominationContaining(@Param("searchTerm") String searchTerm) {
         return ResponseEntity.ok(customerSvc.getByDenominationContaining(searchTerm.toLowerCase()));
     }
 
     @GetMapping("/byCreationDateBetween")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     //    Accessibile solo ad ADMIN/USER
     public ResponseEntity<List<CustomerResponse>> getByCreationDateBetween(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate) {
         return ResponseEntity.ok(customerSvc.getByCreationDateBetween(startDate, endDate));
     }
 
     @GetMapping("/byLastContactBetween")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     //    Accessibile solo ad ADMIN/USER
     public ResponseEntity<List<CustomerResponse>> getByLastContactBetween(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate) {
         return ResponseEntity.ok(customerSvc.getByLastContactBetween(startDate, endDate));
     }
 
     @GetMapping("/by-username")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<CustomerResponse> getByUsername(@RequestParam String username) {
         return ResponseEntity.ok(mapper.toCustomerResponse(customerSvc.getByUsername(username)));
     }
+    @GetMapping("/by-customer-username")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<CustomerResponse> getByCustomerUsername(@AuthenticationPrincipal User userDetails) {
+        return ResponseEntity.ok(mapper.toCustomerResponse(customerSvc.getByUsername(userDetails.getUsername())));
+    }
 
     @GetMapping("/by-vatCode")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<CustomerResponse> getByVatCode(@RequestParam String vatCode) {
         return ResponseEntity.ok(customerSvc.findByVatCode(vatCode));
     }
