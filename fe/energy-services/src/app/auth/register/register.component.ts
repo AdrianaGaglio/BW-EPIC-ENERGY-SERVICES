@@ -159,7 +159,8 @@ export class RegisterComponent implements OnInit {
   }
   onCheckboxChange(): void {
     const isCheck = this.form.get('customer.registeredOfficeAddress.isCheck')?.value;
-    if (isCheck) {
+    console.log(isCheck);
+    if (isCheck == false) {
       const legalAddress = this.form.get('customer.registeredOfficeAddress')?.value;
       const operationalAddress = this.form.get('customer.operationalHeadquartersAddress');
       operationalAddress?.patchValue(legalAddress);

@@ -1,11 +1,11 @@
 .background {
   background-image: url('/copertina.png');
   background-size: cover;
-  height: 100vh;
+  height: 100%;
   background-position: center;
 }
 .cover{
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
 }
 .hide{
@@ -19,4 +19,11 @@
 }
 .cursor-pointer {
   cursor: pointer;
+}
+.round{
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+.row{
+  height: 100vh;
 }
