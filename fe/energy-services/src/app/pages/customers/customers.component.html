@@ -1,1 +1,2 @@
-<p>customers works!</p>
+<app-logged-customers *ngIf="isCustomer"></app-logged-customers>
+<app-foradminuser *ngIf="!isCustomer"></app-foradminuser>

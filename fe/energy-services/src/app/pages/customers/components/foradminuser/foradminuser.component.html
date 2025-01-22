@@ -1,0 +1,89 @@
+<h3>Search customers</h3>
+<div class="position-relative">
+  <h5>Search by</h5>
+  <div class="btn-group" role="group">
+    <input
+      type="radio"
+      class="btn-check"
+      name="searchBy"
+      id="all"
+      autocomplete="off"
+      [(ngModel)]="searchBy"
+      value="all"
+      checked
+    />
+    <label class="btn btn-outline-primary" for="all">All</label>
+    <input
+      type="radio"
+      class="btn-check"
+      name="searchBy"
+      id="byCustomer"
+      autocomplete="off"
+      [(ngModel)]="searchBy"
+      value="byCustomer"
+      (change)="openSearchByCustomer()"
+    />
+    <label class="btn btn-outline-primary" for="byCustomer"
+      >Creation Date</label
+    >
+
+    <input
+      type="radio"
+      class="btn-check"
+      name="searchBy"
+      id="byNumber"
+      [(ngModel)]="searchBy"
+      value="byNumber"
+      autocomplete="off"
+      (change)="openSearchByNumber()"
+    />
+    <label class="btn btn-outline-primary" for="byNumber">Last Contact</label>
+
+    <input
+      type="radio"
+      class="btn-check"
+      name="searchBy"
+      [(ngModel)]="searchBy"
+      value="byStatus"
+      id="byStatus"
+      autocomplete="off"
+      (change)="openSearchByStatus()"
+    />
+    <label class="btn btn-outline-primary" for="byStatus">Denominations</label>
+    <input
+      type="radio"
+      class="btn-check"
+      name="searchBy"
+      id="byCustomerInfo"
+      [(ngModel)]="searchBy"
+      value="byCustomerInfo"
+      autocomplete="off"
+      (change)="openSearchByCustomerInfo()"
+    />
+    <label class="btn btn-outline-primary" for="byCustomerInfo"
+      >Yearly Turnover</label
+    >
+    <input
+      type="radio"
+      class="btn-check"
+      name="searchBy"
+      id="byDate"
+      [(ngModel)]="searchBy"
+      value="byDate"
+      autocomplete="off"
+      (change)="openSearchByDate()"
+    />
+    <label class="btn btn-outline-primary" for="byDate">Vat Code</label>
+    <input
+      type="radio"
+      class="btn-check"
+      name="searchBy"
+      id="byYear"
+      [(ngModel)]="searchBy"
+      value="byYear"
+      autocomplete="off"
+      (change)="openSearchByYear()"
+    />
+    <label class="btn btn-outline-primary" for="byYear">Username</label>
+  </div>
+</div>
