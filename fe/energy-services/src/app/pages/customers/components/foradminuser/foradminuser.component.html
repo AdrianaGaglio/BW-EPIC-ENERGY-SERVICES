@@ -17,13 +17,13 @@
       type="radio"
       class="btn-check"
       name="searchBy"
-      id="byCustomer"
+      id="byCreationDate"
       autocomplete="off"
       [(ngModel)]="searchBy"
-      value="byCustomer"
+      value="byCreationDate"
       (change)="openSearchByCreationDate()"
     />
-    <label class="btn btn-outline-primary" for="byCustomer"
+    <label class="btn btn-outline-primary" for="byCreationDate"
       >Creation Date</label
     >
 
@@ -31,59 +31,52 @@
       type="radio"
       class="btn-check"
       name="searchBy"
-      id="byNumber"
+      id="byLastContact"
       [(ngModel)]="searchBy"
-      value="byNumber"
+      value="byLastContact"
       autocomplete="off"
       (change)="openSearchByLastContact()"
     />
-    <label class="btn btn-outline-primary" for="byNumber">Last Contact</label>
+    <label class="btn btn-outline-primary" for="byLastContact"
+      >Last Contact</label
+    >
 
     <input
       type="radio"
       class="btn-check"
       name="searchBy"
       [(ngModel)]="searchBy"
-      value="byStatus"
-      id="byStatus"
+      value="byDenomination"
+      id="byDenomination"
       autocomplete="off"
-      (change)="openSearchByNumber()"
+      (change)="openSearchByDenomination()"
     />
-    <label class="btn btn-outline-primary" for="byStatus">Denominations</label>
+    <label class="btn btn-outline-primary" for="byDenomination"
+      >Denominations</label
+    >
     <input
       type="radio"
       class="btn-check"
       name="searchBy"
-      id="byCustomerInfo"
+      id="byYearlyTurnover"
       [(ngModel)]="searchBy"
-      value="byCustomerInfo"
+      value="byYearlyTurnover"
       autocomplete="off"
-      (change)="openSearchByCustomerInfo()"
+      (change)="openSearchByYearlyTurnover()"
     />
-    <label class="btn btn-outline-primary" for="byCustomerInfo"
+    <label class="btn btn-outline-primary" for="byYearlyTurnover"
       >Yearly Turnover</label
     >
     <input
       type="radio"
       class="btn-check"
       name="searchBy"
-      id="byDate"
+      id="byVatcode"
       [(ngModel)]="searchBy"
-      value="byDate"
+      value="byVatcode"
       autocomplete="off"
-      (change)="openSearchByDate()"
+      (change)="openSearchByVatcode()"
     />
-    <label class="btn btn-outline-primary" for="byDate">Vat Code</label>
-    <input
-      type="radio"
-      class="btn-check"
-      name="searchBy"
-      id="byYear"
-      [(ngModel)]="searchBy"
-      value="byYear"
-      autocomplete="off"
-      (change)="openSearchByYear()"
-    />
-    <label class="btn btn-outline-primary" for="byYear">Username</label>
+    <label class="btn btn-outline-primary" for="byVatcode">Vat Code</label>
   </div>
 </div>
