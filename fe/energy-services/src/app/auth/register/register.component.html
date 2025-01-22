@@ -66,16 +66,16 @@
               <label for="registeredCap" class="mt-3">CAP</label>
               <input id="registeredCap"type="number" placeholder="CAP" class="form-control" formControlName="cap"/>
 
-              <label for="registeredDistrict" class="mt-3">Distretto</label>
+              <label for="registeredDistrict" class="mt-3">Provincia</label>
               <select id="registeredDistrict" class="form-control" formControlName="districtId" (change)="onDistrictChange($event)">
-              <option value="">Seleziona Distretto</option>
+              <option value="">Seleziona Provincia</option>
               <option *ngFor="let district of districts" [value]="district.id">
                 {{ district.name }}
               </option>
-            </select>
+              </select>
 
-              <label for="registeredCity" class="mt-3">Città</label>
-              <select id="registeredCity" class="form-control" formControlName="idCity">
+              <label  *ngIf="selected"  for="registeredCity" class="mt-3">Città</label>
+              <select *ngIf="selected"  id="registeredCity" class="form-control" formControlName="idCity">
                 <option [value]="null">Seleziona una città</option>
                 <option *ngFor="let city of cities" [value]="city.id">
                   {{ city.name }}
@@ -95,8 +95,22 @@
               <label for="operationalCap" class="mt-3">CAP</label>
               <input id="operationalCap" type="number" placeholder="CAP" class="form-control" formControlName="cap">
 
-              <label for="operationalIdCity" class="mt-3">ID Città</label>
-              <input id="operationalIdCity" type="number" placeholder="ID Città" class="form-control" formControlName="idCity">
+
+              <label for="operationalDistrict" class="mt-3">Provincia</label>
+              <select id="operationalDistrict" class="form-control" formControlName="districtId" (change)="onDistrictChange1($event)">
+              <option value="">Seleziona Provincia</option>
+              <option *ngFor="let district of districts" [value]="district.id">
+                {{ district.name }}
+              </option>
+              </select>
+
+              <label  *ngIf="selected1"  for="operationalCity" class="mt-3">Città</label>
+              <select *ngIf="selected1"  id="operationalCity" class="form-control" formControlName="idCity">
+                <option [value]="null">Seleziona una città</option>
+                <option *ngFor="let city of cities" [value]="city.id">
+                  {{ city.name }}
+                </option>
+              </select>
             </fieldset>
           </fieldset>
 

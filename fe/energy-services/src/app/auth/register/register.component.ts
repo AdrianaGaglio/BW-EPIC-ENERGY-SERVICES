@@ -16,6 +16,8 @@ export class RegisterComponent implements OnInit {
   types = ['PA', 'SAS', 'SPA', 'SRL'];
   districts: iDistrictResponse[] = [];
   cities: iCityResponse[] = [];
+  selected: boolean = false;
+  selected1: boolean = false;
 
   constructor(
     private authSrv: AuthsrvService,
@@ -47,7 +49,8 @@ export class RegisterComponent implements OnInit {
           street: ['', [Validators.required]],
           addressNumber: ['', [Validators.required]],
           cap: [null, [Validators.required, Validators.min(10000), Validators.max(99999)]],
-          idCity: [null, [Validators.required]],
+          districtId: ['', Validators.required],
+          idCity: ['', Validators.required],
         }),
       }),
       avatar: [''],
@@ -86,9 +89,29 @@ export class RegisterComponent implements OnInit {
   onDistrictChange(event: Event): void {
     const selectedValue = (event.target as HTMLSelectElement).value;
     if (selectedValue) {
+      console.log(selectedValue);
       this.cityService.getCitiesByDistrictId(Number(selectedValue)).subscribe({
         next: (data) => {
           this.cities = data;
+          this.selected = true;
+        },
+        error: (error) => {
+          console.error('Errore nel caricamento delle città:', error);
+        },
+      });
+    } else {
+      this.cities = [];
+    }
+  }
+
+  onDistrictChange1(event: Event): void {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    if (selectedValue) {
+      console.log(selectedValue);
+      this.cityService.getCitiesByDistrictId(Number(selectedValue)).subscribe({
+        next: (data) => {
+          this.cities = data;
+          this.selected1 = true;
         },
         error: (error) => {
           console.error('Errore nel caricamento delle città:', error);
