@@ -18,16 +18,24 @@ export class ForadminuserComponent {
   private modalService = inject(NgbModal);
   searchBy: string = 'all';
   customers: iCustomer[] = [];
+  isPaged: boolean = true;
+  page!: number;
+  pages!: number[];
 
   ngOnInit() {
-    this.getAllCustomers(0, 25);
+    this.getAllCustomers(0, 5);
   }
   getAllCustomers(numberPage: number, size: number, type?: string[]) {
     this.customerSvc
       .getAllCustomers(numberPage, size, type)
       .subscribe((data) => {
         this.customers = data.content;
+        this.isPaged = true;
+        this.pages = Array.from({ length: data.totalPages }, (_, i) => i + 1);
       });
+  }
+  changePage(num: number) {
+    this.getAllCustomers(num, 5);
   }
 
   openSearchByCreationDate() {
@@ -36,6 +44,7 @@ export class ForadminuserComponent {
     });
     modalRef.result.then((res) => {
       this.customers = res;
+      this.isPaged = false;
       console.log(this.customers);
     });
   }
@@ -46,6 +55,7 @@ export class ForadminuserComponent {
     });
     modalRef.result.then((res) => {
       this.customers = res;
+      this.isPaged = false;
       console.log(this.customers);
     });
   }
@@ -56,6 +66,7 @@ export class ForadminuserComponent {
     });
     modalRef.result.then((res) => {
       this.customers = res;
+      this.isPaged = false;
       console.log(this.customers);
     });
   }
@@ -66,6 +77,7 @@ export class ForadminuserComponent {
     });
     modalRef.result.then((res) => {
       this.customers = res;
+      this.isPaged = false;
       console.log(this.customers);
     });
   }
@@ -76,6 +88,7 @@ export class ForadminuserComponent {
     });
     modalRef.result.then((res) => {
       this.customers = res;
+      this.isPaged = false;
       console.log(this.customers);
     });
   }
