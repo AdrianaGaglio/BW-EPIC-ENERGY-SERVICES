@@ -25,6 +25,11 @@ public class CustomerController {
     @Autowired
     private CustomerMapper mapper;
 
+    @GetMapping
+    public ResponseEntity<List<CustomerResponse>> getAll() {
+        return ResponseEntity.ok(mapper.toCustomerResponseList(customerSvc.getAll()));
+    }
+
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<Page<CustomerResponse>> getAll(@ParameterObject Pageable pageable) {

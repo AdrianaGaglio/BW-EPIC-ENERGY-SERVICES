@@ -1,9 +1,12 @@
 import { RegisterComponent } from './../../../../auth/register/register.component';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { iInvoiceresponseforcustomer } from '../../../../interfaces/iinvoiceresponseforcustomer';
 import { iInvoiceresponse } from '../../../../interfaces/iinvoiceresponse';
 import { InvoiceService } from '../../../../services/invoice.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgForm } from '@angular/forms';
+import { iInvoiceStatus } from '../../../../interfaces/iinvoice-status';
+import { InvoiceStatusService } from '../../../../services/invoice-status.service';
 
 @Component({
   selector: 'app-search-by-status',
@@ -13,15 +16,25 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class SearchByStatusComponent {
   constructor(
     private invoiceSvc: InvoiceService,
-    private activeModal: NgbActiveModal
+    private activeModal: NgbActiveModal,
+    private statusSvc: InvoiceStatusService
   ) {}
 
-  invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
+  statuses: iInvoiceStatus[] = [];
+  status: string = '';
 
-  getAllByStatus(status: string) {
-    this.invoiceSvc.getAllByStatus(status).subscribe((res) => {
-      this.invoices = res;
-      this.activeModal.close(this.invoices);
-    });
+  ngOnInit() {
+    this.statusSvc.getAll().subscribe((res) => (this.statuses = res));
+  }
+  invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
+  getAllByStatus() {
+    if (this.status == '') {
+      alert('Select an invoice status to search');
+    } else {
+      this.invoiceSvc.getAllByStatus(this.status).subscribe((res) => {
+        this.invoices = res;
+        this.activeModal.close(this.invoices);
+      });
+    }
   }
 }

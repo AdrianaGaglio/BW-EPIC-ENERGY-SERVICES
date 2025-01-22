@@ -1,8 +1,14 @@
-<form #form="ngForm" (submit)="getAllByYear(+year.value)">
+<form #form="ngForm" (submit)="getAllByYear(+year)">
   <label for="year" class="form-label">Invoice year:</label>
   <div class="d-flex align-items-center gap-2">
-    <input id="year" class="form-control" type="number" #year />
-    <button class="btn btn-success">
+    <input
+      id="year"
+      class="form-control"
+      type="number"
+      name="year"
+      [(ngModel)]="year"
+    />
+    <button class="btn btn-success" [disabled]="year == ''">
       <ng-icon name="bootstrapSearch"></ng-icon>
     </button>
   </div>

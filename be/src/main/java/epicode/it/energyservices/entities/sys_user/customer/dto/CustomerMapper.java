@@ -21,6 +21,7 @@ public class CustomerMapper {
 
     public CustomerResponse toCustomerResponse(Customer e) {
         CustomerResponse customerResponse = modelMapper.map(e, CustomerResponse.class);
+        customerResponse.setId(e.getId());
         List<Invoice> invoices = invoiceRepo.findAllByVatCode(e.getVatCode());
         List<InvoiceResponseForCustomer> invoiceResponses = new ArrayList<>();
         if (invoices.size() > 0) {

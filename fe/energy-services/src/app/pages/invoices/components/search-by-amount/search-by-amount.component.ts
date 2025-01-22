@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { InvoiceService } from '../../../../services/invoice.service';
 import { iInvoiceresponse } from '../../../../interfaces/iinvoiceresponse';
 import { iInvoiceresponseforcustomer } from '../../../../interfaces/iinvoiceresponseforcustomer';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-search-by-amount',
@@ -15,19 +16,21 @@ export class SearchByAmountComponent {
     private activeModal: NgbActiveModal
   ) {}
 
+  @ViewChild('form') form!: NgForm;
+
   min: string = '';
   max: string = '';
 
   invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
 
   getAllByAmountRange(min: number, max: number) {
-    if (min == 0 || max == 0) {
-      alert('Amount values are required');
-    } else {
+    if (this.form.valid) {
       this.invoiceSvc.getAllByAmountRange(min, max).subscribe((res) => {
         this.invoices = res;
         this.activeModal.close(this.invoices);
       });
+    } else {
+      alert('Amount fields are required');
     }
   }
 }

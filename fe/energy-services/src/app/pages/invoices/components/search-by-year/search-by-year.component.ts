@@ -15,6 +15,8 @@ export class SearchByYearComponent {
     private activeModal: NgbActiveModal
   ) {}
 
+  year: string = '';
+
   invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
 
   getAllByYear(year: number) {

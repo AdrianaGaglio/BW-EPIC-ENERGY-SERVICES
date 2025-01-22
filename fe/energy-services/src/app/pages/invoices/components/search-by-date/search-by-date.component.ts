@@ -15,6 +15,8 @@ export class SearchByDateComponent {
     private activeModal: NgbActiveModal
   ) {}
 
+  date: string = '';
+
   invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
 
   getAllByDate(date: string) {
