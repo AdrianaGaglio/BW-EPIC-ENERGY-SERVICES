@@ -12,9 +12,10 @@ import {
 } from '@angular/common/http';
 import { NgIconsModule } from '@ng-icons/core';
 import { bootstrapFloppy, bootstrapSearch } from '@ng-icons/bootstrap-icons';
+import { HeaderComponent } from './main-components/header/header.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, HeaderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
