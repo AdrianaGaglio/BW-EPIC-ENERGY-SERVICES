@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CustomerService } from '../../../../services/customer.service';
 import { iCustomer } from '../../../../interfaces/icustomer';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SearchByCreationdateComponent } from '../search-by-creationdate/search-by-creationdate.component';
 
 @Component({
   selector: 'app-foradminuser',
@@ -9,17 +11,23 @@ import { iCustomer } from '../../../../interfaces/icustomer';
 })
 export class ForadminuserComponent {
   private customerSvc = inject(CustomerService);
+  private modalService = inject(NgbModal);
   searchBy: string = 'all';
   customers: iCustomer[] = [];
+
+  ngOnInit() {
+    this.getAllCustomers(0, 25);
+  }
   getAllCustomers(numberPage: number, size: number, type?: string[]) {
     this.customerSvc
       .getAllCustomers(numberPage, size, type)
       .subscribe((data) => {
         this.customers = data.content;
+        console.log(this.customers);
       });
   }
 
-  getCustomersByCreationDate(startDate: Date, endDate: Date) {
+  getCustomersByCreationDate(startDate: string, endDate: string) {
     this.customerSvc
       .getCustomersByCreationDate(startDate, endDate)
       .subscribe((data) => {
@@ -63,8 +71,8 @@ export class ForadminuserComponent {
     });
   }
 
-  openSearchByCustomer() {
-    // this.modalService.open(SearchByCustomerComponent, { size: 'xl' });
+  openSearchByCreationDate() {
+    this.modalService.open(SearchByCreationdateComponent, { size: 'xl' });
   }
 
   openSearchByStatus() {

@@ -118,7 +118,7 @@ export class InvoiceService {
     max: number
   ): Observable<iInvoiceresponse[]> {
     return this.http.get<iInvoiceresponse[]>(
-      `${this.url}/by-amount-range?min=${min}&max=${max}`
+      `${this.url}/amount-range?min=${min}&max=${max}`
     );
   }
 }
