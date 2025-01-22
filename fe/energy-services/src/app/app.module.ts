@@ -10,10 +10,17 @@ import {
   withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
+import { NgIconsModule } from '@ng-icons/core';
+import { bootstrapSearch } from '@ng-icons/bootstrap-icons';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, NgbModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    NgIconsModule.withIcons({ bootstrapSearch }),
+  ],
   providers: [provideHttpClient(withInterceptors([tokenInterceptor]))],
   bootstrap: [AppComponent],
 })

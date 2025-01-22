@@ -7,6 +7,7 @@ import { iInvoiceresponseforcustomer } from '../interfaces/iinvoiceresponseforcu
 import { DecodeTokenService } from './decode-token.service';
 import { iInvoiceupdaterequest } from '../interfaces/iinvoiceupdaterequest';
 import { iInvoicerequest } from '../interfaces/iinvoicerequest';
+import { iInvoicepageresponse } from '../interfaces/iinvoicepageresponse';
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +32,8 @@ export class InvoiceService {
     page: number,
     size: number,
     sort: string
-  ): Observable<iInvoiceresponse[]> {
-    return this.http.get<iInvoiceresponse[]>(
+  ): Observable<iInvoicepageresponse> {
+    return this.http.get<iInvoicepageresponse>(
       this.url + '/paged' + `?page=${page}&size=${size}&sort=${sort}`
     );
   }
@@ -55,10 +56,12 @@ export class InvoiceService {
   getByNumber(number: number): Observable<any> {
     if (this.decodeToken.userRoles$.value.includes('CUSTOMER')) {
       return this.http.get<iInvoiceresponseforcustomer>(
-        `${this.url}/by-number/${number}`
+        `${this.url}/by-number?number=${number}`
       );
     }
-    return this.http.get<iInvoiceresponse>(`${this.url}/by-number/${number}`);
+    return this.http.get<iInvoiceresponse>(
+      `${this.url}/by-number?number=${number}`
+    );
   }
 
   updateStatus(
