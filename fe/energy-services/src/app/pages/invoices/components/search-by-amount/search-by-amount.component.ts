@@ -15,12 +15,19 @@ export class SearchByAmountComponent {
     private activeModal: NgbActiveModal
   ) {}
 
+  min: string = '';
+  max: string = '';
+
   invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
 
   getAllByAmountRange(min: number, max: number) {
-    this.invoiceSvc.getAllByAmountRange(min, max).subscribe((res) => {
-      this.invoices = res;
-      this.activeModal.close(this.invoices);
-    });
+    if (min == 0 || max == 0) {
+      alert('Amount values are required');
+    } else {
+      this.invoiceSvc.getAllByAmountRange(min, max).subscribe((res) => {
+        this.invoices = res;
+        this.activeModal.close(this.invoices);
+      });
+    }
   }
 }
