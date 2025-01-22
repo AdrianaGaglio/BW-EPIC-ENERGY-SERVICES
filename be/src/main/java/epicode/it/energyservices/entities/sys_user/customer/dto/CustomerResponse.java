@@ -4,6 +4,7 @@ import epicode.it.energyservices.entities.address.Address;
 import epicode.it.energyservices.entities.address.dto.AddressResponseForCustomer;
 import epicode.it.energyservices.entities.invoice.Invoice;
 import epicode.it.energyservices.entities.invoice.dto.InvoiceResponse;
+import epicode.it.energyservices.entities.invoice.dto.InvoiceResponseForCustomer;
 import epicode.it.energyservices.entities.sys_user.customer.Type;
 import lombok.Data;
 
@@ -25,6 +26,6 @@ public class CustomerResponse {
     private String contactPhone;
     private Type type;
     private Map<String, AddressResponseForCustomer> addresses = new HashMap<>(); // collegare a entità indirizzo
-    private List<InvoiceResponse> invoices = new ArrayList<>();
+    private List<InvoiceResponseForCustomer> invoices = new ArrayList<>();
 
 }

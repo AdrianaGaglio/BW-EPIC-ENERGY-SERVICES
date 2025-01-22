@@ -30,4 +30,9 @@ public interface CustomerRepo extends JpaRepository<Customer, Long> {
     @Query("SELECT c FROM Customer c WHERE LOWER(c.denomination) LIKE CONCAT('%', :searchTerm, '%')")
     List<Customer> findAllByDenominationContaining(@Param("searchTerm") String searchTerm);
 
+    @Query("SELECT c FROM Customer c WHERE c.appUser.username = :username")
+    Customer findByUsername(@Param("username") String username);
+
+    Customer findByVatCode(String vatCode);
+
 }

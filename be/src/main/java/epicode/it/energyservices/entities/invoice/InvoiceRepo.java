@@ -39,4 +39,7 @@ public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
 
     Optional<Invoice> findFirstByNumber(int number);
 
+    @Query("SELECT i FROM Invoice i WHERE i.customer.vatCode = :vatCode")
+    public List<Invoice> findAllByVatCode(@Param("vatCode") String vatCode);
+
 }

@@ -7,6 +7,7 @@ import epicode.it.energyservices.entities.city.CitySvc;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerMapper;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerRequest;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerResponse;
+import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerResponseForInvoice;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -86,6 +87,9 @@ public class CustomerSvc {
         return "Customer deleted successfully";
     }
 
+    public CustomerResponse findByVatCode(String vatCode) {
+        return mapper.toCustomerResponse(customerRepo.findByVatCode(vatCode));
+    }
 
     @Transactional
     public Customer create(AppUser appUser, @Valid CustomerRequest request) {
