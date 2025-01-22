@@ -14,17 +14,6 @@
       (change)="getAll()"
     />
     <label class="btn btn-outline-primary" for="all">All</label>
-    <input
-      type="radio"
-      class="btn-check"
-      name="searchBy"
-      id="byCustomer"
-      autocomplete="off"
-      [(ngModel)]="searchBy"
-      value="byCustomer"
-      (change)="openSearchByCustomer()"
-    />
-    <label class="btn btn-outline-primary" for="byCustomer">Customer</label>
 
     <input
       type="radio"
@@ -99,7 +88,7 @@
   </div>
 </div>
 <div *ngIf="invoices" class="row py-3 gy-3">
-  <div *ngIf="pages">
+  <div *ngIf="isPaged">
     <div class="d-flex align-items-center">
       <p class="mb-0">Pages:</p>
       <span
