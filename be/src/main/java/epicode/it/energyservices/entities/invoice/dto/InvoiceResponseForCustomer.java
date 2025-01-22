@@ -11,4 +11,5 @@ public class InvoiceResponseForCustomer {
     private double amount;
     private int number;
     private String status;
+    private String notes;
 }

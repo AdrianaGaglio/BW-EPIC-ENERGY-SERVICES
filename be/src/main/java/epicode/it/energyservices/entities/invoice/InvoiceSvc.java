@@ -84,6 +84,7 @@ public class InvoiceSvc {
         Invoice i = getByNumber(number);
         InvoiceStatus newStatus = invoiceStatusSvc.findByName(request.getStatus().toUpperCase());
         i.setStatus(newStatus);
+        i.setNotes(request.getNotes());
         InvoiceResponse response = mapper.toInvoiceResponse(invoiceRepo.save(i));
         emailSvc.sendEmailHtml(emailMapper.fromInvoicetoEmailRequest("Invoice status changed", i));
         return response;
