@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { InvoiceService } from '../../services/invoice.service';
 import { iInvoiceresponse } from '../../interfaces/iinvoiceresponse';
 import { iInvoiceresponseforcustomer } from '../../interfaces/iinvoiceresponseforcustomer';
+import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { SearchByNumberComponent } from './components/search-by-number/search-by-number.component';
+import { SearchByCustomerComponent } from './components/search-by-customer/search-by-customer.component';
+import { SearchByStatusComponent } from './components/search-by-status/search-by-status.component';
+import { SearchByCustomerInfoComponent } from './components/search-by-customer-info/search-by-customer-info.component';
+import { SearchByDateComponent } from './components/search-by-date/search-by-date.component';
+import { SearchByYearComponent } from './components/search-by-year/search-by-year.component';
+import { SearchByAmountComponent } from './components/search-by-amount/search-by-amount.component';
 
 @Component({
   selector: 'app-invoices',
@@ -10,6 +18,7 @@ import { iInvoiceresponseforcustomer } from '../../interfaces/iinvoiceresponsefo
 })
 export class InvoicesComponent {
   constructor(private invoiceSvc: InvoiceService) {}
+  private modalService = inject(NgbModal);
 
   invoices!: iInvoiceresponse[] | iInvoiceresponseforcustomer[];
 
@@ -21,6 +30,14 @@ export class InvoicesComponent {
   pec: string = '';
   direction: string = 'ASC';
   date: string = '';
+
+  searchBy: string = 'all';
+
+  getAll() {
+    this.invoiceSvc
+      .getAllPaged(0, 20, 'date,desc')
+      .subscribe((res) => (this.invoices = res.content));
+  }
 
   getAllByCustomer() {
     this.invoiceSvc
@@ -34,12 +51,6 @@ export class InvoicesComponent {
   //     this.invoices.push(res);
   //   });
   // }
-
-  getByNumber(number: number) {
-    this.invoiceSvc
-      .getByNumber(number)
-      .subscribe((res) => (this.invoices = res));
-  }
 
   getAllByStatus(status: string) {
     this.invoiceSvc
@@ -74,5 +85,33 @@ export class InvoicesComponent {
     this.invoiceSvc
       .getAllByAmountRange(min, max)
       .subscribe((res) => (this.invoices = res));
+  }
+
+  openSearchByCustomer() {
+    this.modalService.open(SearchByCustomerComponent, { size: 'xl' });
+  }
+
+  openSearchByStatus() {
+    this.modalService.open(SearchByStatusComponent, { size: 'xl' });
+  }
+
+  openSearchByNumber() {
+    this.modalService.open(SearchByNumberComponent, { size: 'xl' });
+  }
+
+  openSearchByCustomerInfo() {
+    this.modalService.open(SearchByCustomerInfoComponent, { size: 'xl' });
+  }
+
+  openSearchByDate() {
+    this.modalService.open(SearchByDateComponent, { size: 'xl' });
+  }
+
+  openSearchByYear() {
+    this.modalService.open(SearchByYearComponent, { size: 'xl' });
+  }
+
+  openSearchByAmount() {
+    this.modalService.open(SearchByAmountComponent, { size: 'xl' });
   }
 }

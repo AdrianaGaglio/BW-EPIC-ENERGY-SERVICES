@@ -23,39 +23,43 @@ export class CustomerService {
   }
 
   getCustomersByCreationDate(startDate: Date, endDate: Date) {
-    return this.HttpClient.get<iCustomer>(
+    return this.HttpClient.get<iCustomer[]>(
       this.baseUrl +
         `/byCreationDateBetween?startDate=${startDate}&endDate=${endDate}`
     );
   }
 
   getCustomerByUsername(username: string) {
-    return this.HttpClient.get(
+    return this.HttpClient.get<iCustomer>(
       this.baseUrl + `/by-username?username=${username}`
     );
   }
   getCustomerByVatCode(vatCode: string) {
-    return this.HttpClient.get(this.baseUrl + `/by-vatCode?vatCode=${vatCode}`);
+    return this.HttpClient.get<iCustomer>(
+      this.baseUrl + `/by-vatCode?vatCode=${vatCode}`
+    );
   }
   getCustomersByLastContact(startDate: Date, endDate: Date) {
-    return this.HttpClient.get(
+    return this.HttpClient.get<iCustomer[]>(
       this.baseUrl +
         `/byLastContactBetween?startDate=${startDate}&endDate=${endDate}`
     );
   }
 
   getCustomerByLoggedCustomer() {
-    return this.HttpClient.get(this.baseUrl + `/by-customer-username`);
+    return this.HttpClient.get<iCustomer>(
+      this.baseUrl + `/by-customer-username`
+    );
   }
 
   getCustomersByDenominationsContain(searchTerm: string) {
-    return this.HttpClient.get<iCustomer>(
+    return this.HttpClient.get<iCustomer[]>(
       this.baseUrl + `/byDenominationContaining?searchTerm=${searchTerm}`
     );
   }
 
   getCustomersByYearlyTurnover(min: number, max: number) {
-    return this.HttpClient.get(
+    return this.HttpClient.get<iCustomer[]>(
       this.baseUrl + `/byYearlyTurnoverBetween?min=${min}&max=${max}`
     );
   }

@@ -1,4 +1,5 @@
 import { iAddress } from '../auth/interfaces/i-address';
+import { iAddressResponse } from './iaddressresponse';
 
 export interface iCustomerresponseforinvoice {
   denomination: string;
@@ -11,7 +12,7 @@ export interface iCustomerresponseforinvoice {
   contactPhone: string;
   type: string;
   addresses: {
-    RegisteredOfficeAddress: iAddress;
-    OperationalHeadquartersAddress: iAddress;
+    RegisteredOfficeAddress: iAddressResponse;
+    OperationalHeadquartersAddress: iAddressResponse;
   };
 }
