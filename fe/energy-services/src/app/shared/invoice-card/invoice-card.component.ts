@@ -18,7 +18,7 @@ export class InvoiceCardComponent {
   roles: string[] = [];
 
   ngOnInit() {
-    this.decodeToken.userRoles$.subscribe((res) => (this.roles = res));
+    this.roles = this.decodeToken.userRoles$.getValue();
   }
 
   openModal(invoice: iInvoiceresponse) {
