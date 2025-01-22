@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { InvoiceService } from '../../../../services/invoice.service';
 import { iInvoiceresponse } from '../../../../interfaces/iinvoiceresponse';
 import { iInvoiceresponseforcustomer } from '../../../../interfaces/iinvoiceresponseforcustomer';
@@ -10,13 +10,17 @@ import { iInvoiceresponseforcustomer } from '../../../../interfaces/iinvoiceresp
   styleUrl: './search-by-number.component.scss',
 })
 export class SearchByNumberComponent {
-  constructor(private invoiceSvc: InvoiceService) {}
+  constructor(
+    private invoiceSvc: InvoiceService,
+    private activeModal: NgbActiveModal
+  ) {}
 
   invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
 
   getByNumber(number: number) {
     this.invoiceSvc.getByNumber(number).subscribe((res) => {
       this.invoices.push(res);
+      this.activeModal.close(this.invoices);
     });
   }
 }

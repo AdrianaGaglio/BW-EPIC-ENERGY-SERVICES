@@ -1,2 +1,17 @@
-Search by amount
-<form></form>
+<form #form="ngForm" (submit)="getAllByAmountRange(+min.value, +max.value)">
+  <div class="d-flex align-items-bottom gap-2">
+    <div>
+      <label for="min" class="form-label">Invoice min amount:</label>
+      <input id="min" class="form-control" type="number" #min />
+    </div>
+    <div>
+      <label for="max" class="form-label">Invoice max amount:</label>
+      <input id="max" class="form-control" type="number" #max />
+    </div>
+    <div class="align-self-end gap-2">
+      <button class="btn btn-success">
+        <ng-icon name="bootstrapSearch"></ng-icon>
+      </button>
+    </div>
+  </div>
+</form>

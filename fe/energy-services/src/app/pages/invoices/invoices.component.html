@@ -11,6 +11,7 @@
       [(ngModel)]="searchBy"
       value="all"
       checked
+      (change)="getAll()"
     />
     <label class="btn btn-outline-primary" for="all">All</label>
     <input
@@ -95,5 +96,22 @@
       (change)="openSearchByAmount()"
     />
     <label class="btn btn-outline-primary" for="byAmount">Amount</label>
+  </div>
+</div>
+<div *ngIf="invoices" class="row py-3 gy-3">
+  <div *ngIf="pages">
+    <div class="d-flex align-items-center">
+      <p class="mb-0">Pages:</p>
+      <span
+        (click)="changePage(num - 1)"
+        class="badge text-primary"
+        *ngFor="let num of pages"
+        role="button"
+        >{{ num }}</span
+      >
+    </div>
+  </div>
+  <div class="col-12" *ngFor="let invoice of invoices">
+    <app-invoice-card [invoice]="invoice"></app-invoice-card>
   </div>
 </div>
