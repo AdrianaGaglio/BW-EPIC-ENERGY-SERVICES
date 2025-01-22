@@ -6,7 +6,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: "full"},
   { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
   { path: 'invoices', loadChildren: () => import('./pages/invoices/invoices.module').then(m => m.InvoicesModule) },
-  { path: 'customers', loadChildren: () => import('./pages/customers/customers.module').then(m => m.CustomersModule) }
+  { path: 'customers', loadChildren: () => import('./pages/customers/customers.module').then(m => m.CustomersModule) },
+  { path: 'create-invoice', loadChildren: () => import('./pages/create-invoice/create-invoice.module').then(m => m.CreateInvoiceModule) }
 ];
 
 @NgModule({

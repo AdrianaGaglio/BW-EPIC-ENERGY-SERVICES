@@ -11,7 +11,7 @@ import {
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { NgIconsModule } from '@ng-icons/core';
-import { bootstrapSearch } from '@ng-icons/bootstrap-icons';
+import { bootstrapFloppy, bootstrapSearch } from '@ng-icons/bootstrap-icons';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +19,7 @@ import { bootstrapSearch } from '@ng-icons/bootstrap-icons';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    NgIconsModule.withIcons({ bootstrapSearch }),
+    NgIconsModule.withIcons({ bootstrapSearch, bootstrapFloppy }),
   ],
   providers: [provideHttpClient(withInterceptors([tokenInterceptor]))],
   bootstrap: [AppComponent],

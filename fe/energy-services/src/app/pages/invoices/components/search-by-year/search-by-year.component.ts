@@ -2,6 +2,7 @@ import { iInvoiceresponseforcustomer } from './../../../../interfaces/iinvoicere
 import { Component, Input } from '@angular/core';
 import { iInvoiceresponse } from '../../../../interfaces/iinvoiceresponse';
 import { InvoiceService } from '../../../../services/invoice.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-search-by-year',
@@ -9,14 +10,19 @@ import { InvoiceService } from '../../../../services/invoice.service';
   styleUrl: './search-by-year.component.scss',
 })
 export class SearchByYearComponent {
-  constructor(private invoiceSvc: InvoiceService) {}
+  constructor(
+    private invoiceSvc: InvoiceService,
+    private activeModal: NgbActiveModal
+  ) {}
+
+  year: string = '';
 
   invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
 
   getAllByYear(year: number) {
     this.invoiceSvc.getAllByYear(year).subscribe((res) => {
       this.invoices = res;
-      console.log(this.invoices);
+      this.activeModal.close(this.invoices);
     });
   }
 }

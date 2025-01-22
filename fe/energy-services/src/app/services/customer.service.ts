@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { iCustomer } from '../interfaces/icustomer';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,10 @@ export class CustomerService {
   baseUrl: string = environment.baseUrl + 'customer';
 
   constructor(private HttpClient: HttpClient) {}
+
+  getAll(): Observable<iCustomer[]> {
+    return this.HttpClient.get<iCustomer[]>(this.baseUrl);
+  }
 
   getAllCustomers(numberPage: number, size: number, type?: string[]) {
     let url: string = this.baseUrl + `/all?page=${numberPage}&size=${size}`;
@@ -39,7 +44,7 @@ export class CustomerService {
       this.baseUrl + `/by-vatCode?vatCode=${vatCode}`
     );
   }
-  getCustomersByLastContact(startDate: Date, endDate: Date) {
+  getCustomersByLastContact(startDate: string, endDate: string) {
     return this.HttpClient.get<iCustomer[]>(
       this.baseUrl +
         `/byLastContactBetween?startDate=${startDate}&endDate=${endDate}`

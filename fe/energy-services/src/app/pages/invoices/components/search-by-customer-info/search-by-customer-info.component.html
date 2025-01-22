@@ -2,14 +2,17 @@
   <div class="d-flex align-items-bottom gap-2">
     <div>
       <label for="customerId" class="form-label">Customer:</label>
-      <input
-        id="customerId"
-        class="form-control"
-        type="number"
+      <select
+        class="form-select"
         name="customerId"
         [(ngModel)]="customerId"
         [disabled]="vatCode != '' || pec != '' ? true : false"
-      />
+      >
+        <option class="form-control" value="">-- select customer --</option>
+        <option class="form-control" *ngFor="let c of customers" [value]="c.id">
+          {{ c.denomination }}
+        </option>
+      </select>
     </div>
     <div>
       <label for="vatCode" class="form-label">Customer vat code:</label>
@@ -48,7 +51,16 @@
         />
         <label for="direction">Want to order DESC?</label>
       </div>
-      <button class="btn btn-success align-self-end">
+      <button
+        class="btn btn-success align-self-end"
+        [disabled]="
+          (customerId == '' || customerId == undefined) &&
+          vatCode == '' &&
+          pec == ''
+            ? true
+            : false
+        "
+      >
         <ng-icon name="bootstrapSearch"></ng-icon>
       </button>
     </div>

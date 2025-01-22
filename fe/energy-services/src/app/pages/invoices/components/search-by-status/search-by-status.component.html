@@ -1,8 +1,20 @@
-<form #form="ngForm" (submit)="getAllByStatus(status.value)">
+<form #form="ngForm" (submit)="getAllByStatus()">
   <label for="status" class="form-label">Invoice status:</label>
   <div class="d-flex align-items-center gap-2">
-    <input id="status" class="form-control" type="text" #status />
-    <button class="btn btn-success">
+    <select
+      class="form-select"
+      name="status"
+      id="status"
+      name="status"
+      required
+      [(ngModel)]="status"
+    >
+      <option value="">-- select invoice status --</option>
+      <option class="form-control" *ngFor="let s of statuses" [value]="s.name">
+        {{ s.name }} - {{ s.description }}
+      </option>
+    </select>
+    <button class="btn btn-success" [disabled]="status == ''">
       <ng-icon name="bootstrapSearch"></ng-icon>
     </button>
   </div>

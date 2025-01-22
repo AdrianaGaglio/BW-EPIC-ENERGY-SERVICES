@@ -8,6 +8,11 @@ import { ForadminuserComponent } from './components/foradminuser/foradminuser.co
 import { FormsModule } from '@angular/forms';
 import { SearchByCreationdateComponent } from './components/search-by-creationdate/search-by-creationdate.component';
 import { NgIconsModule } from '@ng-icons/core';
+import { SearchByLastcontactComponent } from './components/search-by-lastcontact/search-by-lastcontact.component';
+import { SearchByDenominationComponent } from './components/search-by-denomination/search-by-denomination.component';
+import { SearchByYearlyturnoverComponent } from './components/search-by-yearlyturnover/search-by-yearlyturnover.component';
+import { SearchByVatcodeComponent } from './components/search-by-vatcode/search-by-vatcode.component';
+import { CardCustomerComponent } from './components/cardCustomer/cardCustomer.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +20,11 @@ import { NgIconsModule } from '@ng-icons/core';
     LoggedCustomersComponent,
     ForadminuserComponent,
     SearchByCreationdateComponent,
+    SearchByLastcontactComponent,
+    SearchByDenominationComponent,
+    SearchByYearlyturnoverComponent,
+    SearchByVatcodeComponent,
+    CardCustomerComponent,
   ],
   imports: [CommonModule, CustomersRoutingModule, FormsModule, NgIconsModule],
 })
