@@ -83,7 +83,7 @@
     >
   </div>
 </div>
-<div *ngIf="customers" class="row py-3 gy-3">
+<div *ngIf="customers && customers.length > 0" class="row py-3 gy-3">
   <div *ngIf="isPaged">
     <div class="d-flex align-items-center">
       <p class="mb-0">Pages:</p>
@@ -108,3 +108,9 @@
     </ng-container>
   </div>
 </div>
+<app-alert
+  *ngIf="message && message.length > 0"
+  [message]="message"
+  [type]="'warning'"
+  (closeAlert)="clearMessage()"
+></app-alert>

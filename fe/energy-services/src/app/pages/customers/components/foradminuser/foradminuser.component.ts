@@ -22,6 +22,8 @@ export class ForadminuserComponent {
   page!: number;
   pages!: number[];
 
+  message!: string;
+
   ngOnInit() {
     this.getAllCustomers(0, 5);
   }
@@ -47,6 +49,9 @@ export class ForadminuserComponent {
         this.customers = res;
         this.searchBy = '';
         this.isPaged = false;
+        if (res.length == 0) {
+          this.message = 'No customers found';
+        }
       })
       .catch((reason) => {
         this.modalService.dismissAll();
@@ -63,6 +68,9 @@ export class ForadminuserComponent {
         this.customers = res;
         this.searchBy = '';
         this.isPaged = false;
+        if (res.length == 0) {
+          this.message = 'No customers found';
+        }
       })
       .catch((reason) => {
         this.modalService.dismissAll();
@@ -79,6 +87,9 @@ export class ForadminuserComponent {
         this.customers = res;
         this.searchBy = '';
         this.isPaged = false;
+        if (res.length == 0) {
+          this.message = 'No customers found';
+        }
       })
       .catch((reason) => {
         this.modalService.dismissAll();
@@ -95,6 +106,9 @@ export class ForadminuserComponent {
         this.customers = res;
         this.searchBy = '';
         this.isPaged = false;
+        if (res.length == 0) {
+          this.message = 'No customers found';
+        }
       })
       .catch((reason) => {
         this.modalService.dismissAll();
@@ -111,10 +125,19 @@ export class ForadminuserComponent {
         this.customers = res;
         this.searchBy = '';
         this.isPaged = false;
+        if (res.length == 0) {
+          this.message = 'No customers found';
+        }
       })
       .catch((reason) => {
         this.modalService.dismissAll();
         this.searchBy = '';
       });
+  }
+
+  clearMessage() {
+    this.message = '';
+    this.searchBy = 'all';
+    this.getAllCustomers(0, 5);
   }
 }

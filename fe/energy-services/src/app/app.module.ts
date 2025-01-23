@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { tokenInterceptor } from './auth/token.interceptor';
 import {
   HTTP_INTERCEPTORS,
@@ -17,6 +17,7 @@ import {
   bootstrapArrowUp,
   bootstrapFloppy,
   bootstrapSearch,
+  bootstrapXLg,
 } from '@ng-icons/bootstrap-icons';
 import { HeaderComponent } from './main-components/header/header.component';
 import { FooterComponent } from './main-components/footer/footer.component';
@@ -28,11 +29,13 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    NgbAlertModule,
     NgIconsModule.withIcons({
       bootstrapSearch,
       bootstrapFloppy,
       bootstrapArrowUp,
       bootstrapArrowDown,
+      bootstrapXLg,
     }),
   ],
   providers: [
