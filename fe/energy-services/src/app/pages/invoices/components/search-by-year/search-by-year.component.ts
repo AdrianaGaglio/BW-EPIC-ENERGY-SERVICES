@@ -1,8 +1,8 @@
 import { iInvoiceresponseforcustomer } from './../../../../interfaces/iinvoiceresponseforcustomer';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { iInvoiceresponse } from '../../../../interfaces/iinvoiceresponse';
 import { InvoiceService } from '../../../../services/invoice.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-search-by-year',

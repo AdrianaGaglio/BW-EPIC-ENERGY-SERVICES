@@ -103,15 +103,20 @@ export class InvoicesComponent {
       size: 'xl',
     });
 
-    modalRef.result.then((res) => {
-      this.isPaged = false;
-      this.searchBy = '';
-      if (this.roles.includes('CUSTOMER')) {
-        this.customerInvoices = res;
-      } else {
-        this.invoices = res;
-      }
-    });
+    modalRef.result
+      .then((res) => {
+        this.isPaged = false;
+        this.searchBy = '';
+        if (this.roles.includes('CUSTOMER')) {
+          this.customerInvoices = res;
+        } else {
+          this.invoices = res;
+        }
+      })
+      .catch((reason) => {
+        this.modalService.dismissAll();
+        this.searchBy = '';
+      });
   }
 
   openSearchByNumber() {
@@ -119,15 +124,20 @@ export class InvoicesComponent {
       size: 'xl',
     });
 
-    modalRef.result.then((res) => {
-      this.isPaged = false;
-      this.searchBy = '';
-      if (this.roles.includes('CUSTOMER')) {
-        this.customerInvoices = res;
-      } else {
-        this.invoices = res;
-      }
-    });
+    modalRef.result
+      .then((res) => {
+        this.isPaged = false;
+        this.searchBy = '';
+        if (this.roles.includes('CUSTOMER')) {
+          this.customerInvoices = res;
+        } else {
+          this.invoices = res;
+        }
+      })
+      .catch((reason) => {
+        this.modalService.dismissAll();
+        this.searchBy = '';
+      });
   }
 
   openSearchByCustomerInfo() {
@@ -135,11 +145,16 @@ export class InvoicesComponent {
       size: 'xl',
     });
 
-    modalRef.result.then((res) => {
-      this.isPaged = false;
-      this.searchBy = '';
-      this.invoices = res;
-    });
+    modalRef.result
+      .then((res) => {
+        this.isPaged = false;
+        this.searchBy = '';
+        this.invoices = res;
+      })
+      .catch((reason) => {
+        this.modalService.dismissAll();
+        this.searchBy = '';
+      });
   }
 
   openSearchByDate() {
@@ -147,15 +162,20 @@ export class InvoicesComponent {
       size: 'xl',
     });
 
-    modalRef.result.then((res) => {
-      this.isPaged = false;
-      this.searchBy = '';
-      if (this.roles.includes('CUSTOMER')) {
-        this.customerInvoices = res;
-      } else {
-        this.invoices = res;
-      }
-    });
+    modalRef.result
+      .then((res) => {
+        this.isPaged = false;
+        this.searchBy = '';
+        if (this.roles.includes('CUSTOMER')) {
+          this.customerInvoices = res;
+        } else {
+          this.invoices = res;
+        }
+      })
+      .catch((reason) => {
+        this.modalService.dismissAll();
+        this.searchBy = '';
+      });
   }
 
   openSearchByYear() {
@@ -163,15 +183,20 @@ export class InvoicesComponent {
       size: 'xl',
     });
 
-    modalRef.result.then((res) => {
-      this.isPaged = false;
-      this.searchBy = '';
-      if (this.roles.includes('CUSTOMER')) {
-        this.customerInvoices = res;
-      } else {
-        this.invoices = res;
-      }
-    });
+    modalRef.result
+      .then((res) => {
+        this.isPaged = false;
+        this.searchBy = '';
+        if (this.roles.includes('CUSTOMER')) {
+          this.customerInvoices = res;
+        } else {
+          this.invoices = res;
+        }
+      })
+      .catch((reason) => {
+        this.modalService.dismissAll();
+        this.searchBy = '';
+      });
   }
 
   openSearchByAmount() {
@@ -179,14 +204,19 @@ export class InvoicesComponent {
       size: 'xl',
     });
 
-    modalRef.result.then((res) => {
-      this.isPaged = false;
-      this.searchBy = '';
-      if (this.roles.includes('CUSTOMER')) {
-        this.customerInvoices = res;
-      } else {
-        this.invoices = res;
-      }
-    });
+    modalRef.result
+      .then((res) => {
+        this.isPaged = false;
+        this.searchBy = '';
+        if (this.roles.includes('CUSTOMER')) {
+          this.customerInvoices = res;
+        } else {
+          this.invoices = res;
+        }
+      })
+      .catch((reason) => {
+        this.modalService.dismissAll();
+        this.searchBy = '';
+      });
   }
 }
