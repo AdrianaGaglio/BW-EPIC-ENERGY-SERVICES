@@ -10,6 +10,7 @@ import { BehaviorSubject, tap } from 'rxjs';
 import { iPasswordResetRequest } from './interfaces/i-password-reset-request';
 import { DecodeTokenService } from '../services/decode-token.service';
 import { iResponseStringMessage } from './interfaces/i-response-string-message';
+import { iAppUserResponse } from './interfaces/i-appUserResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -92,6 +93,17 @@ export class AuthsrvService {
     return this.http.post<iResponseStringMessage>(
       this.baseUrl + 'auth/requestChangePassword',
       email
+    );
+  }
+
+  getByCustomerWithAppUser() {
+    return this.http.get<iAppUserResponse>(this.baseUrl + 'auth/withAppUser');
+  }
+
+  updateAppUser(appUser: iAppUserResponse) {
+    return this.http.put<iAppUserResponse>(
+      this.baseUrl + 'auth/withAppUser',
+      appUser
     );
   }
 }

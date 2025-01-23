@@ -45,4 +45,5 @@ public class CustomerMapper {
         CustomerResponseForInvoice customerResponseForInvoice = modelMapper.map(e, CustomerResponseForInvoice.class);
         return customerResponseForInvoice;
     }
+
 }
