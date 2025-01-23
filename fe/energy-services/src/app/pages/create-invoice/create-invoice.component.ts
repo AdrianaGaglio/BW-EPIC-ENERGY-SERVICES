@@ -27,6 +27,8 @@ export class CreateInvoiceComponent {
   newInvoice!: FormGroup;
   statuses: iInvoiceStatus[] = [];
 
+  alertMessage!: string;
+
   ngOnInit() {
     this.customerSvc.getAll().subscribe((res) => (this.customers = res));
     this.statusSvc.getAll().subscribe((res) => (this.statuses = res));
@@ -74,7 +76,9 @@ export class CreateInvoiceComponent {
 
   save() {
     if (this.newInvoice.valid) {
-      this.invoceSvc.create(this.newInvoice.value).subscribe();
+      this.invoceSvc.create(this.newInvoice.value).subscribe((res) => {
+        this.alertMessage = 'Invoice created successfully';
+      });
     }
   }
 
@@ -87,5 +91,9 @@ export class CreateInvoiceComponent {
       this.statuses.push(res);
       this.statuses.sort((a, b) => a.name.localeCompare(b.name));
     });
+  }
+
+  clearMessage() {
+    this.alertMessage = '';
   }
 }
