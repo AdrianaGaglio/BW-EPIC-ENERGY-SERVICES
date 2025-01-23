@@ -23,7 +23,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .map(Enum::name)
                 .toArray(String[]::new);
 
-Arrays.stream(roles).map(Role::valueOf).forEach(System.out::println);
 
         return User.builder()
                 .username(user.getUsername())

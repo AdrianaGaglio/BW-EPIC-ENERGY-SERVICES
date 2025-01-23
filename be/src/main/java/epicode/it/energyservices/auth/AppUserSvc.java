@@ -129,7 +129,7 @@ public class AppUserSvc {
 
         emailSvc.sendEmailHtml(emailMapper.fromResetPasswordBodyToEmailRequest(resetUrl, appUser));
 
-        return "Email sent successfully" + token;
+        return "Email sent successfully";
     }
 
     public String verifyTokenPasswordReset(String token, HttpServletResponse response)  {

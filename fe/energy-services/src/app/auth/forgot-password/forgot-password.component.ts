@@ -15,7 +15,7 @@ export class ForgotPasswordComponent {
   private router = inject(Router);
   private authSvc = inject(AuthsrvService);
 
-  email: string = '';
+  email: { email: string } = { email: '' };
 
   constructor() {
     this.form = new FormGroup({
@@ -25,5 +25,13 @@ export class ForgotPasswordComponent {
 
   ngOnInit() {}
 
-  sendResetEmail() {}
+  sendResetEmail() {
+    if (this.form.valid) {
+      this.email.email = this.form.value.email;
+      this.authSvc.sendRequestPasswordReset(this.email).subscribe(() => {
+        alert('Email sent successfully');
+        this.router.navigate(['auth']);
+      });
+    }
+  }
 }
