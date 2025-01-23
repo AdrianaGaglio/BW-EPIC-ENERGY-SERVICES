@@ -93,7 +93,9 @@ export class InvoicesComponent {
   }
 
   openSearchByCustomer() {
-    this.modalService.open(SearchByCustomerComponent, { size: 'xl' });
+    this.modalService.open(SearchByCustomerComponent, {
+      size: 'xl',
+    });
   }
 
   openSearchByStatus() {

@@ -13,6 +13,7 @@ import {
 import { NgIconsModule } from '@ng-icons/core';
 import { bootstrapFloppy, bootstrapSearch } from '@ng-icons/bootstrap-icons';
 import { HeaderComponent } from './main-components/header/header.component';
+import { DirectivesModule } from './shared/directives/directives/directives.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -21,6 +22,7 @@ import { HeaderComponent } from './main-components/header/header.component';
     AppRoutingModule,
     NgbModule,
     NgIconsModule.withIcons({ bootstrapSearch, bootstrapFloppy }),
+    DirectivesModule,
   ],
   providers: [provideHttpClient(withInterceptors([tokenInterceptor]))],
   bootstrap: [AppComponent],

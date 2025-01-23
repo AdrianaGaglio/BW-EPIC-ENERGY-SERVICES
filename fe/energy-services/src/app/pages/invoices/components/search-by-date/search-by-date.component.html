@@ -1,13 +1,15 @@
 <form #form="ngForm" (submit)="getAllByDate(date)">
-  <label for="date" class="form-label">Invoice date:</label>
-  <div class="d-flex align-items-center gap-2">
-    <input
-      id="date"
-      class="form-control"
-      type="date"
-      name="date"
-      [(ngModel)]="date"
-    />
+  <div class="d-flex align-items-end gap-2">
+    <div class="flex-grow-1">
+      <label for="date" class="form-label">Invoice date:</label>
+      <input
+        id="date"
+        class="form-control"
+        type="date"
+        name="date"
+        [(ngModel)]="date"
+      />
+    </div>
     <button class="btn btn-success" [disabled]="date == ''">
       <ng-icon name="bootstrapSearch"></ng-icon>
     </button>

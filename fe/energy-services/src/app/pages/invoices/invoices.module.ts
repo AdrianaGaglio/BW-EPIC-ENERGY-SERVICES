@@ -13,6 +13,7 @@ import { SearchByYearComponent } from './components/search-by-year/search-by-yea
 import { SearchByAmountComponent } from './components/search-by-amount/search-by-amount.component';
 import { NgIconsModule } from '@ng-icons/core';
 import { InvoiceCardModule } from '../../shared/invoice-card/invoice-card.module';
+import { DirectivesModule } from '../../shared/directives/directives/directives.module';
 
 @NgModule({
   declarations: [
