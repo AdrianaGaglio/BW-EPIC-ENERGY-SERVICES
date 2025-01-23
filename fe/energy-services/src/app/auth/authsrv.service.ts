@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment.development';
 import { iUser } from './interfaces/i-user';
 import { iLoginRequest } from './interfaces/i-login-request';
 import { BehaviorSubject, tap } from 'rxjs';
+import { iPasswordResetRequest } from './interfaces/i-password-reset-request';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,7 @@ export class AuthsrvService {
 
   registerUrl: string = environment.registerUrl;
   loginUrl: string = environment.loginUrl;
+  baseUrl: string = environment.baseUrl;
   autoLogoutTimer: any;
 
   register(user: Partial<iUser>) {
@@ -72,5 +74,12 @@ export class AuthsrvService {
     }
 
     this.userAuthSubject$.next(accessdata);
+  }
+
+  resetPassword(passwordResetRequest: iPasswordResetRequest) {
+    return this.http.patch(
+      this.baseUrl + 'auth/reset-password',
+      passwordResetRequest
+    );
   }
 }

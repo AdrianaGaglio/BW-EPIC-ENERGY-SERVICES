@@ -1,8 +1,6 @@
 package epicode.it.energyservices.auth;
 
-import epicode.it.energyservices.auth.dto.AuthResponse;
-import epicode.it.energyservices.auth.dto.LoginRequest;
-import epicode.it.energyservices.auth.dto.RegisterRequest;
+import epicode.it.energyservices.auth.dto.*;
 import epicode.it.energyservices.auth.jwt.JwtTokenUtil;
 import epicode.it.energyservices.entities.sys_user.customer.CustomerSvc;
 import epicode.it.energyservices.entities.sys_user.employee.Employee;
@@ -12,10 +10,11 @@ import epicode.it.energyservices.exceptions.EmailAlreadyUsedException;
 import epicode.it.energyservices.utils.Utils;
 import epicode.it.energyservices.utils.email.EmailMapper;
 import epicode.it.energyservices.utils.email.EmailSvc;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.eclipse.angus.mail.smtp.SMTPSenderFailedException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -117,4 +116,51 @@ public class AppUserSvc {
 
 
     }
+
+
+    public String sendEmailForChangePassword(@Valid EmailForPasswordResetRequest request) {
+        AppUser appUser = appUserRepo.findByEmail(request.getEmail()).orElseThrow(() -> new EntityNotFoundException("Email not registered"));
+        String token = jwtTokenUtil.generateTokenResetPassword(appUser);
+
+        String resetUrl = "http://localhost:8080/api/auth/reset-password?token=" + token;
+
+        emailSvc.sendEmailHtml(emailMapper.fromResetPasswordBodyToEmailRequest(resetUrl, appUser));
+
+        return "Email sent successfully" + token;
+    }
+
+    public String verifyTokenPasswordReset(String token, HttpServletResponse response) {
+        if (jwtTokenUtil.isTokenExpired(token)) {
+            //Da implementare quando e se avremo la pagina di errore
+//            try {
+//                response.sendRedirect("http://localhost:4200/error?message=Token non valido o scaduto");
+//            } catch (IOException e) {
+//                throw new EmailSendErrorException(e.getMessage());
+//            }
+            return "Token not valid or expired";
+        } else {
+
+//            try {
+//                response.sendRedirect("http://localhost:4200/reset-password?token=" + token);
+//            } catch (IOException e) {
+//                throw new EmailSendErrorException(e.getMessage());
+//            }
+
+            return token;
+        }
+    }
+
+    public String resetPassword(@Valid PasswordResetRequest resetPasswordRequest) {
+        if (jwtTokenUtil.isTokenExpired(resetPasswordRequest.getToken())) {
+            throw new SecurityException("Token not valid or expired");
+        } else {
+            String username = jwtTokenUtil.getUsernameFromToken(resetPasswordRequest.getToken());
+            AppUser appUser = appUserRepo.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found"));
+            appUser.setPassword(passwordEncoder.encode(resetPasswordRequest.getPassword()));
+            appUserRepo.save(appUser);
+            emailSvc.sendEmailHtml(emailMapper.fromResetPasswordSuccessBodyToEmailRequest(appUser));
+            return "Password changed successfully";
+        }
+    }
+
 }
