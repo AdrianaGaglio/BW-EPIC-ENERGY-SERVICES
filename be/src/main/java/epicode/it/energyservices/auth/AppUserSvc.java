@@ -7,9 +7,11 @@ import epicode.it.energyservices.entities.sys_user.employee.Employee;
 import epicode.it.energyservices.entities.sys_user.employee.EmployeeSvc;
 import epicode.it.energyservices.exceptions.AlreadyExistsException;
 import epicode.it.energyservices.exceptions.EmailAlreadyUsedException;
+import epicode.it.energyservices.exceptions.EmailSendErrorException;
 import epicode.it.energyservices.utils.Utils;
 import epicode.it.energyservices.utils.email.EmailMapper;
 import epicode.it.energyservices.utils.email.EmailSvc;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
@@ -25,6 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.io.IOException;
 import java.util.Set;
 
 @Service
@@ -129,24 +132,19 @@ public class AppUserSvc {
         return "Email sent successfully" + token;
     }
 
-    public String verifyTokenPasswordReset(String token, HttpServletResponse response) {
-        if (jwtTokenUtil.isTokenExpired(token)) {
-            //Da implementare quando e se avremo la pagina di errore
-//            try {
-//                response.sendRedirect("http://localhost:4200/error?message=Token non valido o scaduto");
-//            } catch (IOException e) {
-//                throw new EmailSendErrorException(e.getMessage());
-//            }
-            return "Token not valid or expired";
-        } else {
-
-//            try {
-//                response.sendRedirect("http://localhost:4200/reset-password?token=" + token);
-//            } catch (IOException e) {
-//                throw new EmailSendErrorException(e.getMessage());
-//            }
-
-            return token;
+    public String verifyTokenPasswordReset(String token, HttpServletResponse response)  {
+        try {
+            if (jwtTokenUtil.isTokenExpired(token)) {
+                response.sendRedirect("http://localhost:4200/error?message=Token non valido o scaduto");
+                return "Token not valid or expired";
+            } else {
+                response.sendRedirect("http://localhost:4200/auth/reset-password/" + token);
+                return "Redirected to reset password page";
+            }
+        } catch (IOException e) {
+            throw new EmailSendErrorException("Redirect fallito: " + e.getMessage());
+        } catch (ExpiredJwtException e){
+          return "Token not valid or expired";
         }
     }
 

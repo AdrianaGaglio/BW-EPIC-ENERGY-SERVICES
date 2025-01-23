@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { iPasswordResetRequest } from '../interfaces/i-password-reset-request';
 import { AuthsrvService } from '../authsrv.service';
@@ -14,6 +14,7 @@ export class ResetPasswordComponent {
   form: FormGroup;
 
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private authSvc = inject(AuthsrvService);
   private jwtHelper: JwtHelperService = new JwtHelperService();
 
@@ -25,14 +26,14 @@ export class ResetPasswordComponent {
 
   constructor() {
     this.token = this.route.snapshot.paramMap.get('token');
-    console.log(this.token?.split('.'));
 
     if (this.token) {
       this.isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
       this.username = this.jwtHelper.decodeToken(this.token).sub;
     }
     if (this.isTokenExpired) {
-      alert('token expired');
+      this.token = null;
+      this.username = null;
     }
     this.form = new FormGroup({
       password: new FormControl('', [Validators.required]),
@@ -48,10 +49,11 @@ export class ResetPasswordComponent {
 
       this.authSvc.resetPassword(formData).subscribe({
         next: (data) => {
-          alert('Password reset with success');
+          alert(data.message);
+          this.router.navigate(['auth']);
         },
         error: (data) => {
-          alert('error reset password');
+          alert(data.error.message);
         },
       });
     }
