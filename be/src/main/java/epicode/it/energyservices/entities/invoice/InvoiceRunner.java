@@ -27,13 +27,29 @@ public class InvoiceRunner implements ApplicationRunner {
         System.out.println("INVOICE RUNNER STARTED");
 
         if (invoiceSvc.count() == 0) {
+            for (int i = 0; i < 300; i++) {
+                InvoiceRequest request = new InvoiceRequest();
+                LocalDate date = LocalDate.of(faker.random().nextInt(2023, 2024), faker.random().nextInt(1, 12), faker.random().nextInt(1, 28));
+                request.setDate(date);
+                request.setAmount(faker.number().randomDouble(2, 2, 1200));
+                request.setStatus(statusSvc.getAll().get(faker.random().nextInt(0, statusSvc.getAll().size() - 1)).getName());
+                request.setCustomerId(faker.random().nextInt(1, 79).longValue());
+
+                try {
+                    invoiceSvc.create(request);
+                } catch (RuntimeException e) {
+                    System.out.println(request);
+                    System.out.println(e.getMessage());
+                }
+            }
+
             for (int i = 0; i < 50; i++) {
                 InvoiceRequest request = new InvoiceRequest();
-                LocalDate date = LocalDate.of(faker.random().nextInt(2020,2025), faker.random().nextInt(1, 12), faker.random().nextInt(1, 28));
+                LocalDate date = LocalDate.of(2025, 1, faker.random().nextInt(1, 31));
                 request.setDate(date);
-                request.setAmount(faker.number().randomDouble(2, 2, 1000));
+                request.setAmount(faker.number().randomDouble(2, 2, 1200));
                 request.setStatus(statusSvc.getAll().get(faker.random().nextInt(0, statusSvc.getAll().size() - 1)).getName());
-                request.setCustomerId(faker.random().nextInt(1, 10).longValue());
+                request.setCustomerId(faker.random().nextInt(1, 79).longValue());
 
                 try {
                     invoiceSvc.create(request);

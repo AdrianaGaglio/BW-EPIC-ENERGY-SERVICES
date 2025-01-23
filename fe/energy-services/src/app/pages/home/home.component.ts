@@ -25,7 +25,7 @@ export class HomeComponent {
 
   waitingPayments: iInvoiceresponse[] = [];
 
-  limit: number = 3;
+  limit: number = 5;
 
   latest: iInvoiceresponse[] = [];
 
@@ -36,7 +36,7 @@ export class HomeComponent {
         if (res && res.total !== undefined) {
           this.totalAmount = {
             ...res,
-            total: parseFloat(res.total.toFixed(2))
+            total: parseFloat(res.total.toFixed(2)),
           };
         }
       });
@@ -44,7 +44,10 @@ export class HomeComponent {
       this.invoiceSvc
         .getTotal(new Date().getFullYear() - 1)
         .subscribe((res) => {
-          this.lastYearAmount = res;
+          this.lastYearAmount = {
+            ...res,
+            total: parseFloat(res.total.toFixed(2)),
+          };
         });
 
       this.invoiceSvc.getWaitingPayment().subscribe((res) => {

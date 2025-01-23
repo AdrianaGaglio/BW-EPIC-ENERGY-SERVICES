@@ -53,7 +53,7 @@ public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
     @Query("SELECT i FROM Invoice i WHERE i.status.name IN ('SENT', 'PARTIALLY PAID', 'OVERDUE')")
     public List<Invoice> findAllWaitingPayment();
 
-    @Query("SELECT i FROM Invoice i WHERE EXTRACT(YEAR FROM i.date) = :year ORDER BY i.date DESC")
+    @Query("SELECT i FROM Invoice i WHERE EXTRACT(YEAR FROM i.date) = :year ORDER BY i.number DESC")
     Page<Invoice> findLatest(@Param("year") int year, Pageable pageable);
 }
 
