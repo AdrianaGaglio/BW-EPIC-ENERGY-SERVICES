@@ -1,6 +1,6 @@
 <ng-container *ngIf="customer">
   <div class="card">
-    <div class="card-header d-flex justify-content-between">
+    <div class="card-header bg-transparent d-flex justify-content-between">
       <span>ID: <span class="fw-bold">{{ customer.id }}</span></span>
       <span>Creation Date:<span class="fw-bold"> {{ customer.creationDate }}</span> </span>
     </div>
@@ -54,7 +54,7 @@
         </ul>
       </div>
     </div>
-    <div class="card-footer bg-transparent d-flex justify-content-end">
+    <div class="card-footer bg-transparent border-0 d-flex justify-content-end">
       <a class="text-primary no-underline" (click)="seeInvoices()">
          → See invoices
       </a>
