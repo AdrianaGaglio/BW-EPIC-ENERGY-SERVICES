@@ -48,7 +48,7 @@ public class JwtTokenUtil {
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
@@ -66,6 +66,15 @@ public class JwtTokenUtil {
                 .claim("roles", roles) // Aggiunge i ruoli come claim
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
+                .signWith(SignatureAlgorithm.HS256, secret)
+                .compact();
+    }
+
+    public String generateTokenResetPassword(AppUser appUser) {
+        return Jwts.builder()
+                .setSubject(appUser.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 *60*15))
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
@@ -90,5 +99,6 @@ public class JwtTokenUtil {
 
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
 
 }

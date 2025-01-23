@@ -54,6 +54,36 @@ public class EmailMapper {
         return processTemplate(template, values);
     }
 
+    public String forResetPasswordRequestBody(String link){
+        String template = loadTemplate("src/main/resources/templates/resetPassword.html");
+        Map<String, String> values = new HashMap<>();
+        values.put("link", link);
+
+        return processTemplate(template, values);
+    }
+
+    public EmailRequest fromResetPasswordBodyToEmailRequest(String link, AppUser user) {
+        EmailRequest request = new EmailRequest();
+        request.setTo(user.getEmail());
+        request.setSubject("Energyservices - Reset password");
+        request.setBody(forResetPasswordRequestBody(link));
+        return request;
+    }
+    public String forResetPasswordSuccess(){
+        String template = loadTemplate("src/main/resources/templates/resetPasswordSuccess.html");
+        Map<String, String> values = new HashMap<>();
+
+        return processTemplate(template, values);
+    }
+
+    public EmailRequest fromResetPasswordSuccessBodyToEmailRequest(AppUser user) {
+        EmailRequest request = new EmailRequest();
+        request.setTo(user.getEmail());
+        request.setSubject("Energyservices - Reset password");
+        request.setBody(forResetPasswordSuccess());
+        return request;
+    }
+
     private String loadTemplate(String filePath)  {
         try {
             return new String(Files.readAllBytes(Paths.get(filePath)));
