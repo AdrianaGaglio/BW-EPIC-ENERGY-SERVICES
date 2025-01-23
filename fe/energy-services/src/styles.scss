@@ -24,6 +24,10 @@ ngb-modal-window.d-block.modal.fade.show
   box-shadow: 1px 1px 3px rgb(0 0 0 / 0.2);
 }
 
+.no-underline {
+  text-decoration: none;
+}
+
 // ngb-modal-backdrop.modal-backdrop.fade.show {
 //   display: none;
 // }

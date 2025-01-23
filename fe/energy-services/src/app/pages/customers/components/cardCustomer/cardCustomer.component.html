@@ -1,34 +1,35 @@
 <ng-container *ngIf="customer">
   <div class="card">
-    <div class="card-header d-flex justify-content-between">
-      <span>Customer Id: {{ customer.id }}</span>
-      <span>Creation Date: {{ customer.creationDate }}</span>
+    <div class="card-header bg-transparent d-flex justify-content-between">
+      <span>ID: <span class="fw-bold">{{ customer.id }}</span></span>
+      <span>Creation Date:<span class="fw-bold"> {{ customer.creationDate }}</span> </span>
     </div>
     <div class="card-body">
-      <div class="d-flex justify-content-between">
+
         <h5>
-          Denomination:
+          <span class="grey">Denomination: </span>
           <span class="fw-bold">{{ customer.denomination }}</span>
         </h5>
         <h5>
-          VatCode: <span class="fw-bold">{{ customer.vatCode }}</span>
+          <span class="grey">VatCode: </span> <span class="fw-bold">{{ customer.vatCode }}</span>
         </h5>
-      </div>
+
       <div class="d-flex flex-column">
-        <p class="mb-0 fw-bold">Details</p>
+        <p class="mb-1 mt-2 fw-bold">Details</p>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
-            Type: <span class="fw-bold"> {{ customer.type }}</span>
+            <span class="grey">💼 Type:</span>
+             <span class="fw-bold"> </span> {{ customer.type }}
           </li>
           <li class="list-group-item">
-            Contact phone:
+            <span class="grey">📞 Contact phone:</span>
             <span class="fw-bold"> {{ customer.contactPhone }}</span>
           </li>
           <li class="list-group-item">
-            PEC: <span class="fw-bold"> {{ customer.pec }}</span>
+            <span class="grey">✉️ PEC: </span><span class="fw-bold"> {{ customer.pec }}</span>
           </li>
           <li class="list-group-item">
-            Office address:
+            <span class="grey"> 📍Office :</span>
             <span class="fw-bold">
               {{ customer.addresses.RegisteredOfficeAddress.street }}
               {{ customer.addresses.RegisteredOfficeAddress.city.name }}
@@ -39,7 +40,7 @@
             </span>
           </li>
           <li class="list-group-item">
-            Headquarter address:
+           <span class="grey"> 🏢 Headquarter:</span>
             <span class="fw-bold">
               {{ customer.addresses.OperationalHeadquartersAddress.street }}
               {{ customer.addresses.OperationalHeadquartersAddress.city.name }}
@@ -53,10 +54,10 @@
         </ul>
       </div>
     </div>
-    <div class="card-footer bg-transparent d-flex justify-content-end">
-      <button class="btn btn-outline-primary" (click)="seeInvoices()">
-        See invoices
-      </button>
+    <div class="card-footer bg-transparent border-0 d-flex justify-content-end">
+      <a class="text-primary no-underline" (click)="seeInvoices()">
+         → See invoices
+      </a>
     </div>
   </div>
 </ng-container>

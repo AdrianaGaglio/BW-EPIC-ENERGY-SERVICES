@@ -18,9 +18,10 @@ import {
   bootstrapSearch,
 } from '@ng-icons/bootstrap-icons';
 import { HeaderComponent } from './main-components/header/header.component';
+import { FooterComponent } from './main-components/footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

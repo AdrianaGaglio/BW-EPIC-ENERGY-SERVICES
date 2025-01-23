@@ -25,5 +25,5 @@
   box-sizing: border-box;
 }
 .row{
-  height:calc(100vh - 72px);
+  min-height:calc(100vh - 72px);
 }
