@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container" >
   <header class="d-flex justify-content-center py-3">
     <ul class="nav nav-pills">
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!roles.includes('CUSTOMER') && roles.length !== 0">
         <a
           routerLink="/"
           routerLinkActive="active"
@@ -11,17 +11,17 @@
           >Home</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="roles.length !== 0">
         <a routerLink="/customers" routerLinkActive="active" class="nav-link text-secondary"
           >Customers</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="roles.length !== 0">
         <a routerLink="/invoices" routerLinkActive="active" class="nav-link text-secondary"
           >Invoices</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="!roles.includes('ADMIN') && !roles.includes('CUSTOMER') && roles.length !== 0 ">
         <a
           routerLink="/create-invoice"
           routerLinkActive="active"
@@ -29,7 +29,7 @@
           >Create Invoice</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="roles.includes('ADMIN')">
         <a
           routerLink="/auth/registeruser"
           routerLinkActive="active"
@@ -38,7 +38,7 @@
           >Register User</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="roles.length == 0" >
         <a
           routerLink="/auth"
           routerLinkActive="active"
@@ -47,7 +47,7 @@
           >Login</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="roles.length !== 0">
         <a role="button" (click)="logout()" class="nav-link text-secondary">Logout</a>
       </li>
     </ul>

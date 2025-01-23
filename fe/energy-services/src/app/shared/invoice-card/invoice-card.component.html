@@ -1,19 +1,19 @@
 <div class="card shadow border-0">
   <div class="card-header head d-flex border-0 justify-content-between">
     <span
-      >Invoice number: #{{ invoice.number! < 10 ? "00" : "0"
+      >Number: #{{ invoice.number! < 10 ? "00" : "0"
       }}{{ invoice.number }}</span
     >
-    <span>Invoice date: {{ invoice.date }}</span>
+    <span>Date: {{ invoice.date }}</span>
   </div>
   <div class="card-body">
     <div class="d-flex justify-content-between">
       <h4>
-        Invoice amount: <span class="fw-bold">€{{ invoice.amount }}</span>
+        Amount: <span class="fw-bold">€{{ invoice.amount }}</span>
       </h4>
       <p *ngIf="invoice.notes">#Notes: {{ invoice.notes }}</p>
       <h5>
-        Invoice status: <span class="fw-bold">{{ invoice.status }}</span>
+        Status: <span class="fw-bold">{{ invoice.status }}</span>
       </h5>
     </div>
     <div
@@ -23,7 +23,7 @@
       <app-customer-info [customer]="invoice.customer!"></app-customer-info>
     </div>
   </div>
-  <div class=" bg-transparent  d-flex justify-content-end">
+  <div class=" bg-transparent card-footer border-0 d-flex justify-content-end">
     <ng-container
       *ngIf="(roles.includes('ADMIN') || roles.includes('USER')) && !isHome"
     >

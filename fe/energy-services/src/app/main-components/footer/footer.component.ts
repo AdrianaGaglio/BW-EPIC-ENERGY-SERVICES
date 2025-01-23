@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DecodeTokenService } from '../../services/decode-token.service';
 
 @Component({
   selector: 'app-footer',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
+    constructor(private decodeToken: DecodeTokenService) {}
+
+
+  ngOnInit(): void {
+
+  }
 
 }
