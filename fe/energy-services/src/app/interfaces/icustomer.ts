@@ -17,4 +17,5 @@ export interface iCustomer {
     OperationalHeadquartersAddress: iAddressResponse;
   };
   invoices: iInvoice[];
+  image: string;
 }
