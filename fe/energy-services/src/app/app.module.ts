@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { tokenInterceptor } from './auth/token.interceptor';
 import {
+  HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptors,
   withInterceptorsFromDi,
@@ -19,6 +20,7 @@ import {
 } from '@ng-icons/bootstrap-icons';
 import { HeaderComponent } from './main-components/header/header.component';
 import { FooterComponent } from './main-components/footer/footer.component';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent],
@@ -33,7 +35,9 @@ import { FooterComponent } from './main-components/footer/footer.component';
       bootstrapArrowDown,
     }),
   ],
-  providers: [provideHttpClient(withInterceptors([tokenInterceptor]))],
+  providers: [
+    provideHttpClient(withInterceptors([tokenInterceptor, ErrorInterceptor])),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { iLoginRequest } from './interfaces/i-login-request';
 import { DecodeTokenService } from '../services/decode-token.service';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -28,16 +29,14 @@ export class AuthComponent {
     if (this.form.valid) {
       //prendo i dati dal form e li inserisco in una varabile
       const formData: iLoginRequest = this.form.value;
-      this.authSvc.login(formData).subscribe({
-        next: (data) => {
-          console.log('login effettuato con successo');
-          this.decodeToken.userRoles$.next(this.decodeToken.getRoles());
-          this.router.navigate(['home']);
-        },
-        error: (data) => {
-          console.log('errore login');
-        },
-      });
+      this.authSvc
+        .login(formData)
+        .pipe(
+          tap((res) =>
+            this.decodeToken.userRoles$.next(this.decodeToken.getRoles())
+          )
+        )
+        .subscribe((res) => this.router.navigate(['/home']));
     } else {
       console.log('form invalido');
     }

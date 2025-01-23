@@ -5,6 +5,7 @@ import { iInvoiceresponse } from '../../interfaces/iinvoiceresponse';
 import { iInvoicepageresponse } from '../../interfaces/iinvoicepageresponse';
 import { CustomerService } from '../../services/customer.service';
 import { iTotalcustomersresponse } from '../../interfaces/itotalcustomersresponse';
+import { DecodeTokenService } from '../../services/decode-token.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,8 @@ import { iTotalcustomersresponse } from '../../interfaces/itotalcustomersrespons
 export class HomeComponent {
   constructor(
     private invoiceSvc: InvoiceService,
-    private customerSvc: CustomerService
+    private customerSvc: CustomerService,
+    private decodeToken: DecodeTokenService
   ) {}
 
   totalAmount!: iTotalresponse;
@@ -28,25 +30,30 @@ export class HomeComponent {
   latest: iInvoiceresponse[] = [];
 
   ngOnInit() {
-    this.invoiceSvc.getTotal(new Date().getFullYear()).subscribe((res) => {
-      this.totalAmount = res;
-    });
+    let roles: string[] = this.decodeToken.userRoles$.getValue();
+    if (!roles.includes('CUSTOMER')) {
+      this.invoiceSvc.getTotal(new Date().getFullYear()).subscribe((res) => {
+        this.totalAmount = res;
+      });
 
-    this.invoiceSvc.getTotal(new Date().getFullYear() - 1).subscribe((res) => {
-      this.lastYearAmount = res;
-    });
+      this.invoiceSvc
+        .getTotal(new Date().getFullYear() - 1)
+        .subscribe((res) => {
+          this.lastYearAmount = res;
+        });
 
-    this.invoiceSvc.getWaitingPayment().subscribe((res) => {
-      this.waitingPayments = res;
-    });
+      this.invoiceSvc.getWaitingPayment().subscribe((res) => {
+        this.waitingPayments = res;
+      });
 
-    this.invoiceSvc.getLatest(this.limit).subscribe((res) => {
-      this.latest = res.content;
-    });
+      this.invoiceSvc.getLatest(this.limit).subscribe((res) => {
+        this.latest = res.content;
+      });
 
-    this.customerSvc.getTotal().subscribe((res) => {
-      this.totalCustomers = res;
-    });
+      this.customerSvc.getTotal().subscribe((res) => {
+        this.totalCustomers = res;
+      });
+    }
   }
 
   changeLimit() {

@@ -80,4 +80,10 @@ public class GlobalExceptionHandler {
         }
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value=ForbiddenException.class)
+    protected ResponseEntity<ErrorMessage> handleForbiddenException(ForbiddenException ex) {
+        ErrorMessage e = new ErrorMessage(ex.getMessage(), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(e, HttpStatus.FORBIDDEN);
+    }
 }

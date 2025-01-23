@@ -8,12 +8,17 @@ import { iUser } from './interfaces/i-user';
 import { iLoginRequest } from './interfaces/i-login-request';
 import { BehaviorSubject, tap } from 'rxjs';
 import { iPasswordResetRequest } from './interfaces/i-password-reset-request';
+import { DecodeTokenService } from '../services/decode-token.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthsrvService {
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private decodeToken: DecodeTokenService
+  ) {
     this.restoreUser();
   }
 
@@ -27,7 +32,6 @@ export class AuthsrvService {
   autoLogoutTimer: any;
 
   register(user: Partial<iUser>) {
-    console.log(user);
     return this.http.post<iAccess>(this.registerUrl, user);
   }
 
@@ -35,8 +39,6 @@ export class AuthsrvService {
     // qui uso una post perchè proteggere i dati sensibili e creare un token lato server
     return this.http.post<iAccess>(this.loginUrl, userDates).pipe(
       tap((dati) => {
-        console.log(dati);
-
         this.userAuthSubject$.next(dati);
         localStorage.setItem('accessData', JSON.stringify(dati));
 
@@ -49,6 +51,7 @@ export class AuthsrvService {
 
   logout() {
     this.userAuthSubject$.next(null);
+    this.decodeToken.userRoles$.next([]);
     localStorage.removeItem('accessData');
     this.router.navigate(['/auth']);
   }
@@ -74,6 +77,7 @@ export class AuthsrvService {
     }
 
     this.userAuthSubject$.next(accessdata);
+    this.decodeToken.userRoles$.next(this.decodeToken.getRoles());
   }
 
   resetPassword(passwordResetRequest: iPasswordResetRequest) {
