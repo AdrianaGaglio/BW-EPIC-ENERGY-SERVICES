@@ -87,9 +87,22 @@ public class InvoiceController {
 
     @PutMapping("/{number}")
 //    Accessibile solo a USER
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<InvoiceResponse> updateStatus(@PathVariable int number, @RequestBody InvoiceUpdateRequest request) {
-        return ResponseEntity.ok(invoiceSvc.updateStatus(number, request));
+    @PreAuthorize("hasAnyRole('USER', 'CUSTOMER')")
+    public ResponseEntity<?> updateStatus(@PathVariable int number, @RequestBody InvoiceUpdateRequest request, @AuthenticationPrincipal User userDetails) {
+        Invoice invoice = invoiceSvc.updateStatus(number, request);
+
+        if (userDetails.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER"))
+        ) {
+            if (!invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())) {
+                throw new InvalidParameterException("You are not the owner of this invoice");
+            } else {
+                return ResponseEntity.ok(mapper.toInvoiceResponseForCustomer(invoice));
+            }
+
+        }
+
+        return ResponseEntity.ok(mapper.toInvoiceResponse(invoice));
     }
 
     @PostMapping

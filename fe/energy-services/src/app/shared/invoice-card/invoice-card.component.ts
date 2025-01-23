@@ -5,6 +5,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdateInvoiceComponent } from './update-invoice/update-invoice.component';
 import { iInvoicestatus } from '../../interfaces/iinvoicestatus';
 import { iInvoiceresponseforcustomer } from '../../interfaces/iinvoiceresponseforcustomer';
+import { InvoiceService } from '../../services/invoice.service';
+import { iInvoiceupdaterequest } from '../../interfaces/iinvoiceupdaterequest';
 
 @Component({
   selector: 'app-invoice-card',
@@ -12,15 +14,28 @@ import { iInvoiceresponseforcustomer } from '../../interfaces/iinvoiceresponsefo
   styleUrl: './invoice-card.component.scss',
 })
 export class InvoiceCardComponent {
-  constructor(private decodeToken: DecodeTokenService) {}
+  constructor(
+    private decodeToken: DecodeTokenService,
+    private invoiceSvc: InvoiceService
+  ) {}
   private modalService = inject(NgbModal);
 
   @Input() invoice!: Partial<iInvoiceresponse>;
 
   roles: string[] = [];
+  toPay: boolean = false;
 
   ngOnInit() {
     this.roles = this.decodeToken.userRoles$.getValue();
+    if (this.roles.includes('CUSTOMER')) {
+      if (
+        this.invoice!.status == 'SENT' ||
+        this.invoice!.status == 'PARTIALLY PAID' ||
+        this.invoice!.status == 'OVERDUE'
+      ) {
+        this.toPay = true;
+      }
+    }
   }
 
   openModal(invoice: Partial<iInvoiceresponse>) {
@@ -33,5 +48,18 @@ export class InvoiceCardComponent {
     modalRef.result.then((res) => {
       this.invoice = res;
     });
+  }
+
+  pay() {
+    let request: iInvoiceupdaterequest = {
+      status: 'PAID',
+      notes: this.invoice!.notes ? this.invoice!.notes : '',
+    };
+    this.invoiceSvc
+      .updateStatus(this.invoice.number!, request)
+      .subscribe((res) => {
+        this.invoice = res;
+        this.toPay = false;
+      });
   }
 }
