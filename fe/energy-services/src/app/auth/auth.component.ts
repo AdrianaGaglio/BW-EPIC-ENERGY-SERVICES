@@ -14,6 +14,8 @@ import { tap } from 'rxjs';
 export class AuthComponent {
   form: FormGroup;
 
+  message!: string;
+
   constructor(
     private authSvc: AuthsrvService,
     private router: Router,
@@ -37,14 +39,21 @@ export class AuthComponent {
           )
         )
         .subscribe((res) => {
-          if (!this.decodeToken.userRoles$.getValue().includes('CUSTOMER')) {
-            this.router.navigate(['/']);
-          } else {
-            this.router.navigate(['/customers']);
-          }
+          this.message = 'Logged in successfully';
+          setTimeout(() => {
+            if (!this.decodeToken.userRoles$.getValue().includes('CUSTOMER')) {
+              this.router.navigate(['/']);
+            } else {
+              this.router.navigate(['/customers']);
+            }
+          }, 1000);
         });
     } else {
       console.log('form invalido');
     }
+  }
+
+  clearMessage() {
+    this.message = '';
   }
 }
