@@ -7,20 +7,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-registeruser',
   templateUrl: './registeruser.component.html',
-  styleUrl: './registeruser.component.scss'
+  styleUrl: './registeruser.component.scss',
 })
 export class RegisteruserComponent {
+  form: FormGroup;
+  types = ['PA', 'SAS', 'SPA', 'SRL'];
+  formvalid = false;
 
-    form: FormGroup;
-    types = ['PA', 'SAS', 'SPA', 'SRL'];
-    formvalid = false;
+  message!: string;
 
   constructor(
-        private authSrv: AuthsrvService,
-        private router: Router,
-        private fb: FormBuilder,
-        private cityService: CitysrvService,
-  ){
+    private authSrv: AuthsrvService,
+    private router: Router,
+    private fb: FormBuilder,
+    private cityService: CitysrvService
+  ) {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
       surname: ['', [Validators.required]],
@@ -33,14 +34,11 @@ export class RegisteruserComponent {
   register(): void {
     if (this.form.valid) {
       console.log('Dati inviati:', this.form.value);
-      this.authSrv.register(this.form.value).subscribe({
-        next: (data) => {
-          console.log('Registrazione effettuata con successo:', data);
-          this.router.navigate(['home']);
-        },
-        error: (error) => {
-          console.error('Errore nella registrazione:', error);
-        },
+      this.authSrv.register(this.form.value).subscribe((res) => {
+        this.message = 'User successfully registered';
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 1000);
       });
     } else {
       console.error('Form non valido:', this.form.errors);
@@ -59,5 +57,7 @@ export class RegisteruserComponent {
     return !this.isValid(fieldName) && this.isTouched(fieldName);
   }
 
-
+  clearMessage() {
+    this.message = '';
+  }
 }

@@ -9,6 +9,7 @@ import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 import { RegisteruserComponent } from './registeruser/registeruser.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { AlertModule } from '../shared/alert/alert/alert.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ReactiveFormsModule,
     NgbProgressbarModule,
     FormsModule,
+    AlertModule,
   ],
 })
 export class AuthModule {}

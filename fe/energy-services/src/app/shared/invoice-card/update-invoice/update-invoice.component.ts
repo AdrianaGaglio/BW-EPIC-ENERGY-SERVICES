@@ -38,7 +38,12 @@ export class UpdateInvoiceComponent {
   updateInvoice() {
     this.invoceSvc
       .updateStatus(this.invoice!.number, this.invoiceUpdate)
-      .subscribe((res) => this.activeModal.close(res));
+      .subscribe((res) => {
+        this.message = 'Invoice updated successfully';
+        setTimeout(() => {
+          this.activeModal.close(res);
+        }, 1000);
+      });
   }
 
   clearMessage() {

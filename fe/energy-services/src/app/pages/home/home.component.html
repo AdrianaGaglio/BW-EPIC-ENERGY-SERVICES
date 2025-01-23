@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row mt-4">
-    <div class="col-12 col-md-6 col-lg-4 ">
+    <div class="col-12 col-md-6 col-lg-4 d-flex flex-column position-relative">
       <div class="d-flex align-items-center justify-content-between gap-5 mb-2">
         <h4 class="flex-grow-1 flex-shrink-0">Latest invoices</h4>
         <select
@@ -15,20 +15,25 @@
           <option [value]="10">Latest 10</option>
         </select>
       </div>
-      <div *ngFor="let i of latest" class="mb-3">
-        <app-invoice-card [invoice]="i"></app-invoice-card>
+
+      <div class="scrollable position-absolute end-0">
+        <div *ngFor="let i of latest" class="mb-3">
+          <app-invoice-card [invoice]="i"></app-invoice-card>
+        </div>
       </div>
     </div>
     <div class="col-12 col-md-6 col-lg-8">
       <div class="row gap-3">
         <div class="col-12">
-          <div class="bg rounded-3 row p-3 gy-3 mt-1">
-            <div class="bg-white p-3 rounded-2">
-              <div
-                class="d-flex align-content-center justify-content-between"
-                *ngIf="totalAmount && totalAmount.total"
-              >
-                <h4 class="mb-0 align-self-center">Total amount current year</h4>
+          <div class="bg rounded-3 row p-3 gy-3">
+            <div
+              class="bg-white p-3 rounded-2"
+              *ngIf="totalAmount && lastYearAmount"
+            >
+              <div class="d-flex align-content-center justify-content-between">
+                <h4 class="mb-0 align-self-center">
+                  Total amount current year
+                </h4>
                 <span class="fs-1">
                   <ng-icon
                     class="text-success"
@@ -43,10 +48,7 @@
                   {{ totalAmount.total }}</span
                 >
               </div>
-              <div
-                class="d-flex align-content-center justify-content-between"
-                *ngIf="lastYearAmount && lastYearAmount.total"
-              >
+              <div class="d-flex align-content-center justify-content-between">
                 <h4 class="mb-0 align-self-center text-body-secondary">
                   Total amount last year
                 </h4>
@@ -81,9 +83,7 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
-
 </div>

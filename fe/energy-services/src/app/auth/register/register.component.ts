@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { AuthsrvService } from '../authsrv.service';
 import { Router } from '@angular/router';
 import { CitysrvService } from '../../services/citysrv.service';
@@ -11,7 +16,7 @@ import { DecodeTokenService } from '../../services/decode-token.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
@@ -21,19 +26,20 @@ export class RegisterComponent implements OnInit {
   selected: boolean = false;
   selected1: boolean = false;
   currentStep = 1;
-  progress:number = 25;
+  progress: number = 25;
   formvalid = false;
   isCheck = false;
   roles: string[] = [];
   admin = false;
 
+  message!: string;
 
   constructor(
     private authSrv: AuthsrvService,
     private router: Router,
     private fb: FormBuilder,
     private cityService: CitysrvService,
-    private decodeToken: DecodeTokenService,
+    private decodeToken: DecodeTokenService
   ) {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
@@ -51,7 +57,10 @@ export class RegisterComponent implements OnInit {
         registeredOfficeAddress: this.fb.group({
           street: ['', [Validators.required]],
           addressNumber: ['', [Validators.required]],
-          cap: [null, [Validators.required, Validators.min(10000), Validators.max(99999)]],
+          cap: [
+            null,
+            [Validators.required, Validators.min(10000), Validators.max(99999)],
+          ],
           districtId: ['', Validators.required],
           idCity: ['', Validators.required],
           isCheck: [false],
@@ -59,7 +68,10 @@ export class RegisterComponent implements OnInit {
         operationalHeadquartersAddress: this.fb.group({
           street: ['', [Validators.required]],
           addressNumber: ['', [Validators.required]],
-          cap: [null, [Validators.required, Validators.min(10000), Validators.max(99999)]],
+          cap: [
+            null,
+            [Validators.required, Validators.min(10000), Validators.max(99999)],
+          ],
           districtId: ['', Validators.required],
           idCity: ['', Validators.required],
         }),
@@ -69,7 +81,6 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.cityService.getAllDistricts().subscribe({
       next: (data) => {
         this.districts = data;
@@ -78,7 +89,6 @@ export class RegisterComponent implements OnInit {
         console.error('Errore nel caricamento dei distretti:', error);
       },
     });
-
   }
 
   register(): void {
@@ -146,10 +156,10 @@ export class RegisterComponent implements OnInit {
       this.currentStep--;
       this.progress -= 25;
     }
-    if(this.isCheck === true)
-    this.form.get('customer.registeredOfficeAddress')?.patchValue({
-      isCheck: false,
-    });
+    if (this.isCheck === true)
+      this.form.get('customer.registeredOfficeAddress')?.patchValue({
+        isCheck: false,
+      });
     this.isCheck = false;
   }
 
@@ -165,21 +175,32 @@ export class RegisterComponent implements OnInit {
     return !this.isValid(fieldName) && this.isTouched(fieldName);
   }
 
-  goToLogin(){
-    this.router.navigate(['/auth'])
+  goToLogin() {
+    this.router.navigate(['/auth']);
   }
   onCheckboxChange(): void {
-    const isCheck = this.form.get('customer.registeredOfficeAddress.isCheck')?.value;
+    const isCheck = this.form.get(
+      'customer.registeredOfficeAddress.isCheck'
+    )?.value;
     console.log(isCheck);
     this.isCheck = isCheck;
-    if (isCheck ===  false) {
-      const legalAddress = this.form.get('customer.registeredOfficeAddress')?.value;
-      const operationalAddress = this.form.get('customer.operationalHeadquartersAddress');
+    if (isCheck === false) {
+      const legalAddress = this.form.get(
+        'customer.registeredOfficeAddress'
+      )?.value;
+      const operationalAddress = this.form.get(
+        'customer.operationalHeadquartersAddress'
+      );
       operationalAddress?.patchValue(legalAddress);
     } else {
-      const operationalAddress = this.form.get('customer.operationalHeadquartersAddress');
+      const operationalAddress = this.form.get(
+        'customer.operationalHeadquartersAddress'
+      );
       operationalAddress?.reset();
     }
   }
 
+  clearMessage() {
+    this.message = '';
+  }
 }
