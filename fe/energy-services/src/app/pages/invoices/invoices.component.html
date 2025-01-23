@@ -1,6 +1,7 @@
-<h3>Search invoices</h3>
+<div class="container">
+  <h2>Invoices</h2>
 <div>
-  <h5>Search by</h5>
+  <h6>Search by</h6>
   <div class="btn-group" role="group">
     <input
       type="radio"
@@ -13,7 +14,7 @@
       checked
       (change)="getAll()"
     />
-    <label class="btn btn-outline-primary" for="all">All</label>
+    <label class="btn btn-outline-primary btn-sm tab" for="all">All</label>
 
     <input
       type="radio"
@@ -25,7 +26,7 @@
       autocomplete="off"
       (change)="openSearchByNumber()"
     />
-    <label class="btn btn-outline-primary" for="byNumber">Number</label>
+    <label class="btn btn-outline-primary btn-sm tab" for="byNumber">Number</label>
 
     <input
       type="radio"
@@ -37,7 +38,7 @@
       autocomplete="off"
       (change)="openSearchByStatus()"
     />
-    <label class="btn btn-outline-primary" for="byStatus">Status</label>
+    <label class="btn btn-outline-primary btn-sm tab" for="byStatus">Status</label>
     <ng-container *ngIf="!roles.includes('CUSTOMER')">
       <input
         type="radio"
@@ -49,7 +50,7 @@
         autocomplete="off"
         (change)="openSearchByCustomerInfo()"
       />
-      <label class="btn btn-outline-primary" for="byCustomerInfo"
+      <label class="btn btn-outline-primary btn-sm tab" for="byCustomerInfo"
         >Customer Info</label
       >
     </ng-container>
@@ -63,7 +64,7 @@
       autocomplete="off"
       (change)="openSearchByDate()"
     />
-    <label class="btn btn-outline-primary" for="byDate">Date</label>
+    <label class="btn btn-outline-primary btn-sm tab" for="byDate">Date</label>
     <input
       type="radio"
       class="btn-check"
@@ -74,7 +75,7 @@
       autocomplete="off"
       (change)="openSearchByYear()"
     />
-    <label class="btn btn-outline-primary" for="byYear">Year</label>
+    <label class="btn btn-outline-primary btn-sm tab" for="byYear">Year</label>
 
     <input
       type="radio"
@@ -86,7 +87,7 @@
       autocomplete="off"
       (change)="openSearchByAmount()"
     />
-    <label class="btn btn-outline-primary" for="byAmount">Amount</label>
+    <label class="btn btn-outline-primary btn-sm tab" for="byAmount">Amount</label>
   </div>
 </div>
 
@@ -112,4 +113,6 @@
   <div class="col-12" *ngFor="let invoice of customerInvoices">
     <app-invoice-card [invoice]="invoice"></app-invoice-card>
   </div>
+</div>
+
 </div>
