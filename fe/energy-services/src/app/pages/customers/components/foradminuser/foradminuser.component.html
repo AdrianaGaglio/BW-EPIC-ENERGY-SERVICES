@@ -1,6 +1,6 @@
-<h2>🔎 Search customers</h2>
+<h2 class="mb-4">👩🏻‍💼 Customers</h2>
 <div class="position-relative">
-  <h6>Search by</h6>
+  <h6>Filter by</h6>
   <div class="btn-group" role="group">
     <input
       type="radio"
@@ -13,7 +13,7 @@
       checked
       (change)="getAllCustomers(0, 25)"
     />
-    <label class="btn btn-outline-primary" for="all">All</label>
+    <label class="btn btn-outline-primary btn-sm tab" for="all">All</label>
     <input
       type="radio"
       class="btn-check"
@@ -24,7 +24,7 @@
       value="byCreationDate"
       (change)="openSearchByCreationDate()"
     />
-    <label class="btn btn-outline-primary" for="byCreationDate"
+    <label class="btn btn-outline-primary btn-sm tab" for="byCreationDate"
       >Creation Date</label
     >
 
@@ -38,7 +38,7 @@
       autocomplete="off"
       (change)="openSearchByLastContact()"
     />
-    <label class="btn btn-outline-primary" for="byLastContact"
+    <label class="btn btn-outline-primary btn-sm tab" for="byLastContact"
       >Last Contact</label
     >
 
@@ -52,7 +52,7 @@
       autocomplete="off"
       (change)="openSearchByDenomination()"
     />
-    <label class="btn btn-outline-primary" for="byDenomination"
+    <label class="btn btn-outline-primary btn-sm tab" for="byDenomination"
       >Denominations</label
     >
     <input
@@ -65,7 +65,7 @@
       autocomplete="off"
       (change)="openSearchByYearlyTurnover()"
     />
-    <label class="btn btn-outline-primary" for="byYearlyTurnover"
+    <label class="btn btn-outline-primary btn-sm tab" for="byYearlyTurnover"
       >Yearly Turnover</label
     >
     <input
@@ -78,7 +78,7 @@
       autocomplete="off"
       (change)="openSearchByVatcode()"
     />
-    <label class="btn btn-outline-primary" for="byVatcode">Vat Code</label>
+    <label class="btn btn-outline-primary btn-sm tab" for="byVatcode">Vat Code</label>
   </div>
 </div>
 <div *ngIf="customers" class="row py-3 gy-3">

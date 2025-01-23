@@ -1,15 +1,18 @@
 <div class="container">
-  <h3>Insert new invoice</h3>
+  <h2>📝 Create invoice</h2>
 <div>
-  <div class="d-flex justify-content-end">
+  <div class="d-flex justify-content-between status mt-3 mb-4">
+    <p class="m-0 p-0">Click the button next to add a new invoice status if it doesn’t already exist.</p>
     <button type="button" (click)="openModal()" class="btn btn-primary">
-      Add new invoice status
+      + Add new invoice status
     </button>
   </div>
+
+  <h4 class="mb-3">New invoice:</h4>
   <form [formGroup]="newInvoice" (submit)="save()">
-    <div class="mb-3">
+    <div class="mb-3 mt-2">
       <div class="d-flex justify-content-between">
-        <label class="form-label" for="date">Invoice date:</label>
+        <label class="form-label m-0" for="date">Invoice date:</label>
         <span class="text-danger" *ngIf="isTouchedInvalid('date')">{{
           message("date")
         }}</span>
@@ -24,7 +27,7 @@
     </div>
     <div class="mb-3">
       <div class="d-flex justify-content-between">
-        <label class="form-label" for="date">Invoice amount:</label>
+        <label class="form-label m-0" for="date">Invoice amount:</label>
         <span *ngIf="isTouchedInvalid('amount')" class="text-danger">{{
           message("amount")
         }}</span>
@@ -40,7 +43,7 @@
     </div>
     <div class="mb-3">
       <div class="d-flex justify-content-between">
-        <label class="form-label" for="date">Invoice status:</label>
+        <label class="form-label m-0" for="date">Invoice status:</label>
         <span *ngIf="isTouchedInvalid('status')" class="text-danger">{{
           message("status")
         }}</span>
@@ -59,7 +62,7 @@
     </div>
     <div class="mb-3">
       <div class="d-flex justify-content-between">
-        <label class="form-label" for="date">Customer:</label>
+        <label class="form-label m-0" for="date">Customer:</label>
         <span *ngIf="isTouchedInvalid('customerId')" class="text-danger">{{
           message("customerId")
         }}</span>
@@ -88,9 +91,8 @@
         />
       </div>
     </div>
-    <button class="btn btn-success" [disabled]="newInvoice.invalid">
-      <ng-icon name="bootstrapFloppy"></ng-icon>
-      Save
+    <button class="btn btn-primary" [disabled]="newInvoice.invalid">
+       💾 Save
     </button>
   </form>
 </div>
