@@ -8,6 +8,7 @@ import { iUser } from './interfaces/i-user';
 import { iLoginRequest } from './interfaces/i-login-request';
 import { BehaviorSubject, tap } from 'rxjs';
 import { iPasswordResetRequest } from './interfaces/i-password-reset-request';
+import { iResponseStringMessage } from './interfaces/i-response-string-message';
 
 @Injectable({
   providedIn: 'root',
@@ -77,9 +78,16 @@ export class AuthsrvService {
   }
 
   resetPassword(passwordResetRequest: iPasswordResetRequest) {
-    return this.http.patch(
+    return this.http.patch<iResponseStringMessage>(
       this.baseUrl + 'auth/reset-password',
       passwordResetRequest
+    );
+  }
+
+  sendRequestPasswordReset(email: { email: string }) {
+    return this.http.post<iResponseStringMessage>(
+      this.baseUrl + 'auth/requestChangePassword',
+      email
     );
   }
 }

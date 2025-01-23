@@ -30,17 +30,24 @@ public class AuthController {
     }
 
     @PostMapping("/requestChangePassword")
-    public ResponseEntity<String> changePassword(@RequestBody EmailForPasswordResetRequest passwordResetRequest) {
-        return new ResponseEntity<>(appUserSvc.sendEmailForChangePassword(passwordResetRequest), HttpStatus.OK);
+    public ResponseEntity<Map<String, String>> changePassword(@RequestBody EmailForPasswordResetRequest passwordResetRequest) {
+        String message = appUserSvc.sendEmailForChangePassword(passwordResetRequest);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", message);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/reset-password")
     public ResponseEntity<String> resetPasswordRedirect(@RequestParam String token, HttpServletResponse response) {
+
         return new ResponseEntity<>(appUserSvc.verifyTokenPasswordReset(token, response), HttpStatus.OK);
     }
 
     @PatchMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest) {
-        return new ResponseEntity<>(appUserSvc.resetPassword(passwordResetRequest), HttpStatus.OK);
+    public ResponseEntity<Map<String, String>> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest) {
+        String message = appUserSvc.resetPassword(passwordResetRequest);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", message);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

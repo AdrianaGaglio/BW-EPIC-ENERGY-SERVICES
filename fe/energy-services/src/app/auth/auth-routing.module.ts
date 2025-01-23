@@ -4,6 +4,7 @@ import { AuthComponent } from './auth.component';
 import { RegisterComponent } from './register/register.component';
 import { RegisteruserComponent } from './registeruser/registeruser.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'reset-password/:token',
     component: ResetPasswordComponent,
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
   },
 ];
 
