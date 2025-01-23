@@ -5,27 +5,35 @@ import { RegisterComponent } from './register/register.component';
 import { RegisteruserComponent } from './registeruser/registeruser.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { UserGuard } from '../guards/user.guard';
+import { GuestGuard } from '../guards/guest.guard';
+import { AdminGuard } from '../guards/admin.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: AuthComponent,
+    canActivate: [GuestGuard],
   },
   {
     path: 'register',
     component: RegisterComponent,
+    canActivate: [GuestGuard],
   },
   {
     path: 'registeruser',
     component: RegisteruserComponent,
+    canActivate: [AdminGuard],
   },
   {
     path: 'reset-password/:token',
     component: ResetPasswordComponent,
+    canActivate: [GuestGuard],
   },
   {
     path: 'forgot-password',
     component: ForgotPasswordComponent,
+    canActivate: [GuestGuard],
   },
 ];
 

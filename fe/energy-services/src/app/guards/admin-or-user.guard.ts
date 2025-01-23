@@ -7,22 +7,26 @@ import {
   MaybeAsync,
   RouterStateSnapshot,
 } from '@angular/router';
-import { AuthsrvService } from '../auth/authsrv.service';
+import { DecodeTokenService } from '../services/decode-token.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LoggedGuard implements CanActivate, CanActivateChild {
-  constructor(private authSvc: AuthsrvService) {}
+export class AdminOrUserGuard implements CanActivate, CanActivateChild {
+  constructor(private decodeToken: DecodeTokenService) {}
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): MaybeAsync<GuardResult> {
-    if (this.authSvc.userAuthSubject$.getValue() == null) {
-      return false;
+    if (
+      this.decodeToken.userRoles$.getValue().includes('ADMIN') ||
+      this.decodeToken.userRoles$.getValue().includes('USER')
+    ) {
+      return true;
     }
 
-    return true;
+    return false;
   }
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
