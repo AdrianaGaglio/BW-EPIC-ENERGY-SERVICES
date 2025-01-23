@@ -2,7 +2,7 @@ import { Component, inject, input, OnInit } from '@angular/core';
 import { InvoiceService } from '../../services/invoice.service';
 import { iInvoiceresponse } from '../../interfaces/iinvoiceresponse';
 import { iInvoiceresponseforcustomer } from '../../interfaces/iinvoiceresponseforcustomer';
-import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { SearchByNumberComponent } from './components/search-by-number/search-by-number.component';
 import { SearchByCustomerComponent } from './components/search-by-customer/search-by-customer.component';
 import { SearchByStatusComponent } from './components/search-by-status/search-by-status.component';
@@ -41,6 +41,8 @@ export class InvoicesComponent {
   page!: number;
   pages!: number[];
 
+  message: string = '';
+
   customerFromlocalStorage: string | null = null;
   searchBy: string = 'all';
 
@@ -55,17 +57,8 @@ export class InvoicesComponent {
     if (this.customerFromlocalStorage) {
       this.openSearchByCustomerInfo();
       this.searchBy = 'byCustomerInfo';
-    } else if (this.roles.includes('CUSTOMER')) {
-      this.isPaged = false;
-      this.invoiceSvc.getAllByCustomer().subscribe((res) => {
-        this.customerInvoices = res;
-      });
     } else {
-      this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
-        this.invoices = res.content;
-        this.isPaged = true;
-        this.pages = Array.from({ length: res.totalPages }, (_, i) => i + 1);
-      });
+      this.getAll();
     }
   }
 
@@ -73,7 +66,11 @@ export class InvoicesComponent {
     if (!this.roles.includes('CUSTOMER')) {
       this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
         this.isPaged = true;
+        this.pages = Array.from({ length: res.totalPages }, (_, i) => i + 1);
         this.invoices = res.content;
+        if (res.content.length == 0) {
+          this.message = 'No invoices found';
+        }
       });
     } else {
       this.getAllByCustomer();
@@ -87,9 +84,12 @@ export class InvoicesComponent {
   }
 
   getAllByCustomer() {
-    this.invoiceSvc
-      .getAllByCustomer()
-      .subscribe((res) => (this.customerInvoices = res));
+    this.invoiceSvc.getAllByCustomer().subscribe((res) => {
+      this.customerInvoices = res;
+      if (res.length == 0) {
+        this.message = 'No invoices found';
+      }
+    });
   }
 
   openSearchByCustomer() {
@@ -112,6 +112,9 @@ export class InvoicesComponent {
         } else {
           this.invoices = res;
         }
+        if (res.length == 0) {
+          this.message = 'No invoices found';
+        }
       })
       .catch((reason) => {
         this.modalService.dismissAll();
@@ -133,6 +136,9 @@ export class InvoicesComponent {
         } else {
           this.invoices = res;
         }
+        if (res.length == 0) {
+          this.message = 'No invoices found';
+        }
       })
       .catch((reason) => {
         this.modalService.dismissAll();
@@ -150,6 +156,9 @@ export class InvoicesComponent {
         this.isPaged = false;
         this.searchBy = '';
         this.invoices = res;
+        if (res.length == 0) {
+          this.message = 'No invoices found';
+        }
       })
       .catch((reason) => {
         this.modalService.dismissAll();
@@ -171,6 +180,9 @@ export class InvoicesComponent {
         } else {
           this.invoices = res;
         }
+        if (res.length == 0) {
+          this.message = 'No invoices found';
+        }
       })
       .catch((reason) => {
         this.modalService.dismissAll();
@@ -191,6 +203,9 @@ export class InvoicesComponent {
           this.customerInvoices = res;
         } else {
           this.invoices = res;
+        }
+        if (res.length == 0) {
+          this.message = 'No invoices found';
         }
       })
       .catch((reason) => {
@@ -218,5 +233,11 @@ export class InvoicesComponent {
         this.modalService.dismissAll();
         this.searchBy = '';
       });
+  }
+
+  clearMessage() {
+    this.message = '';
+    this.searchBy = 'all';
+    this.getAll();
   }
 }

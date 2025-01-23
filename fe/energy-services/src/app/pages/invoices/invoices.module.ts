@@ -14,6 +14,9 @@ import { SearchByAmountComponent } from './components/search-by-amount/search-by
 import { NgIconsModule } from '@ng-icons/core';
 import { InvoiceCardModule } from '../../shared/invoice-card/invoice-card.module';
 
+import { NgbAlert, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { AlertModule } from '../../shared/alert/alert/alert.module';
+
 @NgModule({
   declarations: [
     InvoicesComponent,
@@ -31,6 +34,7 @@ import { InvoiceCardModule } from '../../shared/invoice-card/invoice-card.module
     FormsModule,
     NgIconsModule,
     InvoiceCardModule,
+    AlertModule,
   ],
 })
 export class InvoicesModule {}

@@ -13,6 +13,7 @@ import { SearchByDenominationComponent } from './components/search-by-denominati
 import { SearchByYearlyturnoverComponent } from './components/search-by-yearlyturnover/search-by-yearlyturnover.component';
 import { SearchByVatcodeComponent } from './components/search-by-vatcode/search-by-vatcode.component';
 import { CardCustomerComponent } from './components/cardCustomer/cardCustomer.component';
+import { AlertModule } from '../../shared/alert/alert/alert.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,12 @@ import { CardCustomerComponent } from './components/cardCustomer/cardCustomer.co
     SearchByVatcodeComponent,
     CardCustomerComponent,
   ],
-  imports: [CommonModule, CustomersRoutingModule, FormsModule, NgIconsModule],
+  imports: [
+    CommonModule,
+    CustomersRoutingModule,
+    FormsModule,
+    NgIconsModule,
+    AlertModule,
+  ],
 })
 export class CustomersModule {}
