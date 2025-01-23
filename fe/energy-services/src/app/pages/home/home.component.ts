@@ -30,27 +30,22 @@ export class HomeComponent {
   ngOnInit() {
     this.invoiceSvc.getTotal(new Date().getFullYear()).subscribe((res) => {
       this.totalAmount = res;
-      console.log(this.totalAmount);
     });
 
     this.invoiceSvc.getTotal(new Date().getFullYear() - 1).subscribe((res) => {
       this.lastYearAmount = res;
-      console.log(this.lastYearAmount);
     });
 
     this.invoiceSvc.getWaitingPayment().subscribe((res) => {
       this.waitingPayments = res;
-      console.log(this.waitingPayments);
     });
 
     this.invoiceSvc.getLatest(this.limit).subscribe((res) => {
       this.latest = res.content;
-      console.log(this.latest);
     });
 
     this.customerSvc.getTotal().subscribe((res) => {
       this.totalCustomers = res;
-      console.log(res);
     });
   }
 
