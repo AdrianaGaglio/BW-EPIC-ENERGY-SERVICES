@@ -103,6 +103,7 @@ export class InvoicesComponent {
 
     modalRef.result.then((res) => {
       this.isPaged = false;
+      this.searchBy = '';
       if (this.roles.includes('CUSTOMER')) {
         this.customerInvoices = res;
       } else {
@@ -118,6 +119,7 @@ export class InvoicesComponent {
 
     modalRef.result.then((res) => {
       this.isPaged = false;
+      this.searchBy = '';
       if (this.roles.includes('CUSTOMER')) {
         this.customerInvoices = res;
       } else {
@@ -133,6 +135,7 @@ export class InvoicesComponent {
 
     modalRef.result.then((res) => {
       this.isPaged = false;
+      this.searchBy = '';
       this.invoices = res;
     });
   }
@@ -144,6 +147,7 @@ export class InvoicesComponent {
 
     modalRef.result.then((res) => {
       this.isPaged = false;
+      this.searchBy = '';
       if (this.roles.includes('CUSTOMER')) {
         this.customerInvoices = res;
       } else {
@@ -159,6 +163,7 @@ export class InvoicesComponent {
 
     modalRef.result.then((res) => {
       this.isPaged = false;
+      this.searchBy = '';
       if (this.roles.includes('CUSTOMER')) {
         this.customerInvoices = res;
       } else {
@@ -174,7 +179,7 @@ export class InvoicesComponent {
 
     modalRef.result.then((res) => {
       this.isPaged = false;
-
+      this.searchBy = '';
       if (this.roles.includes('CUSTOMER')) {
         this.customerInvoices = res;
       } else {
