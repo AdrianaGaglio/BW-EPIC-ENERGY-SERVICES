@@ -20,12 +20,21 @@ export class InvoiceStatusComponent {
   name: string = '';
   description: string = '';
 
+  message!: string;
+
   save() {
     if (this.form.valid) {
       this.name = this.form.controls['name'].value.toUpperCase();
       this.statusSvc.create(this.form.value).subscribe((res) => {
-        this.activeModal.close(res);
+        this.message = 'Invoice status created successfully';
+        setTimeout(() => {
+          this.activeModal.close(res);
+        }, 1000);
       });
     }
+  }
+
+  clearMessage() {
+    this.message = '';
   }
 }

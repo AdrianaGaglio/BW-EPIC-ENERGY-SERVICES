@@ -24,6 +24,8 @@ export class UpdateInvoiceComponent {
 
   @Input() invoice!: iInvoiceresponse | iInvoiceresponseforcustomer;
 
+  message!: string;
+
   invoiceUpdate: iInvoiceupdaterequest = {
     status: '',
     notes: '',
@@ -37,5 +39,9 @@ export class UpdateInvoiceComponent {
     this.invoceSvc
       .updateStatus(this.invoice!.number, this.invoiceUpdate)
       .subscribe((res) => this.activeModal.close(res));
+  }
+
+  clearMessage() {
+    this.message = '';
   }
 }
