@@ -79,15 +79,6 @@ export class RegisterComponent implements OnInit {
       },
     });
 
-    this.roles = this.decodeToken.userRoles$.getValue();
-    console.log(this.roles);
-
-   // if (this.roles.includes('AMIN') || this.roles.length == 0) {
-     // this.admin = true;
-      //allora può registrare per tutti i ruoli e visualizza una scritta diversa
-    //} else {
-     // this.router.navigate(['home'])
-    //}
   }
 
   register(): void {
