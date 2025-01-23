@@ -36,7 +36,7 @@ export class AuthComponent {
             this.decodeToken.userRoles$.next(this.decodeToken.getRoles())
           )
         )
-        .subscribe((res) => this.router.navigate(['/home']));
+        .subscribe((res) => this.router.navigate(['/']));
     } else {
       console.log('form invalido');
     }
