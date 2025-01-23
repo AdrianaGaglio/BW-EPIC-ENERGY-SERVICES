@@ -33,7 +33,12 @@ export class HomeComponent {
     let roles: string[] = this.decodeToken.userRoles$.getValue();
     if (!roles.includes('CUSTOMER')) {
       this.invoiceSvc.getTotal(new Date().getFullYear()).subscribe((res) => {
-        this.totalAmount = res;
+        if (res && res.total !== undefined) {
+          this.totalAmount = {
+            ...res,
+            total: parseFloat(res.total.toFixed(2))
+          };
+        }
       });
 
       this.invoiceSvc

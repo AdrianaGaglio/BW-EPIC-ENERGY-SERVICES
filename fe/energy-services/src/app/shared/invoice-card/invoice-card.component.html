@@ -23,7 +23,7 @@
       <app-customer-info [customer]="invoice.customer!"></app-customer-info>
     </div>
   </div>
-  <div class="card-footer bg-transparent  d-flex justify-content-end">
+  <div class=" bg-transparent  d-flex justify-content-end">
     <ng-container
       *ngIf="(roles.includes('ADMIN') || roles.includes('USER')) && !isHome"
     >
