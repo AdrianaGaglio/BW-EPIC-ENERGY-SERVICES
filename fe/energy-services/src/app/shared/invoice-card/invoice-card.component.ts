@@ -40,7 +40,7 @@ export class InvoiceCardComponent {
       }
     }
 
-    if (this.router.url.includes('home')) {
+    if (this.router.url == '/') {
       this.isHome = true;
     }
   }
