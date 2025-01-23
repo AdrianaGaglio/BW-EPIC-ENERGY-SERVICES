@@ -11,7 +11,7 @@
           <span class="fw-bold">{{ customer.denomination }}</span>
         </h5>
         <h6>
-          <span class="grey">VatCode: </span> <span class="fw-bold">{{ customer.vatCode }}</span>
+          <span class="grey">VatCode: </span> <span class="">{{ customer.vatCode }}</span>
         </h6>
 
       <div class="d-flex flex-column">
@@ -19,18 +19,18 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item border-0">
             <span class="grey">💼 Type:</span>
-             <span class="fw-bold"> </span> {{ customer.type }}
+             <span class=""> </span> {{ customer.type }}
           </li>
           <li class="list-group-item border-0">
             <span class="grey">📞 Phone:</span>
-            <span class="fw-bold"> {{ customer.contactPhone }}</span>
+            <span class=""> {{ customer.contactPhone }}</span>
           </li>
           <li class="list-group-item border-0">
-            <span class="grey">✉️ PEC: </span><span class="fw-bold"> {{ customer.pec }}</span>
+            <span class="grey">✉️ PEC: </span><span class=""> {{ customer.pec }}</span>
           </li>
           <li class="list-group-item border-0">
             <span class="grey"> 📍Office :</span>
-            <span class="fw-bold">
+            <span class="">
               {{ customer.addresses.RegisteredOfficeAddress.street }}
               {{ customer.addresses.RegisteredOfficeAddress.city.name }} (
               {{
@@ -41,7 +41,7 @@
           </li>
           <li class="list-group-item border-0">
            <span class="grey"> 🏢 Headquarter:</span>
-            <span class="fw-bold">
+            <span class="">
               {{ customer.addresses.OperationalHeadquartersAddress.street }}
               {{ customer.addresses.OperationalHeadquartersAddress.city.name }}
               {{

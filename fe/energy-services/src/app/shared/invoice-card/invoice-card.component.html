@@ -1,5 +1,5 @@
-<div class="card">
-  <div class="card-header d-flex justify-content-between">
+<div class="card shadow border-0">
+  <div class="card-header head d-flex border-0 justify-content-between">
     <span
       >Invoice number: #{{ invoice.number! < 10 ? "00" : "0"
       }}{{ invoice.number }}</span
@@ -8,9 +8,9 @@
   </div>
   <div class="card-body">
     <div class="d-flex justify-content-between">
-      <h5>
+      <h4>
         Invoice amount: <span class="fw-bold">€{{ invoice.amount }}</span>
-      </h5>
+      </h4>
       <p *ngIf="invoice.notes">#Notes: {{ invoice.notes }}</p>
       <h5>
         Invoice status: <span class="fw-bold">{{ invoice.status }}</span>
@@ -23,20 +23,20 @@
       <app-customer-info [customer]="invoice.customer!"></app-customer-info>
     </div>
   </div>
-  <div class="card-footer d-flex justify-content-end">
+  <div class="card-footer bg-transparent  d-flex justify-content-end">
     <ng-container
       *ngIf="(roles.includes('ADMIN') || roles.includes('USER')) && !isHome"
     >
       <button
-        class="btn btn-success"
+        class="btn btn-secondary"
         *ngIf="invoice && invoice.id"
         (click)="openModal(invoice)"
       >
-        Edit
+        ✏️ Edit
       </button>
     </ng-container>
     <ng-container *ngIf="toPay">
-      <button class="btn btn-success" (click)="pay()">Pay</button>
+      <button class="btn btn-secondary" (click)="pay()">Pay</button>
     </ng-container>
   </div>
 </div>

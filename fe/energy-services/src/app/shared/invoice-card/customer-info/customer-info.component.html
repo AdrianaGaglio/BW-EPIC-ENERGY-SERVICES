@@ -1,21 +1,27 @@
-<p class="mb-0 fw-bold">Customer details</p>
+<div class="separator"></div>
+<h5>
+  <span class="grey">Company: </span>
+  <span class="fw-bold">{{ customer.denomination }}</span>
+</h5>
+<h6>
+  <span class="grey">VatCode: </span> <span class="">{{ customer.vatCode }}</span>
+</h6>
+<div class="separator"></div>
 <ul class="list-group list-group-flush">
-  <li class="list-group-item">{{ customer.denomination }}</li>
-  <li class="list-group-item">Vat code: {{ customer.vatCode }}</li>
-  <li class="list-group-item">Contact phone: {{ customer.contactPhone }}</li>
-  <li class="list-group-item">PEC: {{ customer!.pec }}</li>
-  <li class="list-group-item" *ngIf="customer!.yearlyTurnover > 0">
+  <li class="list-group-item border-0"> <span class="grey">📞 Phone:</span> {{ customer.contactPhone }}</li>
+  <li class="list-group-item border-0"> <span class="grey">✉️ PEC:</span> {{ customer!.pec }}</li>
+  <li class="list-group-item border-0" *ngIf="customer!.yearlyTurnover > 0">
     Yearly turnover: {{ customer.yearlyTurnover }} €
   </li>
-  <li class="list-group-item">
-    Office address:
+  <li class="list-group-item border-0">
+    <span class="grey">📍 Office :</span>
     {{ customer.addresses.RegisteredOfficeAddress.street }}
     {{ customer.addresses.RegisteredOfficeAddress.city.name }}
     {{ customer.addresses.RegisteredOfficeAddress.city.district.code }}
     {{ customer.addresses.RegisteredOfficeAddress.cap }}
   </li>
-  <li class="list-group-item">
-    Headquarter address:
+  <li class="list-group-item border-0">
+   <span class="grey"> 🏢 Headquarter </span>:
     {{ customer.addresses.OperationalHeadquartersAddress.street }}
     {{ customer.addresses.OperationalHeadquartersAddress.city.name }}
     {{ customer.addresses.OperationalHeadquartersAddress.city.district.code }}
