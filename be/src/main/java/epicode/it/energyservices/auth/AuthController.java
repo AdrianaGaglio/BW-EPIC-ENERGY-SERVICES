@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -19,8 +22,11 @@ public class AuthController {
     private AppUserSvc appUserSvc;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) {
-        return new ResponseEntity<>(appUserSvc.registerUser(registerRequest), HttpStatus.CREATED);
+    public ResponseEntity<Map<String, String>> register(@RequestBody RegisterRequest registerRequest) {
+        String message = appUserSvc.registerUser(registerRequest);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", message);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
