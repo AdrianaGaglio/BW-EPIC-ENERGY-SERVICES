@@ -2,6 +2,8 @@ package epicode.it.energyservices.entities.invoice;
 
 import epicode.it.energyservices.entities.invoice_status.InvoiceStatus;
 import epicode.it.energyservices.entities.sys_user.customer.Customer;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -44,5 +46,15 @@ public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
 
     @Query("SELECT SUM(i.amount) FROM Invoice i WHERE i.customer.id = :customerId AND EXTRACT(YEAR FROM i.date) = :year")
     public double findTotalAllByCustomerAndYear(@Param("customerId") Long customerId, @Param("year") int year);
+
+    @Query("SELECT SUM(i.amount) FROM Invoice i WHERE EXTRACT(YEAR FROM i.date) = :year AND (i.status.name = 'PAID' OR i.status.name = 'PARTIALLY PAID' OR i.status.name = 'ARCHIVED')")
+    public Optional<Double> getTotal(@Param("year") int year);
+
+    @Query("SELECT i FROM Invoice i WHERE i.status.name IN ('SENT', 'PARTIALLY PAID', 'OVERDUE')")
+    public List<Invoice> findAllWaitingPayment();
+
+    @Query("SELECT i FROM Invoice i WHERE EXTRACT(YEAR FROM i.date) = :year ORDER BY i.date DESC")
+    Page<Invoice> findLatest(@Param("year") int year, Pageable pageable);
 }
+
 

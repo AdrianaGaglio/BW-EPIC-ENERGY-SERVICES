@@ -11,7 +11,12 @@ import {
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { NgIconsModule } from '@ng-icons/core';
-import { bootstrapFloppy, bootstrapSearch } from '@ng-icons/bootstrap-icons';
+import {
+  bootstrapArrowDown,
+  bootstrapArrowUp,
+  bootstrapFloppy,
+  bootstrapSearch,
+} from '@ng-icons/bootstrap-icons';
 import { HeaderComponent } from './main-components/header/header.component';
 
 @NgModule({
@@ -20,7 +25,12 @@ import { HeaderComponent } from './main-components/header/header.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    NgIconsModule.withIcons({ bootstrapSearch, bootstrapFloppy }),
+    NgIconsModule.withIcons({
+      bootstrapSearch,
+      bootstrapFloppy,
+      bootstrapArrowUp,
+      bootstrapArrowDown,
+    }),
   ],
   providers: [provideHttpClient(withInterceptors([tokenInterceptor]))],
   bootstrap: [AppComponent],

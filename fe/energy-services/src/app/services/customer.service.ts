@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { iCustomer } from '../interfaces/icustomer';
 import { Observable } from 'rxjs';
+import { iTotalresponse } from '../interfaces/itotalresponse';
+import { iTotalcustomersresponse } from '../interfaces/itotalcustomersresponse';
 
 @Injectable({
   providedIn: 'root',
@@ -66,6 +68,12 @@ export class CustomerService {
   getCustomersByYearlyTurnover(min: number, max: number) {
     return this.HttpClient.get<iCustomer[]>(
       this.baseUrl + `/byYearlyTurnoverBetween?min=${min}&max=${max}`
+    );
+  }
+
+  getTotal(): Observable<iTotalcustomersresponse> {
+    return this.HttpClient.get<iTotalcustomersresponse>(
+      this.baseUrl + '/total'
     );
   }
 }

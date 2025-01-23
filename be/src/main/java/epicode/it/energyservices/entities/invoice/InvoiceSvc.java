@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -121,5 +122,24 @@ public class InvoiceSvc {
 
     public double getTotalByCustomerIdAndYear(Long id, int year) {
         return invoiceRepo.findTotalAllByCustomerAndYear(id, year);
+    }
+
+    public double getTotal(int year) {
+        return invoiceRepo.getTotal(year).orElse(0.0);
+    }
+
+    public List<InvoiceResponse> getAllWaitingPayment() {
+        return mapper.toInvoiceResponseList(invoiceRepo.findAllWaitingPayment());
+    }
+
+    public Page<InvoiceResponse> getLatest(int size) {
+        Pageable pageable = PageRequest.of(0, size); // Pagina 0 con 5 elementi
+        int currentYear = LocalDate.now().getYear();
+        Page<Invoice> pagedInvoices = invoiceRepo.findLatest(currentYear, pageable);
+        Page<InvoiceResponse> response = pagedInvoices.map(e -> {
+            InvoiceResponse invoiceResponse = mapper.toInvoiceResponse(e);
+            return invoiceResponse;
+        });
+        return response;
     }
 }

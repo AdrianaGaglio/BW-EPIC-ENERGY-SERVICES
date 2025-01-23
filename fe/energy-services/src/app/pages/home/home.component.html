@@ -1,1 +1,79 @@
-<p>home works!</p>
+<div class="row">
+  <div class="col-4">
+    <div class="d-flex align-items-center justify-content-between gap-5 mb-2">
+      <h4 class="flex-grow-1 flex-shrink-0">Latest invoices</h4>
+      <select
+        class="form-select flex-grow-0 flex-shrink-1"
+        name="limit"
+        id="limit"
+        [(ngModel)]="limit"
+        (change)="changeLimit()"
+      >
+        <option [value]="3">Latest 3</option>
+        <option [value]="5">Latest 5</option>
+        <option [value]="10">Latest 10</option>
+      </select>
+    </div>
+    <div *ngFor="let i of latest" class="mb-3">
+      <app-invoice-card [invoice]="i"></app-invoice-card>
+    </div>
+  </div>
+  <div class="col-8">
+    <div class="row gap-3">
+      <div class="col">
+        <div class="row gy-2">
+          <div class="bg-body-tertiary rounded-3">
+            <div
+              class="d-flex align-content-center justify-content-between mb-2"
+            >
+              <h4 class="mb-0 align-self-center">Waiting payment</h4>
+              <span class="fs-1">{{ waitingPayments.length }}</span>
+            </div>
+
+            <div *ngFor="let i of waitingPayments.slice(0, 2)" class="mb-3">
+              <app-invoice-card [invoice]="i"></app-invoice-card>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="bg-body-tertiary rounded-3 row p-3 gy-3">
+          <div class="bg-white p-3 rounded-2">
+            <div class="d-flex align-content-center justify-content-between">
+              <h4 class="mb-0 align-self-center">Total amount current year</h4>
+              <span class="fs-1">
+                <ng-icon
+                  class="text-success"
+                  name="bootstrapArrowUp"
+                  *ngIf="totalAmount.total > lastYearAmount.total"
+                ></ng-icon>
+                <ng-icon
+                  class="text-danger"
+                  name="bootstrapArrowDown"
+                  *ngIf="totalAmount.total < lastYearAmount.total"
+                ></ng-icon>
+                {{ totalAmount.total }}</span
+              >
+            </div>
+            <div class="d-flex align-content-center justify-content-between">
+              <h4 class="mb-0 align-self-center text-body-secondary">
+                Total amount last year
+              </h4>
+              <span class="fs-1 text-body-secondary">{{
+                lastYearAmount.total
+              }}</span>
+            </div>
+          </div>
+          <div class="bg-white p-3 rounded-3">
+            <div
+              class="d-flex align-content-center justify-content-between mb-2"
+            >
+              <h4 class="mb-0 align-self-center">Total customers</h4>
+              <span class="fs-1">{{ totalCustomers.customers }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

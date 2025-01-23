@@ -7,6 +7,7 @@ import { iInvoicestatus } from '../../interfaces/iinvoicestatus';
 import { iInvoiceresponseforcustomer } from '../../interfaces/iinvoiceresponseforcustomer';
 import { InvoiceService } from '../../services/invoice.service';
 import { iInvoiceupdaterequest } from '../../interfaces/iinvoiceupdaterequest';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-card',
@@ -16,7 +17,8 @@ import { iInvoiceupdaterequest } from '../../interfaces/iinvoiceupdaterequest';
 export class InvoiceCardComponent {
   constructor(
     private decodeToken: DecodeTokenService,
-    private invoiceSvc: InvoiceService
+    private invoiceSvc: InvoiceService,
+    private router: Router
   ) {}
   private modalService = inject(NgbModal);
 
@@ -24,6 +26,7 @@ export class InvoiceCardComponent {
 
   roles: string[] = [];
   toPay: boolean = false;
+  isHome: boolean = false;
 
   ngOnInit() {
     this.roles = this.decodeToken.userRoles$.getValue();
@@ -35,6 +38,10 @@ export class InvoiceCardComponent {
       ) {
         this.toPay = true;
       }
+    }
+
+    if (this.router.url.includes('home')) {
+      this.isHome = true;
     }
   }
 

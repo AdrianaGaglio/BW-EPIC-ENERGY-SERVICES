@@ -14,9 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -81,13 +79,5 @@ public class CustomerController {
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<CustomerResponse> getByVatCode(@RequestParam String vatCode) {
         return ResponseEntity.ok(customerSvc.findByVatCode(vatCode));
-    }
-
-    @GetMapping("/total")
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public ResponseEntity<Map<String, Integer>> count() {
-        Map<String, Integer> response = new HashMap<>();
-        response.put("customers", customerSvc.count());
-        return ResponseEntity.ok(response);
     }
 }

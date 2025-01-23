@@ -8,6 +8,7 @@ import { DecodeTokenService } from './decode-token.service';
 import { iInvoiceupdaterequest } from '../interfaces/iinvoiceupdaterequest';
 import { iInvoicerequest } from '../interfaces/iinvoicerequest';
 import { iInvoicepageresponse } from '../interfaces/iinvoicepageresponse';
+import { iTotalresponse } from '../interfaces/itotalresponse';
 
 @Injectable({
   providedIn: 'root',
@@ -119,6 +120,20 @@ export class InvoiceService {
   ): Observable<iInvoiceresponse[]> {
     return this.http.get<iInvoiceresponse[]>(
       `${this.url}/amount-range?min=${min}&max=${max}`
+    );
+  }
+
+  getTotal(year: number): Observable<iTotalresponse> {
+    return this.http.get<iTotalresponse>(this.url + `/total?year=${year}`);
+  }
+
+  getWaitingPayment(): Observable<iInvoiceresponse[]> {
+    return this.http.get<iInvoiceresponse[]>(this.url + '/waiting-payment');
+  }
+
+  getLatest(limit: number): Observable<iInvoicepageresponse> {
+    return this.http.get<iInvoicepageresponse>(
+      this.url + `/latest?limit=${limit}`
     );
   }
 }

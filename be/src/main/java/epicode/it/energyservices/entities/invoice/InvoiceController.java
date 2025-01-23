@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/invoice")
@@ -187,5 +189,23 @@ public class InvoiceController {
         return ResponseEntity.ok(mapper.toInvoiceResponseList(invoices));
     }
 
-    
+    @GetMapping("/total")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public ResponseEntity<Map<String, Double>> getTotal(@RequestParam int year) {
+        Map<String, Double> response = new HashMap<>();
+        response.put("total", invoiceSvc.getTotal(year));
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/waiting-payment")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public ResponseEntity<List<InvoiceResponse>> getWaitingPayment() {
+        return ResponseEntity.ok(invoiceSvc.getAllWaitingPayment());
+    }
+
+    @GetMapping("/latest")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public ResponseEntity<Page<InvoiceResponse>> getLatest(@RequestParam int limit) {
+        return ResponseEntity.ok(invoiceSvc.getLatest(limit));
+    }
 }
