@@ -59,7 +59,6 @@ export class InvoicesComponent {
       this.isPaged = false;
       this.invoiceSvc.getAllByCustomer().subscribe((res) => {
         this.customerInvoices = res;
-        console.log(this.customerInvoices);
       });
     } else {
       this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
@@ -71,10 +70,14 @@ export class InvoicesComponent {
   }
 
   getAll() {
-    this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
-      this.isPaged = true;
-      this.invoices = res.content;
-    });
+    if (!this.roles.includes('CUSTOMER')) {
+      this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
+        this.isPaged = true;
+        this.invoices = res.content;
+      });
+    } else {
+      this.getAllByCustomer();
+    }
   }
 
   changePage(num: number) {
@@ -100,7 +103,11 @@ export class InvoicesComponent {
 
     modalRef.result.then((res) => {
       this.isPaged = false;
-      this.invoices = res;
+      if (this.roles.includes('CUSTOMER')) {
+        this.customerInvoices = res;
+      } else {
+        this.invoices = res;
+      }
     });
   }
 
@@ -111,7 +118,11 @@ export class InvoicesComponent {
 
     modalRef.result.then((res) => {
       this.isPaged = false;
-      this.invoices = res;
+      if (this.roles.includes('CUSTOMER')) {
+        this.customerInvoices = res;
+      } else {
+        this.invoices = res;
+      }
     });
   }
 
@@ -133,7 +144,11 @@ export class InvoicesComponent {
 
     modalRef.result.then((res) => {
       this.isPaged = false;
-      this.invoices = res;
+      if (this.roles.includes('CUSTOMER')) {
+        this.customerInvoices = res;
+      } else {
+        this.invoices = res;
+      }
     });
   }
 
@@ -144,7 +159,11 @@ export class InvoicesComponent {
 
     modalRef.result.then((res) => {
       this.isPaged = false;
-      this.invoices = res;
+      if (this.roles.includes('CUSTOMER')) {
+        this.customerInvoices = res;
+      } else {
+        this.invoices = res;
+      }
     });
   }
 
@@ -155,7 +174,12 @@ export class InvoicesComponent {
 
     modalRef.result.then((res) => {
       this.isPaged = false;
-      this.invoices = res;
+
+      if (this.roles.includes('CUSTOMER')) {
+        this.customerInvoices = res;
+      } else {
+        this.invoices = res;
+      }
     });
   }
 }

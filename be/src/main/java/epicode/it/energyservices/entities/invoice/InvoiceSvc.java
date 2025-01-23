@@ -38,7 +38,7 @@ public class InvoiceSvc {
 
     public List<InvoiceResponseForCustomer> getAllByCustomer(String username) {
         Long customerId = customerSvc.getByUsername(username).getId();
-        return mapper.toInvoiceResponseForCustomerList(invoiceRepo.findAllByCustomerId(customerId));
+        return mapper.toInvoiceResponseForCustomerList(invoiceRepo.findAllByCustomerIdOrderByNumberDesc(customerId));
     }
 
     public Page<InvoiceResponse> getAllPageable(Pageable pageable) {
@@ -90,12 +90,12 @@ public class InvoiceSvc {
         return response;
     }
 
-    public List<InvoiceResponse> getAllByStatus(String status, String direction) {
+    public List<Invoice> getAllByStatus(String status, String direction) {
         InvoiceStatus invoiceStatus = invoiceStatusSvc.findByName(status.toUpperCase());
         if (direction.equals("ASC")) {
-            return mapper.toInvoiceResponseList(invoiceRepo.findAllByStatusOrderByDateAsc(invoiceStatus.getId()));
+            return invoiceRepo.findAllByStatusOrderByDateAsc(invoiceStatus.getId());
         } else {
-            return mapper.toInvoiceResponseList(invoiceRepo.findAllByStatusOrderByDateDesc(invoiceStatus.getId()));
+            return invoiceRepo.findAllByStatusOrderByDateDesc(invoiceStatus.getId());
         }
     }
 
@@ -107,16 +107,16 @@ public class InvoiceSvc {
         }
     }
 
-    public List<InvoiceResponse> getAllByDate(LocalDate date) {
-        return mapper.toInvoiceResponseList(invoiceRepo.findAllByDate(date));
+    public List<Invoice> getAllByDate(LocalDate date) {
+        return invoiceRepo.findAllByDate(date);
     }
 
-    public List<InvoiceResponse> getAllByYear(int year) {
-        return mapper.toInvoiceResponseList(invoiceRepo.findAllByYear(year));
+    public List<Invoice> getAllByYear(int year) {
+        return invoiceRepo.findAllByYear(year);
     }
 
-    public List<InvoiceResponse> getAllByAmountBetween(double min, double max) {
-        return mapper.toInvoiceResponseList(invoiceRepo.findAllByAmountBetweenOrderByAmountAsc(min, max));
+    public List<Invoice> getAllByAmountBetween(double min, double max) {
+        return invoiceRepo.findAllByAmountBetweenOrderByAmountAsc(min, max);
     }
 
     public double getTotalByCustomerIdAndYear(Long id, int year) {

@@ -38,19 +38,21 @@
       (change)="openSearchByStatus()"
     />
     <label class="btn btn-outline-primary" for="byStatus">Status</label>
-    <input
-      type="radio"
-      class="btn-check"
-      name="searchBy"
-      id="byCustomerInfo"
-      [(ngModel)]="searchBy"
-      value="byCustomerInfo"
-      autocomplete="off"
-      (change)="openSearchByCustomerInfo()"
-    />
-    <label class="btn btn-outline-primary" for="byCustomerInfo"
-      >Customer Info</label
-    >
+    <ng-container *ngIf="!roles.includes('CUSTOMER')">
+      <input
+        type="radio"
+        class="btn-check"
+        name="searchBy"
+        id="byCustomerInfo"
+        [(ngModel)]="searchBy"
+        value="byCustomerInfo"
+        autocomplete="off"
+        (change)="openSearchByCustomerInfo()"
+      />
+      <label class="btn btn-outline-primary" for="byCustomerInfo"
+        >Customer Info</label
+      >
+    </ng-container>
     <input
       type="radio"
       class="btn-check"
@@ -87,6 +89,7 @@
     <label class="btn btn-outline-primary" for="byAmount">Amount</label>
   </div>
 </div>
+
 <div *ngIf="invoices" class="row py-3 gy-3">
   <div *ngIf="isPaged">
     <div class="d-flex align-items-center">
@@ -100,11 +103,11 @@
       >
     </div>
   </div>
-
   <div class="col-12" *ngFor="let invoice of invoices">
     <app-invoice-card [invoice]="invoice"></app-invoice-card>
   </div>
 </div>
+
 <div *ngIf="customerInvoices" class="row py-3 gy-3">
   <div class="col-12" *ngFor="let invoice of customerInvoices">
     <app-invoice-card [invoice]="invoice"></app-invoice-card>

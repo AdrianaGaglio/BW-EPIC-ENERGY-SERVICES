@@ -56,8 +56,8 @@ public class InvoiceController {
         if (userDetails.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER"))
         ) {
-            if (!invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())){
-            throw new InvalidParameterException("You are not the owner of this invoice");
+            if (!invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())) {
+                throw new InvalidParameterException("You are not the owner of this invoice");
             } else {
                 return ResponseEntity.ok(mapper.toInvoiceResponseForCustomer(invoice));
             }
@@ -75,7 +75,7 @@ public class InvoiceController {
         if (userDetails.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER"))
         ) {
-            if (!invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())){
+            if (!invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())) {
                 throw new InvalidParameterException("You are not the owner of this invoice");
             } else {
                 return ResponseEntity.ok(mapper.toInvoiceResponseForCustomer(invoice));
@@ -101,10 +101,18 @@ public class InvoiceController {
 
     @GetMapping("/by-status")
 //    Accessibile solo ad ADMIN/USER
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public ResponseEntity<List<InvoiceResponse>> getAllByStatus(@RequestParam String status, @RequestParam(required = false) String direction) {
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'CUSTOMER')")
+    public ResponseEntity<?> getAllByStatus(@RequestParam String status, @RequestParam(required = false) String direction, @AuthenticationPrincipal User userDetails) {
         if (direction == null || direction.isEmpty()) direction = "ASC";
-        return ResponseEntity.ok(invoiceSvc.getAllByStatus(status, direction));
+
+        List<Invoice> invoices = invoiceSvc.getAllByStatus(status, direction);
+
+        if (userDetails.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER"))
+        ) {
+            return ResponseEntity.ok(mapper.toInvoiceResponseForCustomerList(invoices.stream().filter(invoice -> invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())).toList()));
+        }
+        return ResponseEntity.ok(mapper.toInvoiceResponseList(invoices));
     }
 
     @GetMapping("/by-customer")
@@ -123,24 +131,48 @@ public class InvoiceController {
 
     @GetMapping("/by-date")
     //    Accessibile solo ad ADMIN/USER
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public ResponseEntity<List<InvoiceResponse>> getAllByDate(@RequestParam LocalDate date) {
-        return ResponseEntity.ok(invoiceSvc.getAllByDate(date));
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'CUSTOMER')")
+    public ResponseEntity<?> getAllByDate(@RequestParam LocalDate date, @AuthenticationPrincipal User userDetails) {
+        List<Invoice> invoices = invoiceSvc.getAllByDate(date);
+
+        if (userDetails.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER"))
+        ) {
+            return ResponseEntity.ok(mapper.toInvoiceResponseForCustomerList(invoices.stream().filter(invoice -> invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())).toList()));
+        }
+
+        return ResponseEntity.ok(mapper.toInvoiceResponseList(invoices));
     }
 
     @GetMapping("/by-year")
     //    Accessibile solo ad ADMIN/USER
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public ResponseEntity<List<InvoiceResponse>> getAllByYear(@RequestParam int year) {
-        return ResponseEntity.ok(invoiceSvc.getAllByYear(year));
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'CUSTOMER')")
+    public ResponseEntity<?> getAllByYear(@RequestParam int year,  @AuthenticationPrincipal User userDetails) {
+        List<Invoice> invoices = invoiceSvc.getAllByYear(year);
+
+        if (userDetails.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER"))
+        ) {
+            return ResponseEntity.ok(mapper.toInvoiceResponseForCustomerList(invoices.stream().filter(invoice -> invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())).toList()));
+        }
+
+        return ResponseEntity.ok(mapper.toInvoiceResponseList(invoices));
     }
 
     @GetMapping("/amount-range")
     //    Accessibile solo ad ADMIN/USER
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public ResponseEntity<List<InvoiceResponse>> getAllByAmountBetween(double min, double max) {
-        return ResponseEntity.ok(invoiceSvc.getAllByAmountBetween(min, max));
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'CUSTOMER')")
+    public ResponseEntity<?> getAllByAmountBetween(double min, double max, @AuthenticationPrincipal User userDetails) {
+        List<Invoice> invoices = invoiceSvc.getAllByAmountBetween(min, max);
+
+        if (userDetails.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_CUSTOMER"))
+        ) {
+            return ResponseEntity.ok(mapper.toInvoiceResponseForCustomerList(invoices.stream().filter(invoice -> invoice.getCustomer().getAppUser().getUsername().equals(userDetails.getUsername())).toList()));
+        }
+
+        return ResponseEntity.ok(mapper.toInvoiceResponseList(invoices));
     }
 
-    // creare metodi ed endopoint accessibili per il CUSTOMER (ricerca per stato, data, importo ecc)
+    
 }
