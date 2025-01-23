@@ -42,54 +42,79 @@ export class ForadminuserComponent {
     const modalRef = this.modalService.open(SearchByCreationdateComponent, {
       size: 'xl',
     });
-    modalRef.result.then((res) => {
-      this.customers = res;
-      this.isPaged = false;
-      console.log(this.customers);
-    });
+    modalRef.result
+      .then((res) => {
+        this.customers = res;
+        this.searchBy = '';
+        this.isPaged = false;
+      })
+      .catch((reason) => {
+        this.modalService.dismissAll();
+        this.searchBy = '';
+      });
   }
 
   openSearchByLastContact() {
     const modalRef = this.modalService.open(SearchByLastcontactComponent, {
       size: 'xl',
     });
-    modalRef.result.then((res) => {
-      this.customers = res;
-      this.isPaged = false;
-      console.log(this.customers);
-    });
+    modalRef.result
+      .then((res) => {
+        this.customers = res;
+        this.searchBy = '';
+        this.isPaged = false;
+      })
+      .catch((reason) => {
+        this.modalService.dismissAll();
+        this.searchBy = '';
+      });
   }
 
   openSearchByDenomination() {
     const modalRef = this.modalService.open(SearchByDenominationComponent, {
       size: 'xl',
     });
-    modalRef.result.then((res) => {
-      this.customers = res;
-      this.isPaged = false;
-      console.log(this.customers);
-    });
+    modalRef.result
+      .then((res) => {
+        this.customers = res;
+        this.searchBy = '';
+        this.isPaged = false;
+      })
+      .catch((reason) => {
+        this.modalService.dismissAll();
+        this.searchBy = '';
+      });
   }
 
   openSearchByYearlyTurnover() {
     const modalRef = this.modalService.open(SearchByYearlyturnoverComponent, {
       size: 'xl',
     });
-    modalRef.result.then((res) => {
-      this.customers = res;
-      this.isPaged = false;
-      console.log(this.customers);
-    });
+    modalRef.result
+      .then((res) => {
+        this.customers = res;
+        this.searchBy = '';
+        this.isPaged = false;
+      })
+      .catch((reason) => {
+        this.modalService.dismissAll();
+        this.searchBy = '';
+      });
   }
 
   openSearchByVatcode() {
     const modalRef = this.modalService.open(SearchByVatcodeComponent, {
       size: 'xl',
     });
-    modalRef.result.then((res) => {
-      this.customers = res;
-      this.isPaged = false;
-      console.log(this.customers);
-    });
+    modalRef.result
+      .then((res) => {
+        this.customers = res;
+        this.searchBy = '';
+        this.isPaged = false;
+      })
+      .catch((reason) => {
+        this.modalService.dismissAll();
+        this.searchBy = '';
+      });
   }
 }

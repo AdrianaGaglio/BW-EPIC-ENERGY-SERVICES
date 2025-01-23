@@ -15,7 +15,6 @@ export class CustomersComponent {
     private decodeToken: DecodeTokenService
   ) {
     this.roles = this.decodeToken.userRoles$.getValue();
-    console.log(this.roles);
 
     if (this.roles.includes('CUSTOMER')) {
       this.isCustomer = true;
