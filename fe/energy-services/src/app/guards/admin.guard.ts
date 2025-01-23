@@ -22,6 +22,7 @@ export class AdminGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot
   ): MaybeAsync<GuardResult> {
     if (!this.decodeToken.userRoles$.getValue().includes('ADMIN')) {
+      console.log('non sei admin');
       return false;
     }
 
