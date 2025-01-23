@@ -39,7 +39,10 @@
       <div class="col">
         <div class="bg-body-tertiary rounded-3 row p-3 gy-3">
           <div class="bg-white p-3 rounded-2">
-            <div class="d-flex align-content-center justify-content-between">
+            <div
+              class="d-flex align-content-center justify-content-between"
+              *ngIf="totalAmount"
+            >
               <h4 class="mb-0 align-self-center">Total amount current year</h4>
               <span class="fs-1">
                 <ng-icon
@@ -55,7 +58,10 @@
                 {{ totalAmount.total }}</span
               >
             </div>
-            <div class="d-flex align-content-center justify-content-between">
+            <div
+              class="d-flex align-content-center justify-content-between"
+              *ngIf="lastYearAmount"
+            >
               <h4 class="mb-0 align-self-center text-body-secondary">
                 Total amount last year
               </h4>
@@ -64,7 +70,7 @@
               }}</span>
             </div>
           </div>
-          <div class="bg-white p-3 rounded-3">
+          <div class="bg-white p-3 rounded-3" *ngIf="totalCustomers">
             <div
               class="d-flex align-content-center justify-content-between mb-2"
             >

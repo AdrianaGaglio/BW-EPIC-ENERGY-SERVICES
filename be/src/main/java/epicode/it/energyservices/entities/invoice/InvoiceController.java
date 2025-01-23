@@ -33,12 +33,14 @@ public class InvoiceController {
 //    Accessibile solo ad ADMIN e USER
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<List<InvoiceResponse>> getAll() {
+
         return ResponseEntity.ok(invoiceSvc.getAll());
     }
 
     @GetMapping("/byCustomer")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<List<InvoiceResponseForCustomer>> getAllByCustomer(@AuthenticationPrincipal UserDetails userDetails) {
+        System.out.println("ciao");
         return ResponseEntity.ok(invoiceSvc.getAllByCustomer(userDetails.getUsername()));
     }
 
@@ -162,7 +164,7 @@ public class InvoiceController {
     @GetMapping("/by-year")
     //    Accessibile solo ad ADMIN/USER
     @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'CUSTOMER')")
-    public ResponseEntity<?> getAllByYear(@RequestParam int year,  @AuthenticationPrincipal User userDetails) {
+    public ResponseEntity<?> getAllByYear(@RequestParam int year, @AuthenticationPrincipal User userDetails) {
         List<Invoice> invoices = invoiceSvc.getAllByYear(year);
 
         if (userDetails.getAuthorities().stream()

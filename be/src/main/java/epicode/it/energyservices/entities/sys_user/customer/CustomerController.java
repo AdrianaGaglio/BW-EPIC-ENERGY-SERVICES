@@ -28,6 +28,7 @@ public class CustomerController {
     private CustomerMapper mapper;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<List<CustomerResponse>> getAll() {
         return ResponseEntity.ok(mapper.toCustomerResponseList(customerSvc.getAll()));
     }
