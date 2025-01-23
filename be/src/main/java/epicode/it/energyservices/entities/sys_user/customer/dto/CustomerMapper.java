@@ -33,6 +33,7 @@ public class CustomerMapper {
             }
             customerResponse.setInvoices(invoiceResponses);
         }
+        customerResponse.setImage(e.getAppUser().getAvatar());
         return customerResponse;
     }
 

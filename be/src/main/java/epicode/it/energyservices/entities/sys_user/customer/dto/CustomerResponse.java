@@ -28,5 +28,6 @@ public class CustomerResponse {
     private Type type;
     private Map<String, AddressResponseForCustomer> addresses = new HashMap<>(); // collegare a entità indirizzo
     private List<InvoiceResponseForCustomer> invoices = new ArrayList<>();
+    private String image;
 
 }
