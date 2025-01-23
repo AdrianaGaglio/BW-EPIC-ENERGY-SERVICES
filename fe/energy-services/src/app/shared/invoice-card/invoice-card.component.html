@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-header d-flex justify-content-between">
     <span
-      >Invoice number: #{{ invoice.number < 10 ? "00" : "0"
+      >Invoice number: #{{ invoice.number! < 10 ? "00" : "0"
       }}{{ invoice.number }}</span
     >
     <span>Invoice date: {{ invoice.date }}</span>
@@ -17,13 +17,19 @@
       </h5>
     </div>
     <div class="d-flex flex-column" *ngIf="!roles.includes('CUSTOMER')">
-      <app-customer-info [invoice]="invoice"></app-customer-info>
+      <app-customer-info [customer]="invoice.customer!"></app-customer-info>
     </div>
   </div>
   <div
     class="card-footer d-flex justify-content-end"
     *ngIf="roles.includes('ADMIN') || roles.includes('USER')"
   >
-    <button class="btn btn-success" (click)="openModal(invoice)">Edit</button>
+    <button
+      class="btn btn-success"
+      *ngIf="invoice && invoice.id"
+      (click)="openModal(invoice)"
+    >
+      Edit
+    </button>
   </div>
 </div>

@@ -10,6 +10,7 @@ import { SearchByCustomerInfoComponent } from './components/search-by-customer-i
 import { SearchByDateComponent } from './components/search-by-date/search-by-date.component';
 import { SearchByYearComponent } from './components/search-by-year/search-by-year.component';
 import { SearchByAmountComponent } from './components/search-by-amount/search-by-amount.component';
+import { DecodeTokenService } from '../../services/decode-token.service';
 
 @Component({
   selector: 'app-invoices',
@@ -17,7 +18,10 @@ import { SearchByAmountComponent } from './components/search-by-amount/search-by
   styleUrl: './invoices.component.scss',
 })
 export class InvoicesComponent {
-  constructor(private invoiceSvc: InvoiceService) {}
+  constructor(
+    private invoiceSvc: InvoiceService,
+    private decodeToken: DecodeTokenService
+  ) {}
   private modalService = inject(NgbModal);
 
   invoices!: iInvoiceresponse[];
@@ -40,13 +44,23 @@ export class InvoicesComponent {
   customerFromlocalStorage: string | null = null;
   searchBy: string = 'all';
 
+  roles: string[] = [];
+
   ngOnInit() {
+    this.roles = this.decodeToken.userRoles$.getValue();
+
     this.customerFromlocalStorage =
       sessionStorage.getItem('customerToInvoices');
 
     if (this.customerFromlocalStorage) {
       this.openSearchByCustomerInfo();
       this.searchBy = 'byCustomerInfo';
+    } else if (this.roles.includes('CUSTOMER')) {
+      this.isPaged = false;
+      this.invoiceSvc.getAllByCustomer().subscribe((res) => {
+        this.customerInvoices = res;
+        console.log(this.customerInvoices);
+      });
     } else {
       this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
         this.invoices = res.content;

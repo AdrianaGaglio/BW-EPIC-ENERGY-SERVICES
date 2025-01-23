@@ -1,29 +1,24 @@
 <p class="mb-0 fw-bold">Customer details</p>
 <ul class="list-group list-group-flush">
-  <li class="list-group-item">{{ invoice.customer!.denomination }}</li>
-  <li class="list-group-item">Vat code: {{ invoice.customer!.vatCode }}</li>
-  <li class="list-group-item">
-    Contact phone: {{ invoice.customer!.contactPhone }}
-  </li>
-  <li class="list-group-item">PEC: {{ invoice.customer!.pec }}</li>
-  <li class="list-group-item" *ngIf="invoice.customer!.yearlyTurnover > 0">
-    Yearly turnover: {{ invoice.customer!.yearlyTurnover }} €
+  <li class="list-group-item">{{ customer.denomination }}</li>
+  <li class="list-group-item">Vat code: {{ customer.vatCode }}</li>
+  <li class="list-group-item">Contact phone: {{ customer.contactPhone }}</li>
+  <li class="list-group-item">PEC: {{ customer!.pec }}</li>
+  <li class="list-group-item" *ngIf="customer!.yearlyTurnover > 0">
+    Yearly turnover: {{ customer.yearlyTurnover }} €
   </li>
   <li class="list-group-item">
     Office address:
-    {{ invoice.customer!.addresses.RegisteredOfficeAddress.street }}
-    {{ invoice.customer!.addresses.RegisteredOfficeAddress.city.name }}
-    {{ invoice.customer!.addresses.RegisteredOfficeAddress.city.district.code }}
-    {{ invoice.customer!.addresses.RegisteredOfficeAddress.cap }}
+    {{ customer.addresses.RegisteredOfficeAddress.street }}
+    {{ customer.addresses.RegisteredOfficeAddress.city.name }}
+    {{ customer.addresses.RegisteredOfficeAddress.city.district.code }}
+    {{ customer.addresses.RegisteredOfficeAddress.cap }}
   </li>
   <li class="list-group-item">
     Headquarter address:
-    {{ invoice.customer!.addresses.OperationalHeadquartersAddress.street }}
-    {{ invoice.customer!.addresses.OperationalHeadquartersAddress.city.name }}
-    {{
-      invoice.customer!.addresses.OperationalHeadquartersAddress.city.district
-        .code
-    }}
-    {{ invoice.customer!.addresses.OperationalHeadquartersAddress.cap }}
+    {{ customer.addresses.OperationalHeadquartersAddress.street }}
+    {{ customer.addresses.OperationalHeadquartersAddress.city.name }}
+    {{ customer.addresses.OperationalHeadquartersAddress.city.district.code }}
+    {{ customer.addresses.OperationalHeadquartersAddress.cap }}
   </li>
 </ul>

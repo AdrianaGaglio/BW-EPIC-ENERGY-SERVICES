@@ -1,6 +1,5 @@
+import { iCustomerresponseforinvoice } from './../../../interfaces/icustomerresponseforinvoice';
 import { Component, Input } from '@angular/core';
-import { iCustomerresponseforinvoice } from '../../../interfaces/icustomerresponseforinvoice';
-import { iInvoiceresponse } from '../../../interfaces/iinvoiceresponse';
 
 @Component({
   selector: 'app-customer-info',
@@ -8,5 +7,5 @@ import { iInvoiceresponse } from '../../../interfaces/iinvoiceresponse';
   styleUrl: './customer-info.component.scss',
 })
 export class CustomerInfoComponent {
-  @Input() invoice!: Partial<iInvoiceresponse>;
+  @Input() customer!: iCustomerresponseforinvoice;
 }

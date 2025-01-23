@@ -100,14 +100,13 @@
       >
     </div>
   </div>
-  <ng-container *ngIf="invoices.length">
-    <div class="col-12" *ngFor="let invoice of invoices">
-      <app-invoice-card [invoice]="invoice"></app-invoice-card>
-    </div>
-  </ng-container>
-  <ng-container *ngIf="customerInvoices">
-    <div class="col-12" *ngFor="let invoice of customerInvoices">
-      <app-invoice-card [invoice]="invoice"></app-invoice-card>
-    </div>
-  </ng-container>
+
+  <div class="col-12" *ngFor="let invoice of invoices">
+    <app-invoice-card [invoice]="invoice"></app-invoice-card>
+  </div>
+</div>
+<div *ngIf="customerInvoices" class="row py-3 gy-3">
+  <div class="col-12" *ngFor="let invoice of customerInvoices">
+    <app-invoice-card [invoice]="invoice"></app-invoice-card>
+  </div>
 </div>

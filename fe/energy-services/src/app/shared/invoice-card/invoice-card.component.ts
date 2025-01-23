@@ -15,7 +15,7 @@ export class InvoiceCardComponent {
   constructor(private decodeToken: DecodeTokenService) {}
   private modalService = inject(NgbModal);
 
-  @Input() invoice!: iInvoiceresponse | iInvoiceresponseforcustomer;
+  @Input() invoice!: Partial<iInvoiceresponse>;
 
   roles: string[] = [];
 
@@ -23,7 +23,7 @@ export class InvoiceCardComponent {
     this.roles = this.decodeToken.userRoles$.getValue();
   }
 
-  openModal(invoice: iInvoiceresponse | iInvoiceresponseforcustomer) {
+  openModal(invoice: Partial<iInvoiceresponse>) {
     const modalRef = this.modalService.open(UpdateInvoiceComponent, {
       size: 'xl',
     });
