@@ -1,4 +1,7 @@
 <div *ngIf="customer">
   <h1 class="text-center my-4">Welcome {{ customer.denomination }}</h1>
-  <app-card-customer [customer]="customer"></app-card-customer>
+  <app-card-customer
+    [customer]="customer"
+    [isCustomer]="true"
+  ></app-card-customer>
 </div>

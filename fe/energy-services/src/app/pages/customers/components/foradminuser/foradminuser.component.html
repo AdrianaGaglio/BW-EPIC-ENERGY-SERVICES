@@ -78,7 +78,9 @@
       autocomplete="off"
       (change)="openSearchByVatcode()"
     />
-    <label class="btn btn-outline-primary btn-sm tab" for="byVatcode">Vat Code</label>
+    <label class="btn btn-outline-primary btn-sm tab" for="byVatcode"
+      >Vat Code</label
+    >
   </div>
 </div>
 <div *ngIf="customers" class="row py-3 gy-3">
@@ -97,11 +99,12 @@
 
   <div class="row mt-4">
     <ng-container *ngFor="let customer of customers">
-    <div class="col col-12 col-md-12 col-lg-6 mb-3">
-      <app-card-customer [customer]="customer"></app-card-customer>
-    </div>
-  </ng-container>
+      <div class="col col-12 col-md-12 col-lg-6 mb-3">
+        <app-card-customer
+          [customer]="customer"
+          [isCustomer]="false"
+        ></app-card-customer>
+      </div>
+    </ng-container>
   </div>
-
-
 </div>

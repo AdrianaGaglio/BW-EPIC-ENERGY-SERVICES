@@ -10,9 +10,17 @@ import { Component, inject, Input } from '@angular/core';
 export class CardCustomerComponent {
   private router = inject(Router);
   @Input() customer!: iCustomer;
+  @Input() isCustomer!: boolean;
 
   seeInvoices() {
-    sessionStorage.setItem('customerToInvoices', JSON.stringify(this.customer));
-    this.router.navigate(['/invoices']);
+    if (this.isCustomer) {
+      this.router.navigate(['/invoices']);
+    } else {
+      sessionStorage.setItem(
+        'customerToInvoices',
+        JSON.stringify(this.customer)
+      );
+      this.router.navigate(['/invoices']);
+    }
   }
 }
