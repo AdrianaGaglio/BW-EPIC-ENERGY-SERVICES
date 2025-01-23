@@ -22,6 +22,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,11 +44,19 @@ public class AppUserSvc {
     private final EmailSvc emailSvc;
     private final EmailMapper emailMapper;
 
-    boolean existByUsername(String username) {
+    public boolean existByUsername(String username) {
         return appUserRepo.existsByUsername(username.toLowerCase());
     }
 
-    boolean existByEmail(String email) {
+    public AppUser getByUsername(String username) {
+        if (existByUsername(username)) {
+            return appUserRepo.findByUsername(username).get();
+        } else {
+            throw new EntityNotFoundException("User not found");
+        }
+    }
+
+   public  boolean existByEmail(String email) {
         return appUserRepo.existsByEmail(email.toLowerCase());
     }
 
@@ -159,6 +168,28 @@ public class AppUserSvc {
             emailSvc.sendEmailHtml(emailMapper.fromResetPasswordSuccessBodyToEmailRequest(appUser));
             return "Password changed successfully";
         }
+    }
+
+    public AppUserResponse updateUser(AppUserResponse appUserResponse, User userDetails) {
+        AppUser appUser = getByUsername(userDetails.getUsername());
+        if (appUserResponse.getId() != appUser.getId()) {
+            throw new SecurityException("User not authorized");
+        }
+        if(!appUserResponse.getUsername().equals(appUser.getUsername())) {
+            if (existByUsername(appUserResponse.getUsername())) {
+                throw new AlreadyExistsException("Username already used");
+            }
+        }
+        if (!appUserResponse.getEmail().equals(appUser.getEmail())) {
+            if (existByEmail(appUserResponse.getEmail())) {
+                throw new AlreadyExistsException("Email already used");
+            }
+        }
+
+        BeanUtils.copyProperties(appUserResponse, appUser);
+        appUserRepo.save(appUser);
+        return appUserResponse;
+
     }
 
 }

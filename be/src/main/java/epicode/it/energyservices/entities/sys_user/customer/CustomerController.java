@@ -78,6 +78,7 @@ public class CustomerController {
         return ResponseEntity.ok(mapper.toCustomerResponse(customerSvc.getByUsername(userDetails.getUsername())));
     }
 
+
     @GetMapping("/by-vatCode")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<CustomerResponse> getByVatCode(@RequestParam String vatCode) {

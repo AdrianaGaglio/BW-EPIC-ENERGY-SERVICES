@@ -6,6 +6,7 @@ import { iCustomer } from '../interfaces/icustomer';
 import { Observable } from 'rxjs';
 import { iTotalresponse } from '../interfaces/itotalresponse';
 import { iTotalcustomersresponse } from '../interfaces/itotalcustomersresponse';
+import { iCustomerWithAppUser } from '../interfaces/icustomerWithAppUser';
 
 @Injectable({
   providedIn: 'root',

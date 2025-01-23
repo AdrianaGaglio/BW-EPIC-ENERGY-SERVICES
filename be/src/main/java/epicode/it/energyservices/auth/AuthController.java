@@ -2,14 +2,19 @@ package epicode.it.energyservices.auth;
 
 import epicode.it.energyservices.auth.dto.*;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -49,5 +54,29 @@ public class AuthController {
         Map<String, String> response = new HashMap<>();
         response.put("message", message);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/withAppUser")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<AppUserResponse> getByCustomerWithAppUser(@AuthenticationPrincipal User userDetails) {
+        System.out.println(userDetails.getUsername());
+        AppUser appUser = appUserSvc.getByUsername(userDetails.getUsername());
+        AppUserResponse response = new AppUserResponse();
+        response.setId(appUser.getId());
+        response.setName(appUser.getName());
+        response.setSurname(appUser.getSurname());
+        response.setEmail(appUser.getEmail());
+        response.setAvatar(appUser.getAvatar());
+        response.setUsername(appUser.getUsername());
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/withAppUser")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<AppUserResponse> updateByCustomerWithAppUser(@RequestBody AppUserResponse appUserUpdateRequest, @AuthenticationPrincipal User userDetails) {
+
+        AppUserResponse response = appUserSvc.updateUser(appUserUpdateRequest, userDetails);
+        System.out.println(response);
+        return ResponseEntity.ok(response);
     }
 }
