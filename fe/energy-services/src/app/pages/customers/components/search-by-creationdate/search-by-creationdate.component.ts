@@ -13,17 +13,13 @@ export class SearchByCreationdateComponent {
   private activeModal = inject(NgbActiveModal);
 
   customers: iCustomer[] = [];
-
+  isLoading!: boolean;
   getByCreationDate(startDate: string, endDate: string) {
-    console.log(startDate, endDate);
-
+    this.isLoading = true;
     this.customerSvc.getCustomersByCreationDate(startDate, endDate).subscribe({
       next: (res) => {
         this.customers = res;
         this.activeModal.close(this.customers);
-      },
-      error: (err) => {
-        console.log(err);
       },
     });
   }

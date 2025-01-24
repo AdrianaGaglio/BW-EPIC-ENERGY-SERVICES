@@ -13,18 +13,15 @@ export class SearchByLastcontactComponent {
   private activeModal = inject(NgbActiveModal);
 
   customers: iCustomer[] = [];
+  isLoading!: boolean;
 
   getByLastContact(startDate: string, endDate: string) {
-    console.log(startDate, endDate);
-
-    this.customerSvc.getCustomersByLastContact(startDate, endDate).subscribe({
-      next: (res) => {
-        this.customers = res;
-        this.activeModal.close(this.customers);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    (this.isLoading = true),
+      this.customerSvc.getCustomersByLastContact(startDate, endDate).subscribe({
+        next: (res) => {
+          this.customers = res;
+          this.activeModal.close(this.customers);
+        },
+      });
   }
 }

@@ -23,11 +23,14 @@ export class SearchByStatusComponent {
   statuses: iInvoiceStatus[] = [];
   status: string = '';
 
+  isLoading!: boolean;
+
   ngOnInit() {
     this.statusSvc.getAll().subscribe((res) => (this.statuses = res));
   }
   invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
   getAllByStatus() {
+    this.isLoading = true;
     if (this.status == '') {
       alert('Select an invoice status to search');
     } else {

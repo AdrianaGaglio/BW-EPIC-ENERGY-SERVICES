@@ -11,6 +11,7 @@ export class LoggedCustomersComponent {
   private customerSvc = inject(CustomerService);
 
   customer!: iCustomer;
+  isLoading!: boolean;
 
   ngOnInit() {
     this.getCustomerByLoggedCustomer();
@@ -18,6 +19,7 @@ export class LoggedCustomersComponent {
   getCustomerByLoggedCustomer() {
     this.customerSvc.getCustomerByLoggedCustomer().subscribe((data) => {
       this.customer = data;
+      this.isLoading = false;
     });
   }
 }

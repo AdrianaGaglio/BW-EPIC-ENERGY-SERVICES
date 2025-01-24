@@ -47,6 +47,8 @@ export class InvoicesComponent {
 
   message: string = '';
 
+  isLoading: boolean = true;
+
   customerFromlocalStorage: string | null = null;
   searchBy: string = 'all';
 
@@ -69,6 +71,7 @@ export class InvoicesComponent {
   getAll() {
     if (!this.roles.includes('CUSTOMER')) {
       this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
+        this.isLoading = false;
         this.isPaged = true;
         this.pages = Array.from({ length: res.totalPages }, (_, i) => i + 1);
         this.invoices = res.content;
@@ -89,6 +92,7 @@ export class InvoicesComponent {
 
   getAllByCustomer() {
     this.invoiceSvc.getAllByCustomer().subscribe((res) => {
+      this.isLoading = false;
       this.customerInvoices = res;
       if (res.length == 0) {
         this.message = 'No invoices found';

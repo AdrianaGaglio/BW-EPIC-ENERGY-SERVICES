@@ -13,8 +13,10 @@ export class SearchByYearlyturnoverComponent {
   private activeModal = inject(NgbActiveModal);
 
   customers: iCustomer[] = [];
+  isLoading!: boolean;
 
   getByYearlyTurnover(min: number, max: number) {
+    this.isLoading = true;
     this.customerSvc.getCustomersByYearlyTurnover(min, max).subscribe({
       next: (res) => {
         this.customers = res;

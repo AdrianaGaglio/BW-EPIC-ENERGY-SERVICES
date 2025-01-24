@@ -108,27 +108,34 @@
     (closeAlert)="clearMessage()"
   ></app-alert>
 
-  <div *ngIf="invoices" class="row py-3 gy-3">
-    <div *ngIf="isPaged">
-      <div class="d-flex align-items-center">
-        <p class="mb-0">Pages:</p>
-        <span
-          (click)="changePage(num - 1)"
-          class="badge text-primary"
-          *ngFor="let num of pages"
-          role="button"
-          >{{ num }}</span
-        >
+  <ng-container *ngIf="!isLoading">
+    <div *ngIf="invoices" class="row py-3 gy-3">
+      <div *ngIf="isPaged">
+        <div class="d-flex align-items-center">
+          <p class="mb-0">Pages:</p>
+          <span
+            (click)="changePage(num - 1)"
+            class="badge text-primary"
+            *ngFor="let num of pages"
+            role="button"
+            >{{ num }}</span
+          >
+        </div>
+      </div>
+      <div class="col-12" *ngFor="let invoice of invoices">
+        <app-invoice-card [invoice]="invoice"></app-invoice-card>
       </div>
     </div>
-    <div class="col-12" *ngFor="let invoice of invoices">
-      <app-invoice-card [invoice]="invoice"></app-invoice-card>
-    </div>
-  </div>
 
-  <div *ngIf="customerInvoices" class="row py-3 gy-3">
-    <div class="col-12" *ngFor="let invoice of customerInvoices">
-      <app-invoice-card [invoice]="invoice"></app-invoice-card>
+    <div *ngIf="customerInvoices" class="row py-3 gy-3">
+      <div class="col-12" *ngFor="let invoice of customerInvoices">
+        <app-invoice-card [invoice]="invoice"></app-invoice-card>
+      </div>
+    </div>
+  </ng-container>
+  <div *ngIf="isLoading" class="d-flex justify-content-center">
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 </div>

@@ -24,6 +24,8 @@ export class ForadminuserComponent {
 
   message!: string;
 
+  isLoading: boolean = true;
+
   ngOnInit() {
     this.getAllCustomers(0, 5);
   }
@@ -34,6 +36,7 @@ export class ForadminuserComponent {
         this.customers = data.content;
         this.isPaged = true;
         this.pages = Array.from({ length: data.totalPages }, (_, i) => i + 1);
+        this.isLoading = false;
       });
   }
   changePage(num: number) {
@@ -139,5 +142,6 @@ export class ForadminuserComponent {
     this.message = '';
     this.searchBy = 'all';
     this.getAllCustomers(0, 5);
+    this.isLoading = true;
   }
 }

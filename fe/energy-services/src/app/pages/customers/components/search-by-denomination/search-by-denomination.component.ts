@@ -13,15 +13,14 @@ export class SearchByDenominationComponent {
   private activeModal = inject(NgbActiveModal);
 
   customers: iCustomer[] = [];
+  isLoading!: boolean;
 
   getCustomersByDenominationsContain(searchTerm: string) {
+    this.isLoading = true;
     this.customerSvc.getCustomersByDenominationsContain(searchTerm).subscribe({
       next: (res) => {
         this.customers = res;
         this.activeModal.close(this.customers);
-      },
-      error: (err) => {
-        console.log(err);
       },
     });
   }
