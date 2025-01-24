@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   constructor(private authSvc: AuthsrvService, private decodeToken: DecodeTokenService) {}
   roles: string[] = [];
   private rolesSubscription!: Subscription;
+  isActive:boolean = false;
 
 
   ngOnInit(): void {
@@ -23,5 +24,8 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authSvc.logout();
+  }
+  toggleActive() {
+    this.isActive = !this.isActive;
   }
 }
