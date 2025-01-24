@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { iCustomer } from '../interfaces/icustomer';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { iTotalresponse } from '../interfaces/itotalresponse';
 import { iTotalcustomersresponse } from '../interfaces/itotalcustomersresponse';
 import { iCustomerWithAppUser } from '../interfaces/icustomerWithAppUser';
@@ -14,10 +14,14 @@ import { iCustomerWithAppUser } from '../interfaces/icustomerWithAppUser';
 export class CustomerService {
   baseUrl: string = environment.baseUrl + 'customer';
 
+  customers$ = new BehaviorSubject<iCustomer[]>([]);
+
   constructor(private HttpClient: HttpClient) {}
 
   getAll(): Observable<iCustomer[]> {
-    return this.HttpClient.get<iCustomer[]>(this.baseUrl);
+    return this.HttpClient.get<iCustomer[]>(this.baseUrl).pipe(
+      tap((res) => this.customers$.next(res))
+    );
   }
 
   getAllCustomers(numberPage: number, size: number, type?: string[]) {

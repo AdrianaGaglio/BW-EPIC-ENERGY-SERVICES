@@ -6,6 +6,7 @@ import { iInvoicepageresponse } from '../../interfaces/iinvoicepageresponse';
 import { CustomerService } from '../../services/customer.service';
 import { iTotalcustomersresponse } from '../../interfaces/itotalcustomersresponse';
 import { DecodeTokenService } from '../../services/decode-token.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -23,43 +24,43 @@ export class HomeComponent {
   lastYearAmount!: iTotalresponse;
   totalCustomers!: iTotalcustomersresponse;
 
-  waitingPayments: iInvoiceresponse[] = [];
+  waitingPayments!: iInvoiceresponse[];
 
   limit: number = 5;
 
-  latest: iInvoiceresponse[] = [];
+  latest!: iInvoiceresponse[];
+
+  isLoading: boolean = true;
 
   ngOnInit() {
     let roles: string[] = this.decodeToken.userRoles$.getValue();
     if (!roles.includes('CUSTOMER')) {
-      this.invoiceSvc.getTotal(new Date().getFullYear()).subscribe((res) => {
-        if (res && res.total !== undefined) {
+      forkJoin({
+        totalAmount: this.invoiceSvc.getTotal(new Date().getFullYear()),
+        lastYearAmount: this.invoiceSvc.getTotal(new Date().getFullYear() - 1),
+        waitingPayments: this.invoiceSvc.getWaitingPayment(),
+        latest: this.invoiceSvc.getLatest(this.limit),
+        totalCustomers: this.customerSvc.getTotal(),
+      }).subscribe({
+        next: (res) => {
+          // Setta i risultati delle chiamate
           this.totalAmount = {
-            ...res,
-            total: parseFloat(res.total.toFixed(2)),
+            ...res.totalAmount,
+            total: parseFloat(res.totalAmount.total.toFixed(2)),
           };
-        }
-      });
-
-      this.invoiceSvc
-        .getTotal(new Date().getFullYear() - 1)
-        .subscribe((res) => {
           this.lastYearAmount = {
-            ...res,
-            total: parseFloat(res.total.toFixed(2)),
+            ...res.lastYearAmount,
+            total: parseFloat(res.lastYearAmount.total.toFixed(2)),
           };
-        });
-
-      this.invoiceSvc.getWaitingPayment().subscribe((res) => {
-        this.waitingPayments = res;
-      });
-
-      this.invoiceSvc.getLatest(this.limit).subscribe((res) => {
-        this.latest = res.content;
-      });
-
-      this.customerSvc.getTotal().subscribe((res) => {
-        this.totalCustomers = res;
+          this.waitingPayments = res.waitingPayments;
+          this.latest = res.latest.content;
+          this.totalCustomers = res.totalCustomers;
+          this.isLoading = false;
+        },
+        complete: () => {
+          // Imposta isLoading a false quando tutte le chiamate sono completate
+          this.isLoading = false;
+        },
       });
     }
   }

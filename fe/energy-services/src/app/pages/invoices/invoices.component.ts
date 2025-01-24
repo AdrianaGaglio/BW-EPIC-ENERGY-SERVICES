@@ -11,6 +11,7 @@ import { SearchByDateComponent } from './components/search-by-date/search-by-dat
 import { SearchByYearComponent } from './components/search-by-year/search-by-year.component';
 import { SearchByAmountComponent } from './components/search-by-amount/search-by-amount.component';
 import { DecodeTokenService } from '../../services/decode-token.service';
+import { CustomerService } from '../../services/customer.service';
 
 @Component({
   selector: 'app-invoices',
@@ -20,8 +21,11 @@ import { DecodeTokenService } from '../../services/decode-token.service';
 export class InvoicesComponent {
   constructor(
     private invoiceSvc: InvoiceService,
-    private decodeToken: DecodeTokenService
-  ) {}
+    private decodeToken: DecodeTokenService,
+    private customerSvc: CustomerService
+  ) {
+    this.customerSvc.getAll().subscribe();
+  }
   private modalService = inject(NgbModal);
 
   invoices!: iInvoiceresponse[];

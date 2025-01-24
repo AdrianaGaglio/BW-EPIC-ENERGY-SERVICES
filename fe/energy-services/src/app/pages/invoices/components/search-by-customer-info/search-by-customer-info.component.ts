@@ -23,11 +23,20 @@ export class SearchByCustomerInfoComponent {
   customerId: string = '';
   vatCode: string = '';
   pec: string = '';
-  direction: string = 'ASC';
+  direction!: string;
 
   customerFromlocalStorageJSON: string | null = null;
-
+  isChecked: boolean = false;
   customers: iCustomer[] = [];
+
+  toggleCheckbox() {
+    this.isChecked = !this.isChecked;
+    if (this.isChecked) {
+      this.direction = 'DESC';
+    } else {
+      this.direction = 'ASC';
+    }
+  }
 
   ngOnInit() {
     this.customerFromlocalStorageJSON =
@@ -41,9 +50,7 @@ export class SearchByCustomerInfoComponent {
       this.getAllByCustomerInfo();
       sessionStorage.removeItem('customerToInvoices');
     } else {
-      this.customerSvc
-        .getAll()
-        .subscribe((res: iCustomer[]) => (this.customers = res));
+      this.customerSvc.customers$.subscribe((res) => (this.customers = res));
     }
   }
 

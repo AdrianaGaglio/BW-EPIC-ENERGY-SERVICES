@@ -45,11 +45,13 @@
         <input
           type="checkbox"
           class="form-check-input"
-          id="direction"
-          value="DESC"
+          id="isChecked"
+          name="isChecked"
+          [(ngModel)]="isChecked"
+          (click)="toggleCheckbox()"
           #direction
         />
-        <label for="direction">Want to order DESC?</label>
+        <label for="isChecked">Want to order DESC?</label>
       </div>
       <button
         class="btn btn-success align-self-end"
