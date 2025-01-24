@@ -94,14 +94,11 @@ export class RegisterComponent implements OnInit {
   register(): void {
     if (this.form.valid) {
       console.log('Dati inviati:', this.form.value);
-      this.authSrv.register(this.form.value).subscribe({
-        next: (data) => {
-          console.log('Registrazione effettuata con successo:', data);
-          this.router.navigate(['home']);
-        },
-        error: (error) => {
-          console.error('Errore nella registrazione:', error);
-        },
+      this.authSrv.register(this.form.value).subscribe((res) => {
+        this.message = 'User successfully registered';
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 1000);
       });
     } else {
       console.error('Form non valido:', this.form.errors);

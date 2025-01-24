@@ -20,6 +20,7 @@ export class ProfileComponent {
   form!: FormGroup;
 
   customer!: iAppUserResponse;
+  isEditing: boolean = false;
 
   constructor(
     private authSrv: AuthsrvService,
@@ -52,5 +53,9 @@ export class ProfileComponent {
     this.authSrv.updateAppUser(this.form.value).subscribe((data) => {
       console.log(data);
     });
+  }
+
+  enableEditing() {
+    this.isEditing = !this.isEditing;
   }
 }
