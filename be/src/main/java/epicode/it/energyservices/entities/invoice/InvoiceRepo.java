@@ -50,6 +50,9 @@ public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
     @Query("SELECT SUM(i.amount) FROM Invoice i WHERE EXTRACT(YEAR FROM i.date) = :year AND (i.status.name = 'PAID' OR i.status.name = 'PARTIALLY PAID' OR i.status.name = 'ARCHIVED')")
     public Optional<Double> getTotal(@Param("year") int year);
 
+    @Query("SELECT SUM(i.amount) FROM Invoice i WHERE EXTRACT(YEAR FROM i.date) = :year AND i.customer.id = :customerId AND (i.status.name = 'PAID' OR i.status.name = 'PARTIALLY PAID' OR i.status.name = 'ARCHIVED')")
+    public Optional<Double> getTotalByCustomer(@Param("customerId") Long customerId, @Param("year") int year);
+
     @Query("SELECT i FROM Invoice i WHERE i.status.name IN ('SENT', 'PARTIALLY PAID', 'OVERDUE')")
     public List<Invoice> findAllWaitingPayment();
 

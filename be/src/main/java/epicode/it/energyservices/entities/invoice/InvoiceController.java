@@ -210,4 +210,13 @@ public class InvoiceController {
     public ResponseEntity<Page<InvoiceResponse>> getLatest(@RequestParam int limit) {
         return ResponseEntity.ok(invoiceSvc.getLatest(limit));
     }
+
+    @GetMapping("/total-by-customer")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<Map<String, Double>> getTotalByCustomer(@RequestParam int year, @AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+        Map<String, Double> response = new HashMap<>();
+        response.put("total", invoiceSvc.getTotalByCustomer(username, year));
+        return ResponseEntity.ok(response);
+    }
 }

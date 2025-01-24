@@ -5,6 +5,7 @@ import epicode.it.energyservices.entities.invoice_status.InvoiceStatus;
 import epicode.it.energyservices.entities.invoice_status.InvoiceStatusSvc;
 import epicode.it.energyservices.entities.sys_user.customer.Customer;
 import epicode.it.energyservices.entities.sys_user.customer.CustomerSvc;
+import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerRequest;
 import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerResponse;
 import epicode.it.energyservices.utils.email.EmailMapper;
 import epicode.it.energyservices.utils.email.EmailSvc;
@@ -126,6 +127,11 @@ public class InvoiceSvc {
 
     public double getTotal(int year) {
         return invoiceRepo.getTotal(year).orElse(0.0);
+    }
+
+    public double getTotalByCustomer (String username, int year) {
+        Customer c = customerSvc.getByUsername(username);
+        return invoiceRepo.getTotalByCustomer(c.getId(), year).orElse(0.0);
     }
 
     public List<InvoiceResponse> getAllWaitingPayment() {
