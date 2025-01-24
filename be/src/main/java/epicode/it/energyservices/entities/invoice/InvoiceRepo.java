@@ -45,7 +45,7 @@ public interface InvoiceRepo extends JpaRepository<Invoice, Long> {
     public List<Invoice> findAllByVatCode(@Param("vatCode") String vatCode);
 
     @Query("SELECT SUM(i.amount) FROM Invoice i WHERE i.customer.id = :customerId AND EXTRACT(YEAR FROM i.date) = :year")
-    public double findTotalAllByCustomerAndYear(@Param("customerId") Long customerId, @Param("year") int year);
+    public Optional<Double> findTotalAllByCustomerAndYear(@Param("customerId") Long customerId, @Param("year") int year);
 
     @Query("SELECT SUM(i.amount) FROM Invoice i WHERE EXTRACT(YEAR FROM i.date) = :year AND (i.status.name = 'PAID' OR i.status.name = 'PARTIALLY PAID' OR i.status.name = 'ARCHIVED')")
     public Optional<Double> getTotal(@Param("year") int year);

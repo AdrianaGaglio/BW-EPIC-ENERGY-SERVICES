@@ -16,6 +16,8 @@ import java.util.Map;
 @Component
 public class EmailMapper {
 
+    private String website = "http://localhost:4200/";
+
     public EmailRequest fromInvoicetoEmailRequest(String text, Invoice invoice) {
         EmailRequest request = new EmailRequest();
         request.setTo(invoice.getCustomer().getAppUser().getEmail());
@@ -41,6 +43,7 @@ public class EmailMapper {
         values.put("amount", invoice.getAmount() + "");
         values.put("date", invoice.getDate() + "");
         values.put("status", invoice.getStatus().getName());
+        values.put("website", website);
         return processTemplate(template, values);
     }
 
@@ -50,7 +53,7 @@ public class EmailMapper {
         values.put("text", text);
         values.put("username", user.getUsername());
         values.put("email", user.getEmail());
-
+        values.put("website", website);
         return processTemplate(template, values);
     }
 
@@ -58,7 +61,7 @@ public class EmailMapper {
         String template = loadTemplate("src/main/resources/templates/resetPassword.html");
         Map<String, String> values = new HashMap<>();
         values.put("link", link);
-
+        values.put("website", website);
         return processTemplate(template, values);
     }
 
@@ -69,6 +72,7 @@ public class EmailMapper {
         request.setBody(forResetPasswordRequestBody(link));
         return request;
     }
+
     public String forResetPasswordSuccess(){
         String template = loadTemplate("src/main/resources/templates/resetPasswordSuccess.html");
         Map<String, String> values = new HashMap<>();
