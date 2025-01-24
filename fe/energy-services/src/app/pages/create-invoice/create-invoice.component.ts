@@ -8,6 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { iInvoicerequest } from '../../interfaces/iinvoicerequest';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InvoiceStatusComponent } from './components/invoice-status/invoice-status.component';
+import { DecodeTokenService } from '../../services/decode-token.service';
+import { AuthsrvService } from '../../auth/authsrv.service';
 
 @Component({
   selector: 'app-create-invoice',
@@ -19,8 +21,17 @@ export class CreateInvoiceComponent {
     private invoceSvc: InvoiceService,
     private statusSvc: InvoiceStatusService,
     private customerSvc: CustomerService,
-    private fb: FormBuilder
-  ) {}
+    private fb: FormBuilder,
+    private decodeToken: DecodeTokenService,
+    private authSvc: AuthsrvService
+  ) {
+    if (
+      this.authSvc.userAuthSubject$ &&
+      !this.decodeToken.userRoles$.getValue().includes('CUSTOMER')
+    ) {
+      this.customerSvc.getAll().subscribe();
+    }
+  }
   private modalService = inject(NgbModal);
 
   customers: iCustomer[] = [];
@@ -30,7 +41,7 @@ export class CreateInvoiceComponent {
   alertMessage!: string;
 
   ngOnInit() {
-    this.customerSvc.getAll().subscribe((res) => (this.customers = res));
+    this.customerSvc.customers$.subscribe((res) => (this.customers = res));
     this.statusSvc.getAll().subscribe((res) => (this.statuses = res));
 
     this.newInvoice = this.fb.group({
