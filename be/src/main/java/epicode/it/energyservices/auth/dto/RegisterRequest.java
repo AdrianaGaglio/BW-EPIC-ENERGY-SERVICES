@@ -1,10 +1,9 @@
 package epicode.it.energyservices.auth.dto;
 
+import epicode.it.energyservices.entities.sys_user.customer.dto.CustomerRequest;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-
-import java.util.Set;
 
 @Data
 public class RegisterRequest {
@@ -21,6 +20,7 @@ public class RegisterRequest {
     private String surname;
 
     private CustomerRequest customer;
+
     private String avatar;
 
 }

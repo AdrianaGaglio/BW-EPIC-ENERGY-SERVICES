@@ -1,7 +1,7 @@
 package epicode.it.energyservices.auth.jwt;
 
 import epicode.it.energyservices.auth.AppUser;
-import epicode.it.energyservices.auth.AppUserRepository;
+import epicode.it.energyservices.auth.AppUserRepo;
 import epicode.it.energyservices.auth.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenUtil {
     @Autowired
-    private AppUserRepository appUserRepo;
+    private AppUserRepo appUserRepo;
 
     @Value("${jwt.secret}")
     private String secret;
@@ -48,7 +48,7 @@ public class JwtTokenUtil {
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
@@ -70,6 +70,17 @@ public class JwtTokenUtil {
                 .compact();
     }
 
+    public String generateTokenResetPassword(AppUser appUser) {
+        return Jwts.builder()
+                .setSubject(appUser.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 *60*15))
+                .signWith(SignatureAlgorithm.HS256, secret)
+                .compact();
+    }
+
+
+
     public Set<Role> getRolesFromToken(String token) {
         Claims claims = getAllClaimsFromToken(token);
         List<String> rolesAsString = ((List<?>) claims.get("roles"))
@@ -88,5 +99,6 @@ public class JwtTokenUtil {
 
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
 
 }

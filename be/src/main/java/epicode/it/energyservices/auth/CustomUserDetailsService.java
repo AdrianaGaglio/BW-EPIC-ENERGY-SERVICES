@@ -7,20 +7,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
-    private AppUserRepository appUserRepository;
+    private AppUserRepo appUserRepo;
     @Override
     public UserDetails loadUserByUsername(String identifier)  {
-        AppUser user = appUserRepository.findByUsernameOrEmail(identifier, identifier)
+        AppUser user = appUserRepo.findByUsernameOrEmail(identifier, identifier)
                 .orElseThrow(()-> new UsernameNotFoundException("User not found"));
 
-        System.out.println(user.getPassword());
         String[] roles = user.getRoles()
                 .stream()
                 .map(Enum::name)
                 .toArray(String[]::new);
+
 
         return User.builder()
                 .username(user.getUsername())
