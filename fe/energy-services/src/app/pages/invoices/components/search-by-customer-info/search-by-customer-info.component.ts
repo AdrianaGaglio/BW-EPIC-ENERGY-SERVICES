@@ -29,6 +29,8 @@ export class SearchByCustomerInfoComponent {
   isChecked: boolean = false;
   customers: iCustomer[] = [];
 
+  isLoading!: boolean;
+
   toggleCheckbox() {
     this.isChecked = !this.isChecked;
     if (this.isChecked) {
@@ -55,6 +57,7 @@ export class SearchByCustomerInfoComponent {
   }
 
   getAllByCustomerInfo() {
+    this.isLoading = true;
     if (
       (this.customerId == '' || this.customerId == undefined) &&
       this.vatCode == '' &&

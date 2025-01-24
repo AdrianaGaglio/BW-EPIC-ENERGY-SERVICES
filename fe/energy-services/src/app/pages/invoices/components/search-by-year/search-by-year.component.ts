@@ -18,8 +18,9 @@ export class SearchByYearComponent {
   year: string = '';
 
   invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
-
+  isLoading!: boolean;
   getAllByYear(year: number) {
+    this.isLoading = true;
     this.invoiceSvc.getAllByYear(year).subscribe((res) => {
       this.invoices = res;
       this.activeModal.close(this.invoices);

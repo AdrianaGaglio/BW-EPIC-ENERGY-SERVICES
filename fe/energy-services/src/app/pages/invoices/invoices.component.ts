@@ -247,5 +247,6 @@ export class InvoicesComponent {
     this.message = '';
     this.searchBy = 'all';
     this.getAll();
+    this.isLoading = true;
   }
 }

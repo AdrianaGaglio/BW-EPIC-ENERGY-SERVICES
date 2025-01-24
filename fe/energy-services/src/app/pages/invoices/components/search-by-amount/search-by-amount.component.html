@@ -1,4 +1,4 @@
-<div appCloseModal>
+<div class="position-relative">
   <form #form="ngForm" (submit)="getAllByAmountRange(+min, +max)">
     <div class="d-flex align-items-bottom gap-2">
       <div class="flex-grow-1">
@@ -30,4 +30,12 @@
       </div>
     </div>
   </form>
+  <div
+    *ngIf="isLoading"
+    class="d-flex justify-content-center position-absolute start-50 translate-middle-x spinner"
+  >
+    <div class="spinner-border text-success" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
 </div>

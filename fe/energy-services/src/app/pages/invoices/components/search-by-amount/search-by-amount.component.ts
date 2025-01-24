@@ -22,8 +22,10 @@ export class SearchByAmountComponent {
   max: string = '';
 
   invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
+  isLoading!: boolean;
 
   getAllByAmountRange(min: number, max: number) {
+    this.isLoading = true;
     if (this.form.valid) {
       this.invoiceSvc.getAllByAmountRange(min, max).subscribe((res) => {
         this.invoices = res;

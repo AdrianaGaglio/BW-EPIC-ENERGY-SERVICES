@@ -18,8 +18,10 @@ export class SearchByDateComponent {
   date: string = '';
 
   invoices: iInvoiceresponse[] | iInvoiceresponseforcustomer[] = [];
+  isLoading!: boolean;
 
   getAllByDate(date: string) {
+    this.isLoading = true;
     this.invoiceSvc.getAllByDate(date).subscribe((res) => {
       this.invoices = res;
       this.activeModal.close(this.invoices);
