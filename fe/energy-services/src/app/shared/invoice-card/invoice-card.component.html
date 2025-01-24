@@ -23,7 +23,7 @@
       <app-customer-info [customer]="invoice.customer!"></app-customer-info>
     </div>
   </div>
-  <div class=" bg-transparent d-flex justify-content-end">
+  <div class="bg-transparent d-flex justify-content-end">
     <ng-container *ngIf="roles.includes('USER') && !isHome">
       <button
         class="btn btn-secondary"
@@ -34,7 +34,7 @@
       </button>
     </ng-container>
     <ng-container *ngIf="toPay">
-      <button class="btn btn-secondary" (click)="pay()">Pay</button>
+      <button class="btn btn-warning me-2 mb-2" (click)="pay()">Pay</button>
     </ng-container>
   </div>
 </div>

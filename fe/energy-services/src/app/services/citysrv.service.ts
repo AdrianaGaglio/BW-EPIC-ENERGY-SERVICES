@@ -7,10 +7,9 @@ import { environment } from '../../environments/environment.development';
 import { iDistrictResponse } from '../interfaces/idistrictresponse';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CitysrvService {
-
   citySubject$ = new BehaviorSubject<iCityResponse[] | null>(null);
   districtSubject$ = new BehaviorSubject<iDistrictResponse[] | null>(null);
 
@@ -20,9 +19,11 @@ export class CitysrvService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getAllCities() {
-    return this.http.get<iCityResponse[]>(this.cityUrl).pipe(
-      tap((cities: iCityResponse[] | null) => this.citySubject$.next(cities))
-    );
+    return this.http
+      .get<iCityResponse[]>(this.cityUrl)
+      .pipe(
+        tap((cities: iCityResponse[] | null) => this.citySubject$.next(cities))
+      );
   }
 
   getCitiesByDistrictId(districtId: number) {
@@ -31,12 +32,8 @@ export class CitysrvService {
   }
 
   getAllDistricts() {
-    return this.http.get<iDistrictResponse[]>(this.districtUrl).pipe(
-      tap((districts) => this.districtSubject$.next(districts))
-    );
+    return this.http
+      .get<iDistrictResponse[]>(this.districtUrl)
+      .pipe(tap((districts) => this.districtSubject$.next(districts)));
   }
-
-
-
-
 }

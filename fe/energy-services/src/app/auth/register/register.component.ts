@@ -109,7 +109,7 @@ export class RegisterComponent implements OnInit {
     const selectedValue = (event.target as HTMLSelectElement).value;
     if (selectedValue) {
       console.log(selectedValue);
-      this.cityService.getCitiesByDistrictId(Number(selectedValue)).subscribe({
+      this.cityService.getCitiesByDistrictId(+selectedValue).subscribe({
         next: (data) => {
           this.cities = data;
           this.selected = true;
