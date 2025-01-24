@@ -1,8 +1,15 @@
-<div class="container mt-4">
+<div *ngIf="isLoading" class="d-flex justify-content-center">
+  <div class="spinner-border text-success" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+<div *ngIf="!isLoading" class="container mt-4">
   <div class="row mt-4">
-    <div class="col-12 col-md-6 col-lg-4 d-flex flex-column position-relative pl-4 order-3">
+    <div
+      class="col-12 col-md-6 col-lg-4 d-flex flex-column position-relative pl-4 order-3"
+    >
       <div class="d-flex align-items-center justify-content-between gap-5 mb-2">
-        <h4 class="flex-grow-1 flex-shrink-0 ">Latest invoices</h4>
+        <h4 class="flex-grow-1 flex-shrink-0">Latest invoices</h4>
         <select
           class="form-select flex-grow-0 flex-shrink-1"
           name="limit"
@@ -16,16 +23,19 @@
         </select>
       </div>
 
-      <div class="scrollable position-absolute start-0 end-0" style="min-height: 300px;">
+      <div
+        class="scrollable position-absolute start-0 end-0"
+        style="min-height: 300px"
+      >
         <div *ngFor="let i of latest" class="mb-3">
           <app-invoice-card [invoice]="i"></app-invoice-card>
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-6 col-lg-8" style=" padding-right: 24px;">
+    <div class="col-12 col-md-6 col-lg-8" style="padding-right: 24px">
       <div class="row gap-3">
         <div class="col-12">
-          <div class="bg rounded-3 row p-3 ">
+          <div class="bg rounded-3 row p-3">
             <div
               class="bg-white p-3 rounded-2 mb-3"
               *ngIf="totalAmount && lastYearAmount"
@@ -49,7 +59,7 @@
                 >
               </div>
               <div class="d-flex align-content-center justify-content-between">
-                <h4 class="mb-0 align-self-center text-body-secondary ">
+                <h4 class="mb-0 align-self-center text-body-secondary">
                   Total amount last year
                 </h4>
                 <span class="fs-2 text-body-secondary fw-bold">{{
@@ -61,7 +71,7 @@
               <div
                 class="d-flex align-content-center justify-content-between mb-2"
               >
-                <h4 class="mb-0 align-self-center ">Total customers</h4>
+                <h4 class="mb-0 align-self-center">Total customers</h4>
                 <span class="fs-2 fw-bold">{{ totalCustomers.customers }}</span>
               </div>
             </div>
@@ -69,7 +79,7 @@
         </div>
         <div class="col-12">
           <div class="row gy-2">
-            <div class=" rounded-3">
+            <div class="rounded-3">
               <div
                 class="d-flex align-content-center justify-content-between mb-2"
               >

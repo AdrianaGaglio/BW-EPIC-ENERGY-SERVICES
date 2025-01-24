@@ -27,7 +27,7 @@ public class CustomerRunner implements ApplicationRunner {
 
 
         if(customerSvc.count() == 0) {
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 50; i++) {
 
                 CustomerRequest customer = new CustomerRequest();
                 customer.setDenomination(faker.company().name());

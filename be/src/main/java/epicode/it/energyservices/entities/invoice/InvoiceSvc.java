@@ -122,7 +122,7 @@ public class InvoiceSvc {
     }
 
     public double getTotalByCustomerIdAndYear(Long id, int year) {
-        return invoiceRepo.findTotalAllByCustomerAndYear(id, year);
+        return invoiceRepo.findTotalAllByCustomerAndYear(id, year).orElse(0.0);
     }
 
     public double getTotal(int year) {

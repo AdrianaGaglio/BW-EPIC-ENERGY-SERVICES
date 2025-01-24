@@ -27,13 +27,13 @@ public class InvoiceRunner implements ApplicationRunner {
         System.out.println("INVOICE RUNNER STARTED");
 
         if (invoiceSvc.count() == 0) {
-            for (int i = 0; i < 300; i++) {
+            for (int i = 0; i < 100; i++) {
                 InvoiceRequest request = new InvoiceRequest();
-                LocalDate date = LocalDate.of(faker.random().nextInt(2023, 2024), faker.random().nextInt(1, 12), faker.random().nextInt(1, 28));
+                LocalDate date = LocalDate.of(faker.random().nextInt(2022, 2024), faker.random().nextInt(1, 12), faker.random().nextInt(1, 28));
                 request.setDate(date);
                 request.setAmount(faker.number().randomDouble(2, 2, 1200));
                 request.setStatus(statusSvc.getAll().get(faker.random().nextInt(0, statusSvc.getAll().size() - 1)).getName());
-                request.setCustomerId(faker.random().nextInt(1, 79).longValue());
+                request.setCustomerId(faker.random().nextInt(1, 140).longValue());
 
                 try {
                     invoiceSvc.create(request);
@@ -59,6 +59,7 @@ public class InvoiceRunner implements ApplicationRunner {
                 }
             }
         }
+
 
         System.out.println("Invoice Runner finished");
 

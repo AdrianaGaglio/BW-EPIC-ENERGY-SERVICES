@@ -10,6 +10,7 @@ import { iCustomer } from '../../interfaces/icustomer';
 import { CustomerService } from '../../services/customer.service';
 import { iCustomerWithAppUser } from '../../interfaces/icustomerWithAppUser';
 import { iAppUserResponse } from '../../auth/interfaces/i-appUserResponse';
+import { InvoiceService } from '../../services/invoice.service';
 
 @Component({
   selector: 'app-profile',
@@ -25,7 +26,8 @@ export class ProfileComponent {
   constructor(
     private authSrv: AuthsrvService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private invoiceSvc: InvoiceService
   ) {
     if (this.authSrv.userAuthSubject$) {
       authSrv.getByCustomerWithAppUser().subscribe((data) => {
@@ -57,5 +59,9 @@ export class ProfileComponent {
 
   enableEditing() {
     this.isEditing = !this.isEditing;
+  }
+
+  getTotalByCustomer(year: number) {
+    this.invoiceSvc.getTotalByCustomer(year).subscribe();
   }
 }

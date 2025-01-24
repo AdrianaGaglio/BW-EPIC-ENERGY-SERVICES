@@ -1,6 +1,7 @@
 package epicode.it.energyservices.utils.upload;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class UploadSvc {
     private Cloudinary cloudinary;
 
     public String uploadFile(MultipartFile file) throws IOException {
-        Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("folder", "energy-services", "resource_type", "auto", "filename", file.getOriginalFilename()));
+        Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("folder", "energy-services", "filename", file.getOriginalFilename()));
         return uploadResult.get("url").toString(); // Restituisce l'URL del file caricato
     }
 }
