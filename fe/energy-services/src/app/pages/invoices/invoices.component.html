@@ -100,7 +100,10 @@
           >Amount</label
         >
       </div>
-      <app-filters (order)="order($event)" (sort)="sort($event)"></app-filters>
+      <app-filters
+        (order)="order($event)"
+        (sort)="sortAsc($event)"
+      ></app-filters>
     </div>
   </div>
 

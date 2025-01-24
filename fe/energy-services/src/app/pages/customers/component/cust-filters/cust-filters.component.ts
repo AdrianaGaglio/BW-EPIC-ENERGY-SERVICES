@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-filters',
-  templateUrl: './filters.component.html',
-  styleUrl: './filters.component.scss',
+  selector: 'app-cust-filters',
+  templateUrl: './cust-filters.component.html',
+  styleUrl: './cust-filters.component.scss',
 })
-export class FiltersComponent {
+export class CustFiltersComponent {
   @Output() sort = new EventEmitter<string>();
   @Output() order = new EventEmitter<{ sort: string; order: string }>();
 
