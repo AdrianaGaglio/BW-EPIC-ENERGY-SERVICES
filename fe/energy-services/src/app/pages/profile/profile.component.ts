@@ -36,6 +36,8 @@ export class ProfileComponent {
   previewUrl: string | null = null;
   file: File | undefined = undefined;
 
+  message: string = '';
+
   constructor(
     private authSrv: AuthsrvService,
     private router: Router,
@@ -82,6 +84,7 @@ export class ProfileComponent {
     this.authSrv.updateAppUser(this.form.value).subscribe((data) => {
       console.log(data);
       this.isEditing = false;
+      this.message = 'Profile info updated';
     });
   }
 
@@ -131,5 +134,9 @@ export class ProfileComponent {
       this.isEditingPassword = false;
       this.isEditing = false;
     });
+  }
+
+  clearMessage() {
+    this.message = '';
   }
 }

@@ -15,11 +15,12 @@ export class AppComponent {
     private authSvc: AuthsrvService,
     private decodeToken: DecodeTokenService
   ) {
-    if (
-      this.authSvc.userAuthSubject$ &&
-      !this.decodeToken.userRoles$.getValue().includes('CUSTOMER')
-    ) {
-      this.customerSvc.getAll().subscribe();
+    if (this.authSvc.userAuthSubject$) {
+      this.decodeToken.userRoles$.subscribe((res) => {
+        if (!res.includes('CUSTOMER')) {
+          this.customerSvc.getAll().subscribe();
+        }
+      });
     }
   }
   title = 'energy-services';

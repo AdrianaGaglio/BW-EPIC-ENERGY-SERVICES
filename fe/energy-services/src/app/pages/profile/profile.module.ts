@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap';
 import { NgIconsModule } from '@ng-icons/core';
 import { bootstrapPencilFill } from '@ng-icons/bootstrap-icons';
+import { AlertModule } from '../../shared/alert/alert/alert.module';
 
 @NgModule({
   declarations: [ProfileComponent],
@@ -15,6 +16,7 @@ import { bootstrapPencilFill } from '@ng-icons/bootstrap-icons';
     ProfileRoutingModule,
     ReactiveFormsModule,
     NgbProgressbar,
+    AlertModule,
     NgIconsModule.withIcons({ bootstrapPencilFill }),
   ],
 })

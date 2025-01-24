@@ -175,6 +175,12 @@
           </form>
         </ng-container>
       </div>
+      <app-alert
+        *ngIf="message && message.length > 0"
+        [message]="message"
+        [type]="'success'"
+        (closeAlert)="clearMessage()"
+      ></app-alert>
     </div>
   </div>
 </div>
