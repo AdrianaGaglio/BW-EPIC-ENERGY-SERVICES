@@ -268,4 +268,11 @@ export class InvoicesComponent {
     this.getAll();
     this.isLoading = true;
   }
+
+  sort(event: string) {
+    let propertyName = event;
+    // this.invoices.sort((a, b) => {a.[`event`] - b.[event]});
+  }
+
+  order(event: string) {}
 }

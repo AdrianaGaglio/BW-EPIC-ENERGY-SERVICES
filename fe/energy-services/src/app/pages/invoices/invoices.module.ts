@@ -16,6 +16,7 @@ import { InvoiceCardModule } from '../../shared/invoice-card/invoice-card.module
 
 import { NgbAlert, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { AlertModule } from '../../shared/alert/alert/alert.module';
+import { FiltersComponent } from './components/filters/filters.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AlertModule } from '../../shared/alert/alert/alert.module';
     SearchByDateComponent,
     SearchByYearComponent,
     SearchByAmountComponent,
+    FiltersComponent,
   ],
   imports: [
     CommonModule,

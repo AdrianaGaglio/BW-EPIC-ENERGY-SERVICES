@@ -15,7 +15,7 @@ const routes: Routes = [
     pathMatch: 'full',
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomeModule),
-    canActivate: [AdminOrUserGuard],
+    canActivate: [AdminOrUserGuard, LoggedGuard],
   },
   {
     path: 'invoices',
@@ -39,7 +39,11 @@ const routes: Routes = [
       ),
     canActivate: [UserGuard],
   },
-  { path: 'profile', loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule) },
+  {
+    path: 'profile',
+    loadChildren: () =>
+      import('./pages/profile/profile.module').then((m) => m.ProfileModule),
+  },
 ];
 
 @NgModule({
