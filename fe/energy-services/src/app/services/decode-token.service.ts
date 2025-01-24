@@ -13,7 +13,7 @@ export class DecodeTokenService {
 
   jwtHelper: JwtHelperService = new JwtHelperService();
 
-  userRoles$ = new BehaviorSubject<string[] | null>([]);
+  userRoles$ = new BehaviorSubject<string[]>([]);
 
   getRoles() {
     const json = localStorage.getItem('accessData');

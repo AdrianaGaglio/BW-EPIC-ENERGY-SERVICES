@@ -54,7 +54,7 @@ export class AuthsrvService {
 
   logout() {
     this.userAuthSubject$.next(null);
-    this.decodeToken.userRoles$.next(null);
+    this.decodeToken.userRoles$.next([]);
     localStorage.removeItem('accessData');
     this.router.navigate(['/auth']);
   }
