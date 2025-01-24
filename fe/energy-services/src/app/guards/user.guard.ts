@@ -5,6 +5,7 @@ import {
   CanActivateChild,
   GuardResult,
   MaybeAsync,
+  Router,
   RouterStateSnapshot,
 } from '@angular/router';
 import { DecodeTokenService } from '../services/decode-token.service';
@@ -13,7 +14,10 @@ import { DecodeTokenService } from '../services/decode-token.service';
   providedIn: 'root',
 })
 export class UserGuard implements CanActivate, CanActivateChild {
-  constructor(private decodeToken: DecodeTokenService) {}
+  constructor(
+    private decodeToken: DecodeTokenService,
+    private router: Router
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -23,6 +27,7 @@ export class UserGuard implements CanActivate, CanActivateChild {
       return true;
     }
 
+    this.router.navigate(['/profile']);
     return false;
   }
   canActivateChild(

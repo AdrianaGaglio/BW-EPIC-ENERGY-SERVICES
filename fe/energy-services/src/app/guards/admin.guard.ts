@@ -15,7 +15,10 @@ import { AuthsrvService } from '../auth/authsrv.service';
   providedIn: 'root',
 })
 export class AdminGuard implements CanActivate, CanActivateChild {
-  constructor(private decodeToken: DecodeTokenService) {}
+  constructor(
+    private decodeToken: DecodeTokenService,
+    private router: Router
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -23,6 +26,7 @@ export class AdminGuard implements CanActivate, CanActivateChild {
   ): MaybeAsync<GuardResult> {
     if (!this.decodeToken.userRoles$.getValue().includes('ADMIN')) {
       console.log('non sei admin');
+      this.router.navigate(['/profile']);
       return false;
     }
 
