@@ -136,4 +136,10 @@ export class InvoiceService {
       this.url + `/latest?limit=${limit}`
     );
   }
+
+  getTotalByCustomer(year: number): Observable<iTotalresponse> {
+    return this.http.get<iTotalresponse>(
+      this.url + `/total-by-customer?year=${year}`
+    );
+  }
 }
