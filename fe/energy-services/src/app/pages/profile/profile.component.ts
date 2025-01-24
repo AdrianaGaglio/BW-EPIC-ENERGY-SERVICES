@@ -8,13 +8,6 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthsrvService } from '../../auth/authsrv.service';
-import { iCityResponse } from '../../interfaces/icityresponse';
-import { iDistrictResponse } from '../../interfaces/idistrictresponse';
-import { CitysrvService } from '../../services/citysrv.service';
-import { DecodeTokenService } from '../../services/decode-token.service';
-import { iCustomer } from '../../interfaces/icustomer';
-import { CustomerService } from '../../services/customer.service';
-import { iCustomerWithAppUser } from '../../interfaces/icustomerWithAppUser';
 import { iAppUserResponse } from '../../auth/interfaces/i-appUserResponse';
 import { InvoiceService } from '../../services/invoice.service';
 import { UploadSvcService } from '../../services/upload-svc.service';
@@ -52,10 +45,10 @@ export class ProfileComponent {
           id: [this.customer.id, [Validators.required]],
           name: [this.customer.name, [Validators.required]],
           surname: [this.customer.surname, [Validators.required]],
-          email: [this.customer.email, [Validators.required, Validators.email]],
+          email: [this.customer.email, [ Validators.email]],
           avatar: [
             this.customer.avatar,
-            [Validators.required, Validators.minLength(6)],
+            [Validators.required],
           ],
           username: [this.customer.username, [Validators.required]],
         });
