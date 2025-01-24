@@ -5,6 +5,7 @@ import {
   CanActivateChild,
   GuardResult,
   MaybeAsync,
+  Router,
   RouterStateSnapshot,
 } from '@angular/router';
 import { AuthsrvService } from '../auth/authsrv.service';
@@ -13,13 +14,14 @@ import { AuthsrvService } from '../auth/authsrv.service';
   providedIn: 'root',
 })
 export class GuestGuard implements CanActivate, CanActivateChild {
-  constructor(private authSvc: AuthsrvService) {}
+  constructor(private authSvc: AuthsrvService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): MaybeAsync<GuardResult> {
     if (this.authSvc.userAuthSubject$.getValue() != null) {
+      this.router.navigate(['/profile']);
       return false;
     }
     return true;

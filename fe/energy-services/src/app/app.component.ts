@@ -15,7 +15,7 @@ export class AppComponent {
     private authSvc: AuthsrvService,
     private decodeToken: DecodeTokenService
   ) {
-    if (this.authSvc.userAuthSubject$) {
+    if (this.authSvc.userAuthSubject$.getValue()) {
       this.decodeToken.userRoles$.subscribe((res) => {
         if (!res.includes('CUSTOMER')) {
           this.customerSvc.getAll().subscribe();
