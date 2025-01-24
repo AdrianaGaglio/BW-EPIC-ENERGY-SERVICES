@@ -191,4 +191,17 @@ public class AppUserSvc {
 
     }
 
+    public String changePassword(@Valid ChangePasswordRequest changePasswordRequest, User userDetails) {
+        AppUser appUser = getByUsername(userDetails.getUsername());
+        if (!passwordEncoder.matches(changePasswordRequest.getOldPassword(), appUser.getPassword())) {
+            throw new SecurityException("Old password not valid");
+        }
+        if(passwordEncoder.matches(changePasswordRequest.getNewPassword(), appUser.getPassword())) {
+            throw new SecurityException("New password must be different from old password");
+        }
+        appUser.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
+        appUserRepo.save(appUser);
+        return "Password changed successfully";
+    }
+
 }

@@ -79,4 +79,13 @@ public class AuthController {
         System.out.println(response);
         return ResponseEntity.ok(response);
     }
+
+    @PatchMapping("/change-password")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Map<String, String>> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest, @AuthenticationPrincipal User userDetails) {
+        String message = appUserSvc.changePassword(changePasswordRequest, userDetails);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", message);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

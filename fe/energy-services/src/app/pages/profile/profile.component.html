@@ -32,18 +32,22 @@
               />
             </ng-container>
           </span>
-          <h1 class="mt-2">
+          <h1 class="mt-2" *ngIf="!isEditingPassword">
             {{ isEditing ? "Edit profile" : "User details" }}
           </h1>
+          <h1 class="mt-2" *ngIf="isEditingPassword">Edit Password</h1>
           <button
             (click)="enableEditing()"
             class="btn mt-4 ms-auto"
-            [ngClass]="{ 'btn-primary': !isEditing, 'btn-warning': isEditing }"
+            [ngClass]="{
+              'btn-primary': !isEditing || !isEditingPassword,
+              'btn-warning': isEditing || isEditingPassword
+            }"
           >
-            {{ isEditing ? "Undo" : "Edit info" }}
+            {{ isEditing || isEditingPassword ? "Undo" : "Edit info" }}
           </button>
         </div>
-        <ng-container *ngIf="!isEditing && customer">
+        <ng-container *ngIf="!isEditing && customer && !isEditingPassword">
           <div class="py-1 d-flex align-items-center justify-content-between">
             <h5 class="mb-0 fs-6 w-25">First name</h5>
             <p class="mb-0 flex-grow-1">{{ customer.name }}</p>
@@ -59,6 +63,22 @@
           <div class="py-1 d-flex align-items-center justify-content-between">
             <h5 class="mb-0 fs-6 w-25">Username</h5>
             <p class="mb-0 flex-grow-1">{{ customer.username }}</p>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!isEditing && customer && !isEditingPassword">
+          <div class="py-1 d-flex align-items-center justify-content-between">
+            <h5 class="mb-0 fs-6 w-25">Password</h5>
+            <p class="mb-0 flex-grow-1">********</p>
+            <button
+              (click)="enableEditingPassword()"
+              class="btn ms-auto"
+              [ngClass]="{
+                'btn-primary': !isEditing,
+                'btn-warning': isEditing
+              }"
+            >
+              {{ isEditing ? "Undo" : "Change password" }}
+            </button>
           </div>
         </ng-container>
 
@@ -122,6 +142,36 @@
                 Save
               </button>
             </fieldset>
+          </form>
+        </ng-container>
+
+        <ng-container *ngIf="passForm && isEditingPassword">
+          <form [formGroup]="passForm" (ngSubmit)="savePassword()">
+            <label for="oldPassword" class="mt-3">Old password</label>
+            <input
+              id="oldPassword"
+              type="password"
+              placeholder="********"
+              class="form-control"
+              formControlName="oldPassword"
+            />
+
+            <label for="newPassword" class="mt-3">New password</label>
+            <input
+              id="newPassword"
+              type="password"
+              placeholder="********"
+              class="form-control"
+              formControlName="newPassword"
+            />
+
+            <button
+              type="submit"
+              class="btn btn-primary mt-4"
+              [disabled]="passForm.invalid"
+            >
+              Save
+            </button>
           </form>
         </ng-container>
       </div>

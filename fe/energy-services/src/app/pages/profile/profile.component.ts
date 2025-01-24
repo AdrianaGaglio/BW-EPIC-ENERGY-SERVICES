@@ -1,5 +1,11 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthsrvService } from '../../auth/authsrv.service';
 import { iCityResponse } from '../../interfaces/icityresponse';
@@ -20,9 +26,11 @@ import { UploadSvcService } from '../../services/upload-svc.service';
 })
 export class ProfileComponent {
   form!: FormGroup;
+  passForm!: FormGroup;
 
   customer!: iAppUserResponse;
   isEditing: boolean = false;
+  isEditingPassword: boolean = false;
 
   @ViewChild('imgInput') imgInput!: ElementRef;
   previewUrl: string | null = null;
@@ -81,7 +89,21 @@ export class ProfileComponent {
     if (this.isEditing) {
       this.previewUrl = null;
     }
-    this.isEditing = !this.isEditing;
+    if (this.isEditingPassword) {
+      this.enableEditingPassword();
+    } else {
+      this.isEditing = !this.isEditing;
+    }
+  }
+
+  enableEditingPassword() {
+    this.isEditingPassword = !this.isEditingPassword;
+    if (this.isEditingPassword) {
+      this.passForm = this.fb.group({
+        oldPassword: ['', [Validators.required, Validators.minLength(6)]],
+        newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      });
+    }
   }
 
   getTotalByCustomer(year: number) {
@@ -101,5 +123,13 @@ export class ProfileComponent {
       };
       reader.readAsDataURL(this.file);
     }
+  }
+
+  savePassword() {
+    this.authSrv.changePassword(this.passForm.value).subscribe((data) => {
+      console.log(data);
+      this.isEditingPassword = false;
+      this.isEditing = false;
+    });
   }
 }
