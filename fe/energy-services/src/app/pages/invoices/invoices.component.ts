@@ -276,25 +276,46 @@ export class InvoicesComponent {
         if (this.searchBy == 'all') {
           this.getAll(0, 'number,asc');
         }
-        this.invoices = this.invoices.sort((a, b) => {
-          return a.number - b.number;
-        });
+        if (this.roles.includes('CUSTOMER')) {
+          this.customerInvoices = this.customerInvoices.sort((a, b) => {
+            return a.number - b.number;
+          });
+        } else {
+          this.invoices = this.invoices.sort((a, b) => {
+            return a.number - b.number;
+          });
+        }
+
         break;
       case 'date':
         if (this.searchBy == 'all') {
           this.getAll(0, 'date,asc');
         }
-        this.invoices = this.invoices.sort((a, b) => {
-          return new Date(a.date).getTime() - new Date(b.date).getTime();
-        });
+        if (this.roles.includes('CUSTOMER')) {
+          this.customerInvoices = this.customerInvoices.sort((a, b) => {
+            return new Date(a.date).getTime() - new Date(b.date).getTime();
+          });
+        } else {
+          this.invoices = this.invoices.sort((a, b) => {
+            return new Date(a.date).getTime() - new Date(b.date).getTime();
+          });
+        }
+
         break;
       case 'status':
         if (this.searchBy == 'all') {
           this.getAll(0, 'status,asc');
         }
-        this.invoices = this.invoices.sort((a, b) => {
-          return a.status.localeCompare(b.status);
-        });
+        if (this.roles.includes('CUSTOMER')) {
+          this.customerInvoices = this.customerInvoices.sort((a, b) => {
+            return a.status.localeCompare(b.status);
+          });
+        } else {
+          this.invoices = this.invoices.sort((a, b) => {
+            return a.status.localeCompare(b.status);
+          });
+        }
+
         break;
     }
   }
@@ -305,25 +326,45 @@ export class InvoicesComponent {
         if (this.searchBy == 'all') {
           this.getAll(0, 'number,desc');
         }
-        this.invoices = this.invoices.sort((a, b) => {
-          return b.number - a.number;
-        });
+        if (this.roles.includes('CUSTOMER')) {
+          this.customerInvoices = this.customerInvoices.sort((a, b) => {
+            return b.number - a.number;
+          });
+        } else {
+          this.invoices = this.invoices.sort((a, b) => {
+            return b.number - a.number;
+          });
+        }
+
         break;
       case 'date':
         if (this.searchBy == 'all') {
           this.getAll(0, 'date,desc');
         }
-        this.invoices = this.invoices.sort((a, b) => {
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
-        });
+        if (this.roles.includes('CUSTOMER')) {
+          this.customerInvoices = this.customerInvoices.sort((a, b) => {
+            return new Date(b.date).getTime() - new Date(a.date).getTime();
+          });
+        } else {
+          this.invoices = this.invoices.sort((a, b) => {
+            return new Date(b.date).getTime() - new Date(a.date).getTime();
+          });
+        }
         break;
       case 'status':
         if (this.searchBy == 'all') {
           this.getAll(0, 'status,desc');
         }
-        this.invoices = this.invoices.sort((a, b) => {
-          return b.status.localeCompare(a.status);
-        });
+        if (this.roles.includes('CUSTOMER')) {
+          this.customerInvoices = this.customerInvoices.sort((a, b) => {
+            return b.status.localeCompare(a.status);
+          });
+        } else {
+          this.invoices = this.invoices.sort((a, b) => {
+            return b.status.localeCompare(a.status);
+          });
+        }
+
         break;
     }
   }

@@ -12,22 +12,25 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   customer!: iAppUserResponse;
-  avatar: string = "";
+  avatar: string = '';
 
-  constructor(private authSvc: AuthsrvService, private decodeToken: DecodeTokenService, private router: Router) {
-    if (this.authSvc.userAuthSubject$) {
-          authSvc.getByCustomerWithAppUser().subscribe((data) => {
-            this.customer = data;
-            this.avatar = this.customer.avatar;
-          });
-        } else {
-          this.router.navigate(['auth']);
-        }
+  constructor(
+    private authSvc: AuthsrvService,
+    private decodeToken: DecodeTokenService,
+    private router: Router
+  ) {
+    if (this.authSvc.userAuthSubject$.getValue()) {
+      authSvc.getByCustomerWithAppUser().subscribe((data) => {
+        this.customer = data;
+        this.avatar = this.customer.avatar;
+      });
+    } else {
+      this.router.navigate(['auth']);
+    }
   }
   roles: string[] = [];
   private rolesSubscription!: Subscription;
-  isActive:boolean = false;
-
+  isActive: boolean = false;
 
   ngOnInit(): void {
     this.rolesSubscription = this.decodeToken.userRoles$.subscribe((roles) => {

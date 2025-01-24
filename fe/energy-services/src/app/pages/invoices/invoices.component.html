@@ -101,6 +101,7 @@
         >
       </div>
       <app-filters
+        *ngIf="searchBy != 'byNumber'"
         (order)="order($event)"
         (sort)="sortAsc($event)"
       ></app-filters>
