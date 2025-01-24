@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Customer } from './interfaces/iinvoicepageresponse';
 import { CustomerService } from './services/customer.service';
+import { AuthsrvService } from './auth/authsrv.service';
+import { DecodeTokenService } from './services/decode-token.service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +10,17 @@ import { CustomerService } from './services/customer.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  constructor(private customerSvc: CustomerService) {
-    this.customerSvc.getAll().subscribe();
+  constructor(
+    private customerSvc: CustomerService,
+    private authSvc: AuthsrvService,
+    private decodeToken: DecodeTokenService
+  ) {
+    if (
+      this.authSvc.userAuthSubject$ &&
+      !this.decodeToken.userRoles$.getValue().includes('CUSTOMER')
+    ) {
+      this.customerSvc.getAll().subscribe();
+    }
   }
   title = 'energy-services';
 }
