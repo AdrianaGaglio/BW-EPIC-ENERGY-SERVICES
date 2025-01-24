@@ -23,24 +23,24 @@ public class AddressesRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-
-        List<Customer> customers = customerSvc.getAll();
-        for (Customer customer : customers) {
-            City city = citySvc.findCityById((long) faker.number().numberBetween(1, 1000));
-            Address addressRequest = new Address();
-            addressRequest.setAddressNumber(String.valueOf(faker.number().numberBetween(1, 1000)));
-            addressRequest.setCap(faker.number().numberBetween(10000, 99999));
-            addressRequest.setStreet(faker.address().streetAddress());
-            addressRequest.setCity(city);
-            City city1 = citySvc.findCityById((long) faker.number().numberBetween(1, 1001));
-            Address addressRequest1 = new Address();
-            addressRequest1.setAddressNumber(String.valueOf(faker.number().numberBetween(1, 1000)));
-            addressRequest1.setCap(faker.number().numberBetween(10000, 99999));
-            addressRequest1.setStreet(faker.address().streetAddress());
-            addressRequest1.setCity(city1);
-            customer.getAddresses().put("HeadquartersAddress", addressRequest );
-            customer.getAddresses().put("OperationalHeadquartersAddress", addressRequest1 );
-        }
-
+//
+//        List<Customer> customers = customerSvc.getAll();
+//        for (Customer customer : customers) {
+//            City city = citySvc.findCityById((long) faker.number().numberBetween(1, 1000));
+//            Address addressRequest = new Address();
+//            addressRequest.setAddressNumber(String.valueOf(faker.number().numberBetween(1, 1000)));
+//            addressRequest.setCap(faker.number().numberBetween(10000, 99999));
+//            addressRequest.setStreet(faker.address().streetAddress());
+//            addressRequest.setCity(city);
+//            City city1 = citySvc.findCityById((long) faker.number().numberBetween(1, 1001));
+//            Address addressRequest1 = new Address();
+//            addressRequest1.setAddressNumber(String.valueOf(faker.number().numberBetween(1, 1000)));
+//            addressRequest1.setCap(faker.number().numberBetween(10000, 99999));
+//            addressRequest1.setStreet(faker.address().streetAddress());
+//            addressRequest1.setCity(city1);
+//            customer.getAddresses().put("HeadquartersAddress", addressRequest );
+//            customer.getAddresses().put("OperationalHeadquartersAddress", addressRequest1 );
+//        }
+//
     }
 }

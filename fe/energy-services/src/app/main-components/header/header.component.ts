@@ -24,8 +24,6 @@ export class HeaderComponent implements OnInit {
         this.customer = data;
         this.avatar = this.customer.avatar;
       });
-    } else {
-      this.router.navigate(['auth']);
     }
   }
   roles: string[] = [];
