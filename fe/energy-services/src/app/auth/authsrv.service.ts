@@ -11,6 +11,7 @@ import { iPasswordResetRequest } from './interfaces/i-password-reset-request';
 import { DecodeTokenService } from '../services/decode-token.service';
 import { iResponseStringMessage } from './interfaces/i-response-string-message';
 import { iAppUserResponse } from './interfaces/i-appUserResponse';
+import { iChangePasswordRequest } from './interfaces/i-change-password-request';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,7 @@ export class AuthsrvService {
 
   registerUrl: string = environment.registerUrl;
   loginUrl: string = environment.loginUrl;
-  baseUrl: string = environment.baseUrl;
+  baseUrl: string = environment.baseUrl + 'auth/';
   autoLogoutTimer: any;
 
   register(user: Partial<iUser>) {
@@ -84,26 +85,33 @@ export class AuthsrvService {
 
   resetPassword(passwordResetRequest: iPasswordResetRequest) {
     return this.http.patch<iResponseStringMessage>(
-      this.baseUrl + 'auth/reset-password',
+      this.baseUrl + 'reset-password',
       passwordResetRequest
     );
   }
 
   sendRequestPasswordReset(email: { email: string }) {
     return this.http.post<iResponseStringMessage>(
-      this.baseUrl + 'auth/requestChangePassword',
+      this.baseUrl + 'requestChangePassword',
       email
     );
   }
 
   getByCustomerWithAppUser() {
-    return this.http.get<iAppUserResponse>(this.baseUrl + 'auth/withAppUser');
+    return this.http.get<iAppUserResponse>(this.baseUrl + 'withAppUser');
   }
 
   updateAppUser(appUser: iAppUserResponse) {
     return this.http.put<iAppUserResponse>(
-      this.baseUrl + 'auth/withAppUser',
+      this.baseUrl + 'withAppUser',
       appUser
+    );
+  }
+
+  changePassword(changePasswordRequest: iChangePasswordRequest) {
+    return this.http.patch(
+      this.baseUrl + 'change-password',
+      changePasswordRequest
     );
   }
 }
