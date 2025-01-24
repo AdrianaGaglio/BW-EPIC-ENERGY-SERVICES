@@ -46,7 +46,12 @@ export class ProfileComponent {
           name: [this.customer.name, [Validators.required]],
           surname: [this.customer.surname, [Validators.required]],
           email: [this.customer.email, [Validators.required, Validators.email]],
-          avatar: [this.customer.avatar, [Validators.required]],
+          avatar: [
+            this.customer.avatar
+              ? this.customer.avatar
+              : 'https://ui-avatars.com/api/?name=A+A',
+            [Validators.required],
+          ],
           username: [this.customer.username, [Validators.required]],
         });
       });
