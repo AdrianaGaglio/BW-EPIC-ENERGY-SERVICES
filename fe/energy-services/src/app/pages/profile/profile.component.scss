@@ -27,3 +27,30 @@
 .row {
   min-height: calc(100vh - 72px);
 }
+
+#editIcon,
+.avatar-edit,
+.iconContainer {
+  cursor: pointer;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+}
+
+.iconContainer {
+  position: absolute;
+  top: 85%;
+  left: 85%;
+  height: 27px;
+  width: 27px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+#editIcon {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

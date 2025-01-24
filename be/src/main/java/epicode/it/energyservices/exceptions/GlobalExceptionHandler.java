@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -64,6 +66,25 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = InvalidParameterException.class)
     protected ResponseEntity<ErrorMessage> handleInvalidParameterException(InvalidParameterException ex) {
         ErrorMessage e = new ErrorMessage(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = MaxUploadSizeExceededException.class)
+    protected ResponseEntity<ErrorMessage> maxUploadSize(MaxUploadSizeExceededException ex) {
+        ErrorMessage e = new ErrorMessage("Max upload size exceeded global", HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
+    protected ResponseEntity<ErrorMessage> mediaNotSupported(HttpMediaTypeNotSupportedException ex) {
+        ErrorMessage e = new ErrorMessage("Media type not supported", HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(value = MaxSizeException.class)
+    protected ResponseEntity<ErrorMessage> maxSizeException(MaxSizeException ex) {
+        ErrorMessage e = new ErrorMessage(ex.getMessage(), HttpStatus.BAD_REQUEST);
+
         return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
     }
 
