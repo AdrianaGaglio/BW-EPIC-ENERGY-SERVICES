@@ -269,10 +269,53 @@ export class InvoicesComponent {
     this.isLoading = true;
   }
 
-  sort(event: string) {
-    let propertyName = event;
-    // this.invoices.sort((a, b) => {a.[`event`] - b.[event]});
+  sortAsc(event: string) {
+    switch (event) {
+      case 'number':
+        this.invoices = this.invoices.sort((a, b) => {
+          return a.number - b.number;
+        });
+        break;
+      case 'date':
+        this.invoices = this.invoices.sort((a, b) => {
+          return new Date(a.date).getTime() - new Date(b.date).getTime();
+        });
+        break;
+      case 'status':
+        this.invoices = this.invoices.sort((a, b) => {
+          return a.status.localeCompare(b.status);
+        });
+        break;
+    }
   }
 
-  order(event: string) {}
+  sortDesc(event: string) {
+    switch (event) {
+      case 'number':
+        this.invoices = this.invoices.sort((a, b) => {
+          return b.number - a.number;
+        });
+        break;
+      case 'date':
+        this.invoices = this.invoices.sort((a, b) => {
+          return new Date(b.date).getTime() - new Date(a.date).getTime();
+        });
+        break;
+      case 'status':
+        this.invoices = this.invoices.sort((a, b) => {
+          return b.status.localeCompare(a.status);
+        });
+        break;
+    }
+  }
+
+  order(event: { sort: string; order: string }) {
+    switch (event.order) {
+      case 'asc':
+        this.sortAsc(event.sort);
+        break;
+      case 'desc':
+        this.sortDesc(event.sort);
+    }
+  }
 }

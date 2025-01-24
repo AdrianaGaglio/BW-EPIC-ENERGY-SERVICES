@@ -14,6 +14,7 @@ import { SearchByYearlyturnoverComponent } from './components/search-by-yearlytu
 import { SearchByVatcodeComponent } from './components/search-by-vatcode/search-by-vatcode.component';
 import { CardCustomerComponent } from './components/cardCustomer/cardCustomer.component';
 import { AlertModule } from '../../shared/alert/alert/alert.module';
+import { CustFiltersComponent } from './component/cust-filters/cust-filters.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AlertModule } from '../../shared/alert/alert/alert.module';
     SearchByYearlyturnoverComponent,
     SearchByVatcodeComponent,
     CardCustomerComponent,
+    CustFiltersComponent,
   ],
   imports: [
     CommonModule,

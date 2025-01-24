@@ -27,20 +27,20 @@ export class ForadminuserComponent {
   isLoading: boolean = true;
 
   ngOnInit() {
-    this.getAllCustomers(0, 5);
+    this.getAllCustomers(0, 10);
   }
   getAllCustomers(numberPage: number, size: number, type?: string[]) {
     this.customerSvc
       .getAllCustomers(numberPage, size, type)
       .subscribe((data) => {
-        this.customers = data.content;
         this.isPaged = true;
+        this.customers = data.content;
         this.pages = Array.from({ length: data.totalPages }, (_, i) => i + 1);
         this.isLoading = false;
       });
   }
   changePage(num: number) {
-    this.getAllCustomers(num, 5);
+    this.getAllCustomers(num, 10);
   }
 
   openSearchByCreationDate() {
@@ -53,8 +53,8 @@ export class ForadminuserComponent {
     modalRef.result
       .then((res) => {
         this.customers = res;
-        this.searchBy = '';
         this.isPaged = false;
+        this.searchBy = '';
         if (res.length == 0) {
           this.message = 'No customers found';
         }
@@ -154,5 +154,57 @@ export class ForadminuserComponent {
     this.searchBy = 'all';
     this.getAllCustomers(0, 5);
     this.isLoading = true;
+  }
+
+  order(event: { sort: string; order: string }) {
+    switch (event.order) {
+      case 'asc':
+        this.sortAsc(event.sort);
+        break;
+      case 'desc':
+        this.sortDesc(event.sort);
+    }
+  }
+
+  sortAsc(event: string) {
+    switch (event) {
+      case 'denomination':
+        if (this.searchBy == 'all') {
+          this.getAllCustomers(0, 10, ['denomination,asc']);
+        }
+        this.customers = this.customers.sort((a, b) => {
+          return a.denomination.localeCompare(b.denomination);
+        });
+        break;
+      case 'vatcode':
+        if (this.searchBy == 'all') {
+          this.getAllCustomers(0, 5, ['vatCode,asc']);
+        }
+        this.customers = this.customers.sort((a, b) => {
+          return a.vatCode.localeCompare(b.vatCode);
+        });
+        break;
+    }
+  }
+
+  sortDesc(event: string) {
+    switch (event) {
+      case 'denomination':
+        if (this.searchBy == 'all') {
+          this.getAllCustomers(0, 10, ['denomination,desc']);
+        }
+        this.customers = this.customers.sort((a, b) => {
+          return b.denomination.localeCompare(a.denomination);
+        });
+        break;
+      case 'vatcode':
+        if (this.isPaged) {
+          this.getAllCustomers(0, 5, ['vatCode,desc']);
+        }
+        this.customers = this.customers.sort((a, b) => {
+          return b.vatCode.localeCompare(a.vatCode);
+        });
+        break;
+    }
   }
 }
