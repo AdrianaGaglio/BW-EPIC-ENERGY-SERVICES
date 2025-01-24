@@ -49,7 +49,8 @@ export class InvoicesComponent {
   date: string = '';
 
   isPaged: boolean = true;
-  page!: number;
+  page: number = 0;
+
   pages!: number[];
 
   message: string = '';
@@ -71,13 +72,13 @@ export class InvoicesComponent {
       this.openSearchByCustomerInfo();
       this.searchBy = 'byCustomerInfo';
     } else {
-      this.getAll();
+      this.getAll(this.page, 'number,desc');
     }
   }
 
-  getAll() {
+  getAll(page: number, sort: string) {
     if (!this.roles.includes('CUSTOMER')) {
-      this.invoiceSvc.getAllPaged(0, 10, 'number,desc').subscribe((res) => {
+      this.invoiceSvc.getAllPaged(page, 10, sort).subscribe((res) => {
         this.isLoading = false;
         this.isPaged = true;
         this.pages = Array.from({ length: res.totalPages }, (_, i) => i + 1);
@@ -265,23 +266,32 @@ export class InvoicesComponent {
   clearMessage() {
     this.message = '';
     this.searchBy = 'all';
-    this.getAll();
+    this.getAll(this.page, 'number,desc');
     this.isLoading = true;
   }
 
   sortAsc(event: string) {
     switch (event) {
       case 'number':
+        if (this.searchBy == 'all') {
+          this.getAll(0, 'number,asc');
+        }
         this.invoices = this.invoices.sort((a, b) => {
           return a.number - b.number;
         });
         break;
       case 'date':
+        if (this.searchBy == 'all') {
+          this.getAll(0, 'date,asc');
+        }
         this.invoices = this.invoices.sort((a, b) => {
           return new Date(a.date).getTime() - new Date(b.date).getTime();
         });
         break;
       case 'status':
+        if (this.searchBy == 'all') {
+          this.getAll(0, 'status,asc');
+        }
         this.invoices = this.invoices.sort((a, b) => {
           return a.status.localeCompare(b.status);
         });
@@ -292,16 +302,25 @@ export class InvoicesComponent {
   sortDesc(event: string) {
     switch (event) {
       case 'number':
+        if (this.searchBy == 'all') {
+          this.getAll(0, 'number,desc');
+        }
         this.invoices = this.invoices.sort((a, b) => {
           return b.number - a.number;
         });
         break;
       case 'date':
+        if (this.searchBy == 'all') {
+          this.getAll(0, 'date,desc');
+        }
         this.invoices = this.invoices.sort((a, b) => {
           return new Date(b.date).getTime() - new Date(a.date).getTime();
         });
         break;
       case 'status':
+        if (this.searchBy == 'all') {
+          this.getAll(0, 'status,desc');
+        }
         this.invoices = this.invoices.sort((a, b) => {
           return b.status.localeCompare(a.status);
         });
