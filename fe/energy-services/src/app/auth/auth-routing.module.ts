@@ -28,7 +28,6 @@ const routes: Routes = [
   {
     path: 'reset-password/:token',
     component: ResetPasswordComponent,
-    canActivate: [GuestGuard],
   },
   {
     path: 'forgot-password',

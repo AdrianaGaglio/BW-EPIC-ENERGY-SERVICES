@@ -178,6 +178,7 @@ export class InvoicesComponent {
         this.isPaged = false;
         this.searchBy = '';
         this.invoices = res;
+        this.isLoading = false;
         if (res.length == 0) {
           this.message = 'No invoices found';
         }
