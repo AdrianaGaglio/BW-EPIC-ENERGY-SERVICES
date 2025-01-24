@@ -12,6 +12,7 @@ import { SearchByYearComponent } from './components/search-by-year/search-by-yea
 import { SearchByAmountComponent } from './components/search-by-amount/search-by-amount.component';
 import { DecodeTokenService } from '../../services/decode-token.service';
 import { CustomerService } from '../../services/customer.service';
+import { AuthsrvService } from '../../auth/authsrv.service';
 
 @Component({
   selector: 'app-invoices',
@@ -21,10 +22,16 @@ import { CustomerService } from '../../services/customer.service';
 export class InvoicesComponent {
   constructor(
     private invoiceSvc: InvoiceService,
+    private authSvc: AuthsrvService,
     private decodeToken: DecodeTokenService,
     private customerSvc: CustomerService
   ) {
-    this.customerSvc.getAll().subscribe();
+    if (
+      this.authSvc.userAuthSubject$ &&
+      !this.decodeToken.userRoles$.getValue().includes('CUSTOMER')
+    ) {
+      this.customerSvc.getAll().subscribe();
+    }
   }
   private modalService = inject(NgbModal);
 
@@ -111,6 +118,8 @@ export class InvoicesComponent {
       size: 'xl',
     });
 
+    if (this.message) this.clearMessage();
+
     modalRef.result
       .then((res) => {
         this.isPaged = false;
@@ -134,6 +143,8 @@ export class InvoicesComponent {
     const modalRef = this.modalService.open(SearchByNumberComponent, {
       size: 'xl',
     });
+
+    if (this.message) this.clearMessage();
 
     modalRef.result
       .then((res) => {
@@ -159,6 +170,8 @@ export class InvoicesComponent {
       size: 'xl',
     });
 
+    if (this.message) this.clearMessage();
+
     modalRef.result
       .then((res) => {
         this.isPaged = false;
@@ -178,6 +191,8 @@ export class InvoicesComponent {
     const modalRef = this.modalService.open(SearchByDateComponent, {
       size: 'xl',
     });
+
+    if (this.message) this.clearMessage();
 
     modalRef.result
       .then((res) => {
@@ -203,6 +218,8 @@ export class InvoicesComponent {
       size: 'xl',
     });
 
+    if (this.message) this.clearMessage();
+
     modalRef.result
       .then((res) => {
         this.isPaged = false;
@@ -226,6 +243,8 @@ export class InvoicesComponent {
     const modalRef = this.modalService.open(SearchByAmountComponent, {
       size: 'xl',
     });
+
+    if (this.message) this.clearMessage();
 
     modalRef.result
       .then((res) => {

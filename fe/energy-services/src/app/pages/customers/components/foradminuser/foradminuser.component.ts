@@ -47,6 +47,9 @@ export class ForadminuserComponent {
     const modalRef = this.modalService.open(SearchByCreationdateComponent, {
       size: 'xl',
     });
+
+    if (this.message) this.clearMessage();
+
     modalRef.result
       .then((res) => {
         this.customers = res;
@@ -66,6 +69,9 @@ export class ForadminuserComponent {
     const modalRef = this.modalService.open(SearchByLastcontactComponent, {
       size: 'xl',
     });
+
+    if (this.message) this.clearMessage();
+
     modalRef.result
       .then((res) => {
         this.customers = res;
@@ -85,6 +91,8 @@ export class ForadminuserComponent {
     const modalRef = this.modalService.open(SearchByDenominationComponent, {
       size: 'xl',
     });
+
+    if (this.message) this.clearMessage();
     modalRef.result
       .then((res) => {
         this.customers = res;
@@ -104,6 +112,7 @@ export class ForadminuserComponent {
     const modalRef = this.modalService.open(SearchByYearlyturnoverComponent, {
       size: 'xl',
     });
+    if (this.message) this.clearMessage();
     modalRef.result
       .then((res) => {
         this.customers = res;
@@ -123,6 +132,8 @@ export class ForadminuserComponent {
     const modalRef = this.modalService.open(SearchByVatcodeComponent, {
       size: 'xl',
     });
+
+    if (this.message) this.clearMessage();
     modalRef.result
       .then((res) => {
         this.customers = res;

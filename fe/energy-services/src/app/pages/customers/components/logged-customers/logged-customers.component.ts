@@ -11,7 +11,7 @@ export class LoggedCustomersComponent {
   private customerSvc = inject(CustomerService);
 
   customer!: iCustomer;
-  isLoading!: boolean;
+  isLoading: boolean = true;
 
   ngOnInit() {
     this.getCustomerByLoggedCustomer();
