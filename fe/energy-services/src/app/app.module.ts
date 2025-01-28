@@ -1,3 +1,4 @@
+import { TokenInterceptor } from './../../../../../../../../02_Esercizi e Progetti/01_Progetti/Capstone/healthdesk-fe/src/app/auth/token.interceptor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -39,7 +40,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     }),
   ],
   providers: [
-    provideHttpClient(withInterceptors([tokenInterceptor, ErrorInterceptor])),
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
